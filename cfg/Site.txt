@@ -1,0 +1,19 @@
+// populates the select list for Sites list
+// the code following the colon is used to populate the site code field of the db
+
+<option value="">Sites</option>
+<option value="Buellton:BU">Buellton</option>
+<option value="Cloisters:CL">Cloisters</option>
+<option value="Community Center:CC">Community Center</option>
+<option value="Embarcader:EM">Embarcadero</option>
+<option value="Montana de Oro:MDO">Montana de Oro</option>
+<option value="Morro Bay High School:MBHS">Morro Bay High School</option>
+<option value="Morro Landing:ML">Morro Landing</option>
+<option value="Morro Rock">Morro Rock</option>
+<option value="Museum:MU">Museum</option>
+<option value="Oso Flaco:OF">Oso Flaco</option>
+<option value="Santa Maria:SM">Santa Maria</option>
+<option value="St. Peter's:SP">St. Peter's</option>
+<option value="St. Timothy's:ST">St. Timothy's</option>
+<option value="State Park Marina:SPM">State Park Marina</option>
+<option value="Veteran's Hall:VH">Veteran's Hall</option>

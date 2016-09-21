@@ -1,0 +1,29 @@
+// lines that begin with double strokes are comments and ignored
+// userids and password are defined with a colon separating them
+// each uid:password combo is on a single line
+// blank lines are ignored
+
+// define the event start date in international format of YYYY-MM-DD
+eventstart:2016-10-01
+
+// user id's and passwords
+davek:fresno
+jeanf:brant
+bobr:kingfisher
+jeanettes:eagle
+suzyb:falcon
+glenns:cormorant
+
+//The following are special administrative user id's 
+//The password may be changed, however, DO NOT change the userid
+// SignUp Master extract password
+SAMUser:raptor
+
+// Admin password
+Admin:raptor
+
+// ReSequence password
+ReSeq:raptor
+
+// ReSet Event Status password
+ReSet:raptor

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Time Picker Tests</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link rel="stylesheet" href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="css/jquery.timepicker.css" type="text/css"/>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.timepicker.js"></script>
+</head>
+<body>
+<h1>Time Picker Testing</h1>
+
+<form action="timepicker.html" method="get">
+
+1: 
+<input class="tpick" id="tp1" name="tp1" type="text" value="">
+<br>
+2: 
+<input class="tpick" id="tp2" name="tp2" type="text" value=""/>
+<br>
+
+<input type="submit" name="submit" value="Submit">
+<input type="reset" name="reset" value="Reset">
+</form>
+<br>
+<div id="dur">xxxxx</div>
+<script>
+$(document).ready(function(){
+    $("input.tpick").timepicker({ 
+    timeFormat: 'h:mm:ss p',
+    minTime:    "7:00 AM",
+    maxTime:    "8:00 PM",
+    interval:   15 
+    });
+});
+</script>
+<script>
+$("#tp1").blur(function(){
+  $("#tp2:text").val("");
+});
+$("#tp2").blur(function(){
+  var t1 = $("#tp1").val(); var t2 = $("#tp2").val();
+  var t1val = Date.parse(t1); var t2val = Date.parse(t2);
+  alert("t1val: " + t1);
+  var diff = t2 - t1;
+  $("#dur:text").val(diff);
+});
+</script>
+
+
+</body>
+</html>

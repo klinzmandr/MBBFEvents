@@ -1,0 +1,200 @@
+"RowID","Active","FirstName","LastName","Phone","CellPhone","Email","Notes","Address1","Address2","City","State","Zip","Bio"
+1,TRUE,"Louise","Abbott","805-534-1490","805-441-2080","labbott@charter.net",,"1748 Los Osos Valley RD.",,"Los Osos","CA",93402,"Louise Abbott is a self-proclaimed Silicon Valley escapee. She spent most of her career in the high-tech world, retiring as a program manager for Cisco Systems.  Since moving to the Central Coast she has become very active as a State Park Docent, and is a"
+2,TRUE,"Carole","Adams","805-927-5847",,"pcadams71@sbcglobal.net","2/24/2014 - Don't have a cell phone","5050 Oakhurst",,"Cambria","CA",93428,"Phil and Carole Adams have been leading Adventure With Nature Walks for California State Parks for over 10 years. They also volunteer with Friends of the Elephant Seal, Monterey Bay National Marine Sanctuary, and Piedras Blancas Light Station. They enjoy "
+3,TRUE,"Phil","Adams","805-927-5847",,"pcadams71@sbcglobal.net","2/24/2014 - Don't have a cell phone","5050 Oakhurst",,"Cambria","CA",93428,"Phil and Carole Adams have been leading Adventure With Nature Walks for California State Parks for over 10 years. They also volunteer with Friends of the Elephant Seal, Monterey Bay National Marine Sanctuary, and Piedras Blancas Light Station. They enjoy "
+4,FALSE,"Mary","Adams","805-474-0147",,"madams@waterboards.ca.gov",,"6930 Lopez Dr.",,"Arroyo Grande","CA",93420,
+5,FALSE,"Larry","Allen ","723-221-2022",,"larryallen@earlymusicla.org",,"2528 Denton Ave.",,"Rosemead","CA",91770,
+6,FALSE,"Paul","Andreano","805-235-6227",,"himountainpaul@gmail.com",,"1000 Montecito Rd. #3",,"Cayucos","CA",93430,
+7,TRUE,"Rick","Austin","805-771-9084","310-4614-8041","rcaustin@charter.net ",,"360 Piney Way",,"Morro Bay","CA",93442,"Rick is an 8th grade math teacher.  He cautiously began birding 40 years ago and has since birded six of the seven continents in search of avian colors, vocalizations, and novel behaviors.  He has led tours in Alaska and California, and recently spent thr"
+8,TRUE,"Mike","Baird","805-772-2044","805-704-2064","mike@mikebaird.com",,"2756 Indigo Circle",,"Morro Bay","CA",93442,"Mike has been a State Park Docent since 2001 and leads Digital Photowalks (www.photomorrobay.com). He is a PhD Computer Scientist with an MBA, retired from ask.com, and author of Engineering Your Start-up (www.eysu.org). Mike is editor of www.morro-bay.co"
+9,FALSE,"Bob","Barnes","760-382-1260",,"bbarnes@lightspeed.net",,"1009 Las Cruces",,"Ridgecrest","CA",93555,"Bob Barnes has been birding through California for the past 35 years. His expertise in Southern Sierra species distribution and status is unparalleled. Bob has led over 200 birding tours,  and he authored the section on Kern River Valley and Southern Sier"
+10,TRUE,"Louise","Bello","805-748-4969",,"rxbello@msn.com",,"951 Ridgeway St",,"Morro Bay","CA",93442,
+11,TRUE,"Randy","Bello","805-748-4969",,"rxbello@msn.com",,"951 Ridgeway St",,"Morro Bay","CA",93442,
+12,FALSE,"Jodee","Bennett",,"805-440-5408","jbennett@calpoly.edu",,,,,"CA",,
+13,FALSE,"Dave","Berry","805-466-6184",,"gberry@charter.net",,"9125 Santa Barbara Rd/",,"Atascadero","CA",93422,
+14,TRUE,"Daniel","Bohlman","805-235-2874",,"danielb@lcslo.org",,,,,"CA",,
+15,FALSE,"Mick","Bondello","805-481-6549",,"dinonick@hotmail.com",,"207 McKinley St.",,"Arroyo Grande","CA",93420,
+16,TRUE,"Bill","Bouton","805-543-3761","805-540-4352","boutonbill@gmail.com",,"2221 King Court, #16",,"San Luis Obispo","CA",93401,"A retired college biology teacher, Bill has led nature trips to many locations in the USA, and foreign destinations such as Costa Rica, Peru and Ecuador, including the Galapagos Islands.  Bill began birding at 11 years of age.  He is now heavily involved "
+17,FALSE,"Dick","Boyd","805 772 3993","805-748-9749","dickboyd@charter.net",,"375 Fresno Ave.",,"Morro Bay","CA",93442,
+18,FALSE,"Bryan","Brown ","805-528-8137",,"bryanlives@sbcglobal.net",,"1871 Fearn",,"Los Osos","CA",93402,
+19,FALSE,"Eric","Brunschwiler","805-927-1923","805-909-9412","ebrunsch@ucsc.edu",,,,"Cambria","CA",,
+20,TRUE,"Chris","Cameron",,,,,"1670  7th St.",,"Los Osos","CA",93402,
+21,TRUE,"Jay","Carroll","805-528-6064","805-235-4573","jcarroll@tenera.com",,"141 Suburban Rd., Suite A2","Tenera Environmental Inc","San Luis Obispo","CA",93401,"Jay is a marine biologist who has worked as an environmental consultant on the Central Coast for over 35 years. His interest in birds began with shorebird censuses in Elkhorn Slough in the 1970s and later expanded during trips to southeast Alaska, the Gal"
+22,TRUE,"Ralph","Cass","805-528-3292",,"RalphCass@sbcglobal.net",,"1134 5th St.",,"Los Osos","CA",93402,
+23,FALSE,"Ted","Chandik","605-326-1360",,"flybydawn@yahoo.com",,,,,"CA",,
+24,FALSE,"Jamie","Chavez","805 934-3154","805-268-5186","almiyi@verizon.net  
+ 
+",,"935 Rainbow Dr.",,"Santa Maria","CA",93455,
+25,FALSE,"Vince","Cicero","805-927-2185",,"vcicero@hearst-castle.org",,"Hearst Castle,750 H.CastleRd",,"San Simeon","CA",93452,
+26,TRUE,"Karen","Clarke","805-927-0168",,"Seachest@charter.net",,"6216 Moonstone Bch Dr",,"Cambria","CA",93428,"Karen has been birding since the early 1990s.  Besides the birds of the Central Coast, she loves to observe them in exotic places like Borneo, the Philippines, Namibia, and various parts of Alaska. She and her husband live in Cambria, where they have a se"
+27,FALSE,"Dave","Compton",,,"davcompton@earthlink.net",,,,,"CA",,
+28,FALSE,"Mike","Connolly","805-927-6291","805-776-2564","mconnolly@hearstcastle.com",,"750 Hearst Castle Rd.","Coastal Discovery Center","San Simeon","CA",93452,
+29,FALSE,"Joyce","Cory","805-534-9916",,"docentjoyce@yahoo.com",,"1412 4th St. ",,"Los Osos","CA",93402,"Joyce is a volunteer for the California State Parks and active at Montaña de Oro State Park. She is a field trip leader for Easy Birding at the Cloisters Park in Morro Bay. Joyce began birding when she moved to the Central Coast in 1996. Her nature photos"
+30,FALSE,"Joe","Dickerson","(805) 693-9534
+",,"JADPhoto@aol.com",,,,"Solvang","CA",,
+31,TRUE,"Pete","Dullea",,"805-350-1304","pdullea@hotmail.com",,"P.O.Box 1415",,"Buellton","CA",93427,"Peter Dullea is a retired Deputy Public Defender who has been birding seriously for about 18 years.  Peter is a docent at the Sedgwick Ranch Nature Reserve (a University of California research facility), and a docent/volunteer for the Neal Taylor Nature C"
+32,FALSE,"Kathy","Duncan","805 462-1553",,"kathyd227@yahoo.com",,"P. O. Box 787",,"Morro Bay","CA",93443,
+33,FALSE,"Jon","Dunn",,,"cerwa@earthlink.net",,"52 Nevada St.",,"Bishop","CA",93514,
+34,TRUE,"Tom","Edell","805-995-1691","805-235-0831","tedell@aol.com",,"46 8th St.",,"Cayucos","CA",93430,"Tom has lived on the Central Coast in Cayucos since 1975, when he came to Cal Poly State University where he obtained a B.S. in Natural Resource Management.  Always interested in birds, an ornithology class sparked a passion that continues today. He has b"
+35,FALSE,"Rebecca","Fay",,"805-710-2319","rfay@tcsn.net",,"1140 Iris St. # 3",,"San Luis Obispo","CA",93401,
+36,FALSE,"Craig","Fiehler",,"661-565-5242","kragadox@yahoo.com",,"6815 Lafayette Way
+Bakersfield, CA 93309",,"Bakersfield","CA",93309,
+37,FALSE,"Bob","Field","773-6644",,"field64@charter.net",,"64 Whitecap St.",,"Pismo Beach","CA",93449,
+38,FALSE,"Sam","Fitton","513.523.4599 ","513-314-8469","sfitton@woh.rr.com",,"6025 Booth Rd",,"Oxford","CA",,"Sam Fitton started birding early in life growing up on a farm in southwestern Ohio. His desire to know the local birds led to missed chores but plenty of support from his family. Sam quickly got a dream job as field ornithologist in Wyoming, and for 20 ye"
+39,TRUE,"John","Flaherty","805-528-4333","805-235-4381","john@centralcoastoutdoors.com",,"247 Vista Ct. ",,"Los Osos","CA",93403,"John is Central Coast Outdoors owner, 2003 to present, and an outdoor guide since 1991. He currently runs kayak eco-tours on Morro Bay and enthusiastically shares his wealth of knowledge about life in and on the bay, including shorebirds, migrating waterf"
+40,TRUE,"Virginia","Flaherty","805-528-4333","805-235-4381","john@centralcoastoutdoors.com","2/24/2014 - Combine with John Flaherty??","247 Vista Ct.",,"Los Osos","CA",93403,
+41,TRUE,"Karl","Frank","360-319-0900","360-319-0900","karlandrobin@gmail.com
+",,"17642 Delano Street",,"Encino","CA",91316,"Karl is a Biology teacher in Los Angeles.  A friend showed him a Brown creeper and White-headed woodpecker in Sequoia's Giant Forest in 1993, and a life-long passion grew from there.   Karl has been bird watching in Israel, Sweden, Brazil, Peru, Ecuador, "
+42,TRUE,"Claudia","Freitas","805-460-9022","805-440-1753","cfreitas365@gmail.com",,"12710 Escabroso Ct.",,"Atascadero","CA",93422,"Claudia Freitas is a retired Biology professor.  After teaching college Zoology, Wildlife Bio, Marine Bio and a variety of Natural History classes including Birding classes, for 33 years she moved back to the central coast where she had gone to college an"
+43,FALSE,"Wes","Fritz","805-895-0685","805-895-0685","wes-fritz@verizon.net",,"P.O. Box 1253",,"Solvang","CA",93464,
+44,FALSE,"Noah","Gaines",,,"skater_ako1@hotmail.com",,,,,"CA",,
+45,FALSE,"Neil","Gilbert","805-772-7273",,"prairiemerlin@gmail.com",,,,,,,"I am a senior at Calvin College in Grand Rapids, Michigan, double-majoring in biology and Spanish. Birds have fascinated me since the age of six. Apart from birds, I enjoy spying on dragonflies and plants. When I'm not in the field, an ideal evening would"
+46,FALSE,"Jesse","Grantham","805-640-9635",,"jesseg@ojai.net",,"66 Taormina Road",,"Ojai","CA",93023,
+47,FALSE,"Marlin","Greene","206-784-1641 ","206.617.6202","marlin@3hats.com",,"520115th Ave. NW, Suite 22 ",,"Seattle","CA",,
+48,TRUE,"Steve","Griffith","805-772-7539","805-215-2256","aureolin@hotmail.com",,"655 Paula St",,"Morro Bay","CA",93442,
+49,TRUE,"Jessica","Griffiths","847-334-1196",,"jessica.l.griffiths@gmail.com",,"2220 Exposition Dr #76",,"San Luis Obispo","CA",93401,"Jessica Griffiths has been working as a field ornithologist for over 10 years.  She grew up in Chicago, got her undergrad degree at Wellesley College outside of Boston, and spent the next few years traveling around the country working for non-profits and "
+50,TRUE,"Kara","Hagedorn","805-460-6892","805-369-9539 ","karahagedorn@hotmail.com",,"17400 Oak Ave",,"Atascadero","CA",93422,"Kara got turned on to birds camping as a kid in Colorado.  After completing her degree in Zoology, she worked as an Environmental Educator for NY State Parks. She volunteered at the Cornell Hawk Barn as a raptor rehabilitator and in 1997 adopted Sunshine,"
+51,TRUE,"Rich","Hansen","805-772-2042","805-441-4448","richimages@tcsn.net",,"PO Box 694",,"Morro Bay","CA",93443,"Rich is a retired FDA Microbiologist.  He has been a Central Coast resident for the past 30 years, where he was an Audubon board member when Sweet Springs was acquired, and where he has served in several capacities with the BirdFest over the past 15 years"
+52,FALSE,"George ","Hardie",,,,,,,,"CA",,
+53,TRUE,"Marlin","Harms","805-772-7607","805-286-0261","marlin93442@gmail.com",,"563 Estero Way",,"Morro Bay","CA",93442,"Marlin has been birding for over 30 years, has lived in Morro Bay that entire time, and considers the bay his back yard.  He has been a leader in each of the previous winter bird festivals.  He has a degree in biology, assisted in research at Mono Lake an"
+54,FALSE,"Ed","Harper",,"916-704-7954","calidris@surewest.net",,"4855 Cameron Ranch Drive",,"Carmichael","CA",95608,
+55,FALSE,"Cynthia","Hartley","805-443-1888",,"1surfbird@gmail.com",,"3189 Hilltop Dr",,"Ventura","CA",93003,
+56,FALSE,"Ron","Hirst",,,,,,,,"CA",,
+57,FALSE,"Beck","Hoban",,,"b.hoban@verizon.net",,,,,"CA",,
+58,FALSE,"Ken","Hollinga","805-733-2194",,"hollinga@verizon.net",,"972 Pellham Dr.",,"Lompoc","CA",93436,
+59,TRUE,"Cher","Hollingworth","805-738-5588","805-588-0252","hollinga@verizon.net",,"414 Coronado Dr.",,"Lompoc","CA",93438,
+60,FALSE,"Kathleen","Intorf","805-434-2131",,"Kintorf@tcsn.net",,"PO Box 517",,"Templeton","CA",93465,
+61,FALSE,"Mark","Holmgren",,,"holmgren@lifesci.ucsb.edu",,,,,"CA",,
+62,TRUE,"Jodi","Isaacs",,"805-458-3974","Jodi.Isaacs@parks.ca.gov",,"1320 Van Beurden Dr.","San Luis Coastal District","Los Osos","CA",93402,"Jodi has worked in the natural resource management field for over 17 years and currently works as an Environmental Scientist for California State Parks in Morro Bay where she dedicates much of her time to habitat conservation and restoration. Since 2005 s"
+63,FALSE,"Garry","Johnson","771-9281, 772-3738",,"garryjohnson@charter.net",,"1165 Morro Ave.",,"Morro Bay","CA",93442,
+64,FALSE,"Oscar","Johnson",,,"henicorhina@yahoo.com",,,,,"CA",,
+65,FALSE,"Andrea","Jones","805-772-1995 ","805-748-0501","savannarum@hotmail.com",,"601 Embarcadero #14",,"Morro Bay","CA",93442,"Andrea Jones has been Audubon California's Important Bird Areas Program Director since 2006. She has degrees from the University of Massachusetts in Ornithology and Wildlife Conservation.  Her thesis research focused on metapopulation dynamics of grasslan"
+66,TRUE,"Bob","Keally","714-534-5965","714-305-4438","BobKeally@aol.com",,"12602 9th St",,"Garden Grove","CA",92840,
+67,TRUE,"Dave","Keeling","805-771-9727","805-756-2780","dkeeling@calpoly.edu",,"2661 Laurel Ave.",,"Morro Bay","CA",93442,"Dave Keeling is a trained chemist who has taught at Cal Poly for 35 years.   He has been a serious amateur photographer since high school, with an initial emphasis on landscapes, but drifted and evolved to wildlife, and in the last 15 years to bird photog"
+68,TRUE,"Paul","Keller","805-773-5903","805-291-0277","wrentitpk@verizon.net",,"3922 Mesa Circle Drive",,"Lompoc","CA",93436,"For the last 8 years, Paul has been living and birding in northern Santa Barbara County, where he leads field trips. For the previous 9 years, he served the Santa Barbara Audubon Society as Field Trip Chair."
+69,TRUE,"Melissa","Kelly","805-937-9349","805-729-8461","MKelly@sbparks.org ",,"5182 Surfbird Lane",,"Guadalupe","CA",93434,
+70,FALSE,"Kathleen & Tony","Kent","805-239-9010","805-550-1647","kikapoo@charter.net",,"PO Box 3557",,"Paso Robles","CA",93447,
+71,TRUE,"Jerry","Kirkhart","805-534-9198",,"jkirkhart35@gmail.com",,"2350 Inyo",,"Los Osos","CA",93402,"Jerry is a State Park Docent for the CCNHA as well as a Pecho Trail Docent and is very active leading various AWN (Adventures With Nature) walks.  Those dealing with natural history and his passion for photography include local Flora and Fauna along with "
+72,FALSE,"Michaela ","Koenig",,,"michaelamkoenig@yahoo.com",,"Referred by Mike Stiles, no other info",,,,,
+73,TRUE,"Gale","Kordowski","805-924-1354","805-801-4513","gakbirds@yahoo.com",,"P.O. Box 249",,"Cambria","CA",93428,"Gale began to love birds in the mid-70's when she purchased her first Lovebird. Then, in the early 90's while on a trip to Point Reyes National Seashore, she noticed birds on a rock in the ocean and wondered what they were.   This led Gale to buy her firs"
+74,FALSE,"Tony","Krause","805-782-9234",,"anthonykrause@sbcglobal.net",,"657 Pismo St.",,"San Luis Obispo","CA",93401,
+75,TRUE,"Sally","Krenn","805-545-3159","805-801-0288","krenn@charter.net",,"158 Baker Ave",,"Pismo Beach","CA",93449,"Sally has lived on the Central Coast since 1972, when she came to Cal Poly to study Biological Sciences. A phycology class from Dr. Shirley Sparling introduced her to the enthralling marine life on our coastline and involved her in marine science research"
+76,TRUE,"David","Lawrence","805-541-0822","805-459-1709","dmlawrence@mac.com",,"1330 Red Brome Pl.",,"Arroyo Grande","CA",93420,
+77,FALSE,"John Muir","Laws","415 682-8115",,"jlaws@calacademy.org",,,,"San Francisco","CA",94131,
+78,TRUE,"Ken","Levine","805-489-7323","805-550-0797","gabyken@charter.net",,"1425 Hillcrest Dr.",,"Arroyo Grande","CA",93420,"Ken Levine is a retired veterinarian who practiced in Arroyo Grande for 35 years.  He is a charter member of San Luis Obispo Botanical Garden, and has been a docent there for 16 years.  Two of his favorite things are plants and birds.  This has resulted i"
+79,FALSE,"Cheryl","Lish","805-481-8945","408-810-1470","cheryl-lish@earthlink.net",,"365 El Sueno",,"Arroyo Grande","CA",,
+80,FALSE,"Stephanie","Little",,"805-610-6229 ","stephjoy13@hotmail.com",,"Snowy Plover Watch",,,"CA",,
+81,FALSE,"Burleigh","Lockwood","559-621-5720",,,,"894 West Belmont",,"Chaffee Zoo Fresno","CA",93728,
+82,FALSE,"Darwin","Long","805 750-1294",,"darwin.long@briloon.org",,"604 E Ave.de los Arboles",,"Thousand Oaks","CA",91360,
+83,FALSE,"Tom","Maloney",,"748-8231","tmaloney@tcn.org",,,,,"CA",,
+84,TRUE,"Curtis","Marantz","951-534-0918","951-742-1894","alineandcurtis@aol.com",,"1310 Le Conte Dr.",,"Riverside","CA",92507,
+85,TRUE,"John","McCabe","805-464-0528","805-712-3808","mccabewest@aol.com",,"10665 San Marcos Rd.",,"Atascadero","CA",93422,
+86,TRUE,"Ron","Melcer","916-296-6729","916-296-6729","corvid88@gmail.com ",,,,"San Luis Obispo","CA",,"Ron is a lifelong birder turned researcher.  He currently resides in Sacramento, and is working for the Department of Water Resources to develop a conservation strategy for the river systems of the CA Central Valley.  He is also completing graduate work a"
+87,FALSE,"Chuck","Mills","528-4350",,"millschuck55@yahoo.com",,"1675 Los Osos Valley Rd., ",,"Los Osos","CA",93402,
+88,FALSE,"Jennifer","Moonjian","805-440-8224",,"jmoonjia@gmail.com",,"355 Foothill Blvd.",,"San Luis Obispo","CA",93405,
+89,FALSE,"Charlene","Odekirk","805-546-9543","805-801-2509","zoomom@rocketmail.com",,"830 Columbine Ct.",,"San Luis Obispo","CA",93401,"Charlene (on the right in blue), formally a teacher and docent at the Santa Barbara Zoo, joined Rosemary as co-walk leader in 2005. She is also a back desk docent and a member of the Exhibit Enhancement Committee."
+90,FALSE,"Rosemary","Olszewski","805-772-4298","805-704-6710","joeo558@aol.com",,"2286 Emerald Cir",,"Morro Bay","CA",93422,"Rosemary (on the left in blue), formally a consultant, Environment, Safety and Emergency Management with a major international oil company, designed this walk in 2002. She is also a back desk docent at the Morro Bay Natural History Museum and a member of "
+91,FALSE,"Peter","Orr","534-2805 x 15","805-771-1913","rorr@hearst-castle.org",,"CA State Parks, 11 State Park Rd",,"Morro Bay ","CA",93442,
+92,TRUE,"Regena","Orr","805-772-6101x15","805-550-4815","regena.orr@parks.ca.gov",,"11 State Park Rd",,"Morro Bay","CA",93442,"After earning a BS in Natural Resources Management from Cal Poly San Luis Obispo, Regena began working for California State Parks in 1995.  As an Environmental Scientist, she currently manages the Western Snowy Plover program for State Parks in the Morro "
+93,FALSE,"Donna","O'Shaughnessey","895-466-5784",,"pterodactgal@charter.net",,"13790 San Antonio Road",,"Atascadero","CA",93422,
+94,FALSE,"Dave","Pereksta","805-644-1766x320",,"pereksta@pacbell.net",,"2493 Portola Rd., Suite B","USFWS","Ventura","CA",93003,
+95,FALSE,"Nicole","Perreta",,,"nikihawk@yahoo.com",,"P.O.Box  33535",,"San Diego","CA",,
+96,TRUE,"Kaaren","Perry","805-771-0161","714-878-2797","surfbird1@att.net",,"461 Estero Ave.",,"Morro Bay","CA",93442,"Kaaren Perry has been interested in birds and nature since childhood. She is an avid birder and has birded throughout the United States, Canada, Alaska, France, England, Greece and the Czech Republic.  For the past 20 years, Kaaren has enjoyed leading loc"
+97,FALSE,"Phil","Persons",,,"philper@rain.org",,"3899 Jalama Rd",,"Lompoc","CA",93436,
+98,TRUE,"Cruz","Phillips","805-245-8331","805-245-8331","cruzitas@aol.com",,"PO Box 1107",,"Santa Ynez","CA",93460,
+99,TRUE,"Don","Quintana","805-528-9012","805-305-4701","don@quintanastudios.com",,"1204 16th St",,"Los Osos","CA",93402,"Donald Quintana is a Central California Nature and Wildlife Photographer whose family was an early settler in Morro Bay. He finds comfort and renewal by spending time amidst the wonders of the local natural world. His greatest enjoyment comes from capturi"
+100,FALSE,"Henry","Pontarelli","805-534-1493",,"wisehen@hotmail.com",,,,,"CA",,
+101,FALSE,"Barbara","Renshaw","534-1865",,,,"616 Santa Lucia",,"Los Osos","CA",93402,
+102,FALSE,"Don","Roberson","831-375-0794",,"creagus@montereybay.com",,"282 Grove Acre Ave.",,"Pacific Grove","CA",93950,
+103,FALSE,"Jeri","Roberts","805-544-8860",,"Jbenchman@aol.com",,"2700 Perfumo Canyon Rd.",,"San Luis Obispo","CA",93403,
+104,TRUE,"Michele","Roest","927-3101",,"michele.roest@sciencecurric.org","Work Phone: 927-1460","P.O. Box 385",,"Cambria","CA",93428,
+105,FALSE,"Marilyn","Rose",,,"ootw@mcn.org  ",,"PO Box 1010","Out of this World Discount Binoculars","Mendocino","CA",95460,
+106,TRUE,"John","Roser","805-528-7912","805-801-6018","rosercomeau@sbcglobal.net",,"309 Biscarth Rd.",,"Los Osos","CA",93402,
+107,TRUE,"Rouvaishyana",,"805-772-2694x105","805-459-7061","Rouvaishyana@parks.ca.gov",,"Museum of Nat'l History",,"Morro Bay","CA",93442,"Manager, Morro Bay Museum of Natural History since 2005, State Park Interpreter since 1989.  Bird Festival program committee member or co-chair since 2006.  Morro Coast Audubon Society program co-chair since 2006.  Birding informally since childhood, he b"
+108,TRUE,"Jim","Royer","805-528-8933","805-748-7895","jrmotmot@gmail.com",,"337 Henrietta Ave.",,"Los Osos","CA",93402,"Jim got the bug for birding in the mid 70's from his brother Allen, and has led field trips for various Audubon Chapters, the WFO, the ABA, and other groups since the late 70's (including trips to Veracruz, Mexico, to see the world's largest raptor migrat"
+109,FALSE,"Ron","Ruppert","805-528-8346","805-235-9760","rruppert@cuessta.edu",,"1197 10th St",,"Los Osos","CA",93402,"Ron Ruppert is chair of the biology department at Cuesta College. He also teaches courses in Human Anatomy, Natural History, Life Science and Desert Biology. Ron was first introduced to Osteology (bones) at Chaffey College in Southern California. Transfer"
+110,TRUE,"John","Sayers","805-458-9626",,"john.sayers@parks.ca.gov",,"1320 Van Beurden Dr.","San Luis Coastal District","Los Osos","CA",93402,"Environmental Scientist, California State Parks, San Luis Obispo Coast District since 2005.  First started birding in earnest in 2005 while monitoring snowy plover populations along the beaches of San Luis Obispo County.  He grew up in southern California"
+111,TRUE,"Ross","Schaefer",,"805-975-7120","schaeferross@yahoo.com",,"605 Rivera Circle",,"Nipomo","CA",,"Since the age of 5, Ross Schaefer has had a distinct interest in birds.  After moving to the Central Coast and learning from local birder Jim Royer, Ross began leading trips for festivals and other organizations.  Now 17, Ross has birded in 5 continents, "
+112,FALSE,"Alan","Schmierer",,"805-801-3701","aaschmierer@yahoo.com",,"2554 Canet Rd.",,"San Luis Obispo","CA",93405,
+113,FALSE,"John","Schmitt","760-376-6820",,"norbertraven@yahoo.com",,"P.O. Box 9",,"Wofford Heights","CA",93285,
+114,TRUE,"Brad","Schram","805-489-1260","805-801-9325","gonebrdn@lightspeed.net",,"1210 Antler Dr.",,"Arroyo Grande","CA",93420,"Brad started birding in the 1940s as a child in the San Bernardino Mountains of Southern California.  After retiring early from the business world he has served since 1997 as a part-time birding tour leader for Victor Emanuel Nature Tours and as a natural"
+115,TRUE,"Steve","Schubert","805-528-6138","805-440-9390","s_schub1@msn.com ",,"P.O. Box 6002",,"Los Osos","CA",93412,"Steve is an active member of the Morro Coast Audubon Society: President 2000-2001; past Program Chairman; author ""The Peregrine Falcons of Morro Rock: A 40-Year History""  (www.morrorockperegrines.com); Volunteer Coordinator (1996-present) for the Hi Mount"
+116,FALSE,"Kathy","Sharum","661-391-6033","661-391-6033","e-mail: ksharum@blm.gov",,"3801 Pegasus Drive","Carrizo Plain Nat. Mon. BLM Bakersfield Field Office","Bakersfield, CA 93308","CA",93308,
+117,TRUE,"Dennis","Sheridan","805-528-2373",,"dennissher@sbcglobal.net",,"1321 17th St.",,"Los Osos","CA",93402,"Dennis Sheridan is a native Californian who grew up in Arcadia.  He graduated from Cal Poly Pomona with a degree in biology, specialty entomology.  He moved to Morro Bay in 1974 and began a career in photography, concentrating on birds of prey and native "
+118,TRUE,"Tom","Slater","805-441-6945",,"tomslaterphotography@yahoo.com",,,,,,,"An avid surfer and extreme rock climber for more than 30 years, Tom only recently ""discovered"" birding in October 2011. A self-starter (inspired by the book and movie ""The Big Year""), he bought a Sibley's guide and some binoculars and then scoured the Cen"
+119,TRUE,"Greg","Smith","805-441-2169","805-441-2169","slobird@aol.com",,"P.O. Box 2002",,"Morro Bay","CA",93443,"Greg Smith has birded and searched out nature's wonders on all seven continents and has led natural history and birding tours in California, Alaska, Argentina, Chile, the Falkland Islands, South Georgia, and Antarctica. He is recently retired after a 27-y"
+120,TRUE,"Maggie","Smith","805-481-9292","805-710-4356","milleniummaggs@charter.net",,"512 LePoint St.",,"Arroyo Grande","CA",93420,"Maggie began noticing and identifying birds in 2004.  She has led field trips for Morro Coast Audubon Society, Winter Bird Festival and Western Field Ornithologists since 2005.  As a volunteer, she's helped with a series of Sea Bird surveys for Cal Poly a"
+121,FALSE,"Kelly","Sorenson","831-455-9514",,"kellysorenson@ventanaws.org",,"Ventana Wilderness Soc.",,"19045 Portola Dr Salinas","CA",93908,
+122,FALSE,"Bob","Stafford","805-528-8670",,"bstafford@dfg.ca.gov",,"PO Box 6360",,"Los Osos","CA",93402,"Robert Stafford has a worked on a wide array of wildlife species in central California for over 25 years.   Research subjects have ranged from black bears, tule elk, and San Joaquin kit foxes to desert tortoises, blunt-nosed leopard lizards, and western p"
+123,FALSE,"John C.","Sterling","530-908-3836",,,,,,,"CA",,
+124,TRUE,"Mike","Stiles","805-528-1515","805-213-3164","mstiles@calpoly.edu",,"1120 13th St.",,"Los Osos","CA",93402,"Mike is a local native and has been birding in the area since 1973. He has led trips for Morro Coast Audubon Society and the Winter Bird Festival. He has been a board member for the local Audubon Society for the last 7 years as Field Trip Chair, and as th"
+125,TRUE,"Doug","Stinson","805-459-0861","805-459-0861","dgstinson@yahoo.com",,"3940 Broad St",,"San Luis Obispo","CA",93401,
+126,TRUE,"Jeanette","Stone","805-462-0643",,"jstone_tierney@charter.net",,"8685 Casanova Rd.","PWC","Atascadero","CA",93442,"Jeanette serves as the Center Operations Director for Pacific Wildlife Care in Morro Bay, CA.  She has volunteered with PWC for over 3 years in different capacities; as a center worker, website designer, board vice-president and president. As Center Direc"
+127,TRUE,"Jan","Surbey","805-772-7273","805-772-7273","jansurbey@earthlink.net",,"3346 Tide",,"Morro Bay","CA",93442,"Jan has been a Morro Coast Audubon Society Board member 2006 to present (Hospitality, chair, President, Past President).  A retired teacher from St. Louis, Missouri, Jan moved to the Central Coast in 1999 to enjoy year-round running.  Even after traveling"
+128,FALSE,"Linda","Tanner","805-534-9919","550-5777","goingslo@yahoo.com",,"556 Mar Vista Dr. ",,"Los Osos","CA",93402,
+129,TRUE,"Dean","Thompson","805- 528-8504","805-215-4518","ososclan@sbcglobal.net",,"1115 17th St.",,"Los Osos","CA",93402,"Dean Thompson is a naturalist who also happens to enjoy birding.  Trained as a wildlife biologist, he has worked with a variety of raptors in California, Arizona and Wyoming for The Peregrine Fund and the Santa Cruz Predatory Bird Group.  He traveled to A"
+130,FALSE,"Guy","Tingos","805-801-4878",,"guy.tingos@cox.net",,,,"Santa Barbara","CA",,
+131,FALSE,"Nick","Todd"," 805-801-4878",,"jnicktodd@gmail.com ",,"1541 Gamby Way",,"Solvang","CA",93463,
+132,TRUE,"Bert","Townsend","805-543-1373","805-748-4380","betownsend@sbcglobal.net",,"531 Lawrence Dr.",,"San Luis Obispo","CA",93401,"Bert Townsend has been birding since age 11, including several area of North America; from Michigan to Florida and California to Texas.  He has also birded in Central America and Europe.  Bert has been anticipating in the MBWBF from the beginning."
+133,FALSE,"Mike","Tyner","805-234-0320",,"mtyner@charter.net",,"909 Torrey Pines Dr.",,"Paso Robles","CA",93446,
+134,TRUE,"Art","Vandenhueval","805-995-3645  ",,"kellylvandenheuvel@gmail.com",,"1960 Montecito Rd",,"Cayucos","CA",93430,
+135,TRUE,"Kelly","Vandenhueval","805-995-3645  ",,"kellylvandenheuvel@gmail.com",,,,,,,
+136,FALSE,"Francis","Villablanca","756-2200",,"fvillabl@calpoly.edu",,,"Dept of Biology, Cal Poly University",,"CA",,
+137,TRUE,"Karen","Watts","805-772-8396","805-772-9386","klwatts2@charter.net",,"360 Rennell St",,"Morro Bay","CA",93442,"Karen Watts has a bachelor's degree in Biology from UCSB and a master's degree in science education from Cal State East Bay.  She is a former molecular biologist and high school science teacher.  She has been a docent at the Morro Bay Museum of Natural Hi"
+138,TRUE,"Bruce","Webb","916-768-7940",,"bruwebb@surewest.net",,"P. O. BOX 2845",,"Granite Bay","CA",95746,
+139,FALSE,"Joel","Weiss",,"805-801-6236","joelweiss@msn.com",,,,,,,
+140,FALSE,"Pacific","Wildlife Care","805-543-9453",,"kathyd227@yahoo.com",,,,,,,
+141,TRUE,"Eric","Wier","805-543-8769",,"franknwier@gmail.com",,"1700 San Luis Dr.",,"San Luis Obispo","CA",93401,
+142,FALSE,"Dave","Wilson","805-466-4550",,"Info@CoyoteRoadSchool.com",,"4255 Lobos Ave.",,"Atascadero","CA",93422,
+143,FALSE,"Kevin","Winfield","805-748-2201",,"subseatours@charter.net",,,,,,,
+144,TRUE,"Chuck","Woodard","805-438-3045","805-704-9835","woodard@live.com",,"4695 Santa Margarita Lake Rd",,"Santa Margarita","CA",93453,"Chuck is the resident park ranger at Santa Margarita Lake for the County of San Luis Obispo and has been birding the Central Coast since 1986, when he came to Cal Poly SLO and obtained a B.S. in Natural Resource Management. He has done waterfowl and shore"
+145,FALSE,"Aurianna","Woodson","202-9724 cell","602-6674 work","auriannaw@gmail.com",," 1200 Oceanaire Dr Apt A",,"San Luis Obispo ","CA",93405,
+146,FALSE,"Jean Pierre","Woolf","905-781-0448",,"jp.wolff@wolffvineyards.com",,,,"San Luis Obispo","CA",93401,
+147,FALSE,"Jim","Woolf","805-439-0540","805-439-0540","slowoolf@gmail.com",,,,"San Luis Obispo","CA",,
+148,TRUE,"Roger","Zachary","805-466-6222","805-458-8838","rzachary@charter.net",,"1800 Traffic Way",,"Atascadero","CA",93422,"Roger is a recently retired Biology teacher and former North Cuesta Audubon President and Field-trip Leader.  He has been a compiler of the Carrizo Plain CBC since 1983 and is presently an active field-trip leader for Morro Coast Audubon Society and  enjo"
+149,FALSE,"Dave","Ficke",,,,,,,,,,
+150,TRUE,"Lexi","Bell",,"805 242-3551","lbell@mbnep.org",,"601 Embarcadero, Suite 11",,"Morro Bay","CA",93442,"Lexie Bell is the Assistant Director for the Morro Bay National Estuary Program. Lexie's central role is to facilitate the valuable science and conservation work of the organization by helping to establish priorities for the organization, managing adminis"
+151,TRUE,"Dawn","Beattie",,,"Dawn_Beattie@charter.net",,"2760 Indigo Circle",,"Morro Bay","CA",93442,
+152,TRUE,"Lucien","Plauzoles",,"424-744-0938","plauzoles@me.com",,"533 4th St",,"Santa Monica","CA",90402,
+153,FALSE,"Scott","Weidensaul",,,"?scottweidensaul@verizon.net",,"778 Schwartz Valley Rd",,"Schuylkill Haven","PA",17972,
+154,FALSE,"Clinton","Francis"," 805.756.5358",,"cdfranci@calpoly.edu",,"1 Grand Ave","Cal Poly Biological Sciences","San Luis Obispo","CA",93407,
+155,TRUE,"Mike","Bush",,,,,,,,,,
+156,TRUE,"Steve","McMasters",,"805-471-0750","smcmasters@gmail.com",,,,,,,
+157,FALSE,"Shawneen","Finnegan","503-729-1769",,"Shawneenfinnegan@gmail.com",,"6555 SW Old Scholls Ferry Road Apt 8",,"Portland","OR",97223,"Shawneen's artistic parents taught her to draw and paint early in life. As a young adult in the early 1980's she became obsessed with watching birds. Since then she has worn many hats, including artist/illustrator, tour leader and tour manager for WINGS, "
+158,TRUE,"Penny","Principe","528-2499","805-503-9282","princi@charter.net",,"1857 14th Street",,"Los Osos","CA",93402,
+159,TRUE,"Ken","Hillers","805-756-1481",,"khillers@calpoly.edu",,,,,,,
+160,TRUE,"Capt.","Stew",,"805-217-4146",,,"571 Embarcadero",,"Morro Bay","CA",93442,
+161,TRUE,"Owen","Slater","805-441-6945",,"tomslaterphotography@yahoo.com",,,,,,,
+162,TRUE,"Tom","Benson",,"909 648-0899","tbenson@CSUSB.EDU",,"1250 Kendall Drive Apt 117",,"San Bernardino","CA",92407,"San Bernardino, CA 92407"
+163,TRUE,"Josh","Heptig","805-215-4125",,"jheptig@co.slo.ca.us","1209 Vista Del Lago, SLO, 93405","2990 Dairy Creek",,"San Luis Obispo","CA",93405,
+164,TRUE,"Kingston","Leong","805-544-1024",,"kleong@calpoly.edu",,,,,,,
+165,TRUE,"Gary","Espiau","805-934-0999",,"garyjudy.esp@verizon.net",,"3695 Margie Ave",,"Santa Maria","CA",93455,
+166,TRUE,"Susan","Grimaud","805- 543-2141",,"susangpascal@aol.com",,"1545 Wild Rye Way",,"Arroyo Grande","CA",93420,
+167,TRUE,"Kyle","Nessen",,"818-522-8207","kyle.nessen@gmail.com","Kyle is a chummer for the 2015 festival and a potential future leader.","441 Luneta Dr",,"San Luis Obispo","CA",93405,
+168,TRUE,"John","Marzluff",,,,,,,,,,
+169,TRUE,"Rick","Derevan","805-416-3799","805-952-5092","rickderevan@gmail.com",,,,,,,
+170,TRUE,"Neil","Gilbert","805-772-7273",,"prairiemerlin@gmail.com",,,,,,,
+171,TRUE,"Kyle","Weichert","805-235-1133",,"kyle.weichert@yahoo.com",,,,,,,
+172,TRUE,"Bill","Taylor",,"715-546-2207","wht3lks@newnorth.net",,,,,,,
+173,TRUE,"Herb","Elliott","805 714 4363",,"hde@charter.net","Leader with Maggie Smith","2350 Florence Ave",,"San Luis Obispo","CA",93401,
+174,TRUE,"Robbie","Revel","805-752-1040","818-618-3458","robrev@sbcglobal.net",,"1761 Sixth Street",,"Los Osos","CA",93402,
+175,TRUE,"Roy","Poucher",,"714-588-8220","ROPOUCHER@aol.com",,,,,,,
+176,TRUE,"Ray","VanBuskirk",,,,,,,,,,
+177,TRUE,"Bob","Revel","805-752-1040","818-439-7723","bobrevel@sbcglobal.net",,"1761 Sixth St",,"Los Osos","CA",93402,
+178,TRUE,"Van","Dees",,,"vannguyendees@yahoo.com","Leader with Mr R and with Claudia",,,,,,
+179,TRUE,"Tom","Graves","805-286-2862",,"wtkite@sbcglobal.net",,,,,,,
+180,TRUE,"Dean","Wendt",," 805-550-6690","dwendt@calpoly.edu",,,,,,,
+181,TRUE,"Adrienne","Harris","805-772-3834",,"aharris@mbnep.org",,"601 Embarcadero, Suite 11",,"Morro Bay","CA",93442,
+182,TRUE,"Dan","Robinette",,,"drobinette@pointblue.org",,,,,,,
+183,TRUE,"Ray","Weymann",,"650-288-1543","raywey@charter.net",,"7610 San Marcos Rd",,"Atascadero","CA",93422,
+184,TRUE,"John","Lindsey",,,"jcl5@pge.com",,,,,,,
+185,TRUE,"Steve","Hendricks","805-305-3744",,"shendric@cuesta.edu",,,,,,,
+186,TRUE,"Vicky","Johnsen","760-567-1130",,"schoonermagic@earthlink.com",,"2335 Tierra Drive",,"Los Osos","CA",93402,
+187,TRUE,"Paul","O'Connor","805-441-7184",,"pablopaddlerh2o@gmail.com",,,,,,,
+188,TRUE,"George","Trevelyan",,"805-471-9683","gtrevelyan@sbcglobal.net",,,,,,,
+189,TRUE,"Mitch","Wyss",,,,,,,,,,
+190,TRUE,"Rachel","Pass",,,,,,,,,,
+191,FALSE,"Scott","Inman",,"805-305-0049","scottinslo@gmail.com",,,,,,,
+192,FALSE,"Sherrie","Williamson",,,"sabo@sabo.org","For both Sherrie and Tom Wood, husband",,,,,,"After more than 20 years of general birding and hawkwatching, Sheri L. Williamson’s life got hijacked by hummingbirds when she and her husband and colleague Tom Wood moved to Arizona to manage The Nature Conservancy’s Ramsey Canyon Preserve. A quarter cen"
+193,FALSE,"Tom","Wood",,,"sabo@sabo.org",,,,,,,"Tom Wood is co-founder of the Southeastern Arizona Bird Observatory, a non-profit conservation organization. A native Texan, he has a B.S. in Wildlife Biology and was director of the Fort Worth Nature Center and Refuge for 14 years before moving to Arizon"
+194,FALSE,"David","Jaffee","802-881-8568",,"djdenali@gmail.com",,,,,,,"For more than 20 years David Jaffe has guided and taught a variety of audiences about our natural world and our connection with it. His childhood interest in natural systems eventually brought him to Evergreen State College where he earned a B.S. in Envir"
