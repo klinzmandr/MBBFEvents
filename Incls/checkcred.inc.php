@@ -28,7 +28,7 @@ if (strlen($pw) == 0) {
   ';
   exit;
   }
-$pwds = file('cfg/pwfile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$pwds = file('../.MBBFSecFile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 //echo '<pre> pwds '; print_r($pwds); echo '</pre>';
 //echo '<pre> combo '; print_r($combo); echo '</pre>';
 
@@ -43,7 +43,7 @@ return(true);
 }
 
 function geteventstart() {
-  $pwds = file('cfg/pwfile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  $pwds = file('../.MBBFSecFile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 //echo '<pre> pwds '; print_r($pwds); echo '</pre>';
 //echo '<pre> combo '; print_r($combo); echo '</pre>';
   foreach ($pwds as $l) {

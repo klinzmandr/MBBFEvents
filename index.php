@@ -49,7 +49,7 @@ if ($action == 'auth') {
   $pw = isset($_REQUEST['pw']) ? $_REQUEST['pw'] : "";
   $combo = $uid . ':' . $pw;
   // echo "combined: $combo<br>";
-  $pwds = file('cfg/pwfile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  $pwds = file('../.MBBFSecFile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
   if (!in_array($combo, $pwds)) {
     echo '<h3 style="color: red; ">Invalid user id and/or password.</h3>';
     session_unset();    

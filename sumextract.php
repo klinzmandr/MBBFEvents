@@ -39,7 +39,7 @@ echo '
 
 if ($_REQUEST['submit'] == 'LOGIN') {
   $pw = $_REQUEST['pw'];
-  $pwds = file('cfg/pwfile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  $pwds = file('../.MBBFSecFile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
   $combo = "SAMUser:$pw";
   if (in_array($combo, $pwds)) {
     $_SESSION['sumlogin'] = 'OK';

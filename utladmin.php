@@ -51,13 +51,13 @@ $(document).ready(function() {
 </script>
 <h3 style="color: red; " id="X">Update Completed.</h3>
 ';
-  file_put_contents('cfg/pwfile.txt', $ta);
-  $log = file('cfg/pwfile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  file_put_contents('../.MBBFSecFile.txt', $ta);
+  $log = file('../.MBBFSecFile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
   $logstr = implode(', ',$log);
   addlogentry('Admin file updated: '.$logstr);
   }
 
-$pwds = file_get_contents('cfg/pwfile.txt');
+$pwds = file_get_contents('../.MBBFSecFile.txt');
 
 echo '
 <form id="UPD" action="utladmin.php" method="post">
