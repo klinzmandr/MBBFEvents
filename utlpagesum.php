@@ -63,6 +63,7 @@ End: <input type="text" id="ed" name="ed" value="'.$ed.'" placeholder="YYYY-MM-D
 <option value="%%%">ALL</option >
 <option value="%evt%">Events</option>
 <option value="%ldr%">Leaders</option>
+<option value="%rpt%">Reports</option>
 <option value="%utl%">Utilities</option>
 </select>
 <input type="hidden" name="testdb" value="$testdb">
