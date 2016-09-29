@@ -60,9 +60,12 @@ if (d == "") {
 return true;
 }
 </script>
-  <p>This utility will assign a new seuence number to an event based on the day of the event.  If the day for the event is Friday the number is a 100 series number, Saturday is a 200 series, Sunday is a 300 series and Monday is a 400 series.</p>
-  <p>First ALL events a selected for the currently requested day selected regarless of status.  The results are sorted by start time, end time within start time, and event title within end time within start time.  The number is created by assigning a sequential number within the series based on the day.</p>
-  <p>If an event is to be assigned a different day or a new or duplicated event is created there is a probablility that the trip number will be duplicated.  The resequence utility should be run periodically to eliminate any duplications.</p>
+    <p>This utility will assign a new sequence number to an event based on the day of the event. If the day for the event is Friday the number is a 100 series number, Saturday is a 200 series, Sunday is a 300 series and Monday is a 400 series.</p>
+
+    <p>First ALL events are selected for the currently requested day regardless of trip number. The results are sorted by start time, end time within start time, and event title within end time within start time. The number is created by assigning a sequential number within the series based on the day.</p>
+
+    <p>If an event is to be assigned a different day or a new or duplicated event is created there is a probabilility that the trip number will be duplicated. The re-sequence utility should be run periodically to eliminate these duplications.</p>
+
 <form id="FF" action="utlresequence.php" method="post" onsubmit="return chkday();">
 Select Day:
 <select id="Day" name="Day">';
