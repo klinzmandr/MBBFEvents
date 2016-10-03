@@ -72,6 +72,7 @@ while ($r = $res->fetch_assoc()) {
   $codes = array();
   if (stripos($r[Type], 'n/f') > 0) $codes[] = 'P-F';
   else $codes[] = substr($r[Type],0,1);
+  if (strlen($r[SiteCode]) > 0) $codes[] = $r[SiteCode];
   if (strlen($r[Level]) > 0) $codes[] = str_replace(",","",$r[Level]); 
   if (strlen($r[FEE]) > 0)  $codes[] = '$'.$r[FEE];
   $codeout = implode('/',$codes);
