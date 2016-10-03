@@ -48,8 +48,12 @@ echo '
 <td>Lists all event leaders that have assigned events in at least one of the four leader roles.</td>
 </tr>
 <tr>
-<td><a href="rptmailerlisting.php" class="btn btn-primary btn-xs">Mailer Listing</a></td>
+<td><a href="rptmailerlisting.php" class="btn btn-primary btn-xs">Brochure/Summary Schedule</a></td>
 <td>Listing of events in the column layout of the event mailer.</td>
+</tr>
+<tr>
+<td><a href="rptwebsummary.php" class="btn btn-primary btn-xs">Web Site Full Summary Listing</a></td>
+<td>Listing of all events in full web site summary format.</td>
 </tr>
 <tr>
 <td><a href="rpteventlisting.php" class="btn btn-primary btn-xs">Listing of Events</a></td>
