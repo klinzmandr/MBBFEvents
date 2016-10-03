@@ -66,7 +66,7 @@ else {
 
 if ($action == '') {
   echo '
-<p>Produces an extract of the "active" events in a download CSV file format required.</p>
+<p>Produces an extract of the "active" events in a download CSV file using the vertical bar (&apos;pipe&apos;) character as the field separator.</p>
 <a class="btn btn-primary" href="sumextract.php?action=createextract">Create Downlod File</a>
 <br><br>
 Output columns are:<br>
@@ -100,7 +100,7 @@ echo '
 <h3>Extract ready for download.</h3>
 <br>
 <br>
-<a class="hidden-print" href="downloads/sumextract.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>
+<a class="hidden-print" href="downloads/sumextract.csv" title="Download file with fields separated by vertical bar character (&apos;|&apos;)">DOWN LOAD RESULTS</a><span title="Download file with fields separated by vertical bar character (&apos;|&apos;)" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>
 <br>';
 
 //Track	Trip	Start	End	TimeSpan	CODE	FEE	Event	Leaders
@@ -130,8 +130,11 @@ while ($r = $res->fetch_assoc()) {
   if ($r[Leader2] != '') $ldr .= ", $r[Leader2]";
   if ($r[Leader3] != '') $ldr .= ", $r[Leader3]";
   if ($r[Leader4] != '') $ldr .= ", $r[Leader4]";
+  $newldr = convertchrs($ldr);
   $newprog = convertchrs($r[Program]);
-  $csv .= "$r[TypeOfEvent]|$r[Trip]|$r[Day]|$starttime|$endtime|$stts|\"$r[Level]\"|$r[FEE]|\"$r[Event]\"|\"$ldr\"|\"$newprog\"\n";
+  $newevent = convertchrs($r[Event]);
+  $newlvl = convertchrs($r[Level]);
+  $csv .= "$r[TypeOfEvent]|$r[Trip]|$r[Day]|$starttime|$endtime|$stts|\"$newlvl\"|$r[FEE]|\"$newevent\"|\"$newldr\"|\"$newprog\"\n";
   $seqno += 1;
   }
 
@@ -169,6 +172,7 @@ function convertchrs($str) {
   $chr = array_keys  ($chr_map); // but: for efficiency you should
   $rpl = array_values($chr_map); // pre-calculate these two arrays
   $str = str_replace($chr, $rpl, html_entity_decode($str, ENT_QUOTES, "UTF-8"));
+  $str = str_replace("|", "", $str);  // kill vert bar/pipe char used as fld sep
   return($str);
   }
 ?>
