@@ -87,7 +87,6 @@ WHERE `Day` =   "'.$day.'"
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 ';
 
-
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;

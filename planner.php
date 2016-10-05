@@ -70,7 +70,8 @@ echo '</select>
 
 // Process listing based on selected criteria
 $sql = '
-SELECT * FROM `events` WHERE ';
+SELECT * FROM `events` 
+WHERE `TripStatus` NOT LIKE "Delete" AND ';
 $sqllen = strlen($sql);
 if (strlen($day) > 0) { 
   $sql .= '`Day` LIKE "%'.$day.'%" AND '; }

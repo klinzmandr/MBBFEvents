@@ -107,7 +107,8 @@ echo '
 // where
 
 $sql = '
-SELECT * FROM `events` WHERE `TripStatus` NOT LIKE "Delete"
+SELECT * FROM `events` 
+WHERE `TripStatus` NOT LIKE "Delete"
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
 
 //echo "<br>sql: $sql<br>";   2016-01-15 06:45	2016-01-15 14:00

@@ -50,7 +50,9 @@ echo '
 <a class="hidden-print" href="downloads/eventlistingfull.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
 
 $sql = '
-SELECT * FROM `events` WHERE 1=1
+SELECT * FROM `events` 
+WHERE 1=1
+  AND `TripStatus` NOT LIKE "Delete"
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
 
 //echo "<br>sql: $sql<br>";

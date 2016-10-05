@@ -58,6 +58,7 @@ echo '
 $sql = '
 SELECT * FROM `events` 
 WHERE 1=1 
+  AND `TripStatus` NOT LIKE "Delete" 
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 ';
 
