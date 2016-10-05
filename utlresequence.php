@@ -79,9 +79,14 @@ exit;
   }
 
 if ($action == 'reseq') {
+//$sql = 'SELECT * FROM `events` WHERE `Day` = "'.$day.'";';
 $sql = '
-SELECT * FROM `events` WHERE `Day` = "'.$day.'";
+SELECT * FROM `events` 
+WHERE `Day` =   "'.$day.'"
+  AND `TripStatus` NOT LIKE "Delete" 
+ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 ';
+
 
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);

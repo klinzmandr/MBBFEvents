@@ -72,7 +72,8 @@ $sql = '
 SELECT * FROM `events` 
 WHERE `Day` =   "'.$day.'"
   AND `TripStatus` NOT LIKE "Delete" 
-ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
+ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
+';
 if ($day == '') { 
 $sql = '
 SELECT * FROM `events` 

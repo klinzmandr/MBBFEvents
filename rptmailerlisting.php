@@ -56,7 +56,13 @@ echo '
 
 
 //$sql = 'SELECT * FROM `events` WHERE 1=1 LIMIT 0,10;';
-$sql = 'SELECT * FROM `events` WHERE 1=1;';
+//$sql = 'SELECT * FROM `events` WHERE 1=1;';
+$sql = '
+SELECT * FROM `events` 
+WHERE 1=1  
+ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
+';
+
 
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
