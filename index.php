@@ -73,7 +73,8 @@ if (isset($_SESSION['SessionUser'])) {
 
   echo '
 <div class="container">
-<h2>Event System&nbsp;&nbsp;<a href="index.php?action=logout" class="btn btn-danger">Log Out</a></h2>
+<h2>Event System&nbsp;&nbsp;<a href="index.php?action=logout" class="btn btn-danger">Log Out</a>
+</h2>
 <h4>Event Start Date: '.$start.'</h4>
 <table border="0" class="table">
 <tr><td>
@@ -102,6 +103,12 @@ if (isset($_SESSION['SessionUser'])) {
 <td><a href="utlindex.php" class="btn btn-primary btn-xs">Utilities Menu</a></td>
 <td>System utilities available.</td>
 </tr>
+
+<tr>
+<td><a href="docs/MBBFUserGuide.pdf" class="btn btn-primary btn-xs" target="_blank">User Guide</a></td>
+<td>User documentatioin.</td>
+</tr>
+
 </table>
 </div> <!-- container -->
 </body>
