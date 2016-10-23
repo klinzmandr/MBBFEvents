@@ -139,7 +139,8 @@ errMsg;
 function addlogentry($text) {
 	global $mysqli; $errno = '';
 	if (isset($_SESSION['DB_ERROR'])) { echo 'Error!<br>'; return(FALSE); }
-	$user = isset($_SESSION['SessionUser']) ? $_SESSION['SessionUser']: 'Web User';
+	$loc = $_SERVER['REMOTE_ADDR'];
+	$user = isset($_SESSION['SessionUser']) ? $_SESSION['SessionUser']: "Web User@$loc";
 	$seclevel = isset($_SESSION['SecLevel']) ? $_SESSION['SecLevel'] : 'Normal';
 	$page = $_SERVER['PHP_SELF'];
 	$txt = addslashes($text);
