@@ -116,7 +116,7 @@ ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 
-$csv = "Track|Trip#|Day|Start|End|TimeSpan|CODE|FEE|Event|Leaders|Program\n";
+$csv = "Track|Trip#|Day|Start|End|TimeSpan|Site|MaxAtt|CODE|FEE|Event|Leaders|Program\n";
 $seqno = 1;
 while ($r = $res->fetch_assoc()) {
   list($toe,$whocares) = preg_split('/ /', $r[TypeOfEvent]);
@@ -135,7 +135,8 @@ while ($r = $res->fetch_assoc()) {
   $newprog = convertchrs($r[Program]);
   $newevent = convertchrs($r[Event]);
   $newlvl = convertchrs($r[Level]);
-  $csv .= "$r[TypeOfEvent]|$r[Trip]|$r[Day]|$starttime|$endtime|$stts|\"$newlvl\"|$r[FEE]|\"$newevent\"|\"$newldr\"|\"$newprog\"\n";
+  $newsite = convertchrs($r[Site]);
+  $csv .= "$r[TypeOfEvent]|$r[Trip]|$r[Day]|$starttime|$endtime|$stts|\"$newsite\"|$r[MaxAttendees]|\"$newlvl\"|$r[FEE]|\"$newevent\"|\"$newldr\"|\"$newprog\"\n";
   $seqno += 1;
   }
 
