@@ -92,10 +92,10 @@ $start = geteventstart();
 //echo "start: $start<br>";
 
 // create extract
-$sdatefmt = date("Y-m-d", strtotime($start));
+$sdatefmt = date("Y-m-d", strtotime("$start - 1 day"));
 
 echo '
-<h4>Using event start date of: '.$sdatefmt.'</h4>
+<h4>Using event start date of: '.$start.'</h4>
 
 <h3>Extract ready for download.</h3>
 <br>
