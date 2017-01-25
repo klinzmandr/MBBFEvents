@@ -57,6 +57,10 @@ echo '
 <td>System usage summary based on date/time range.</td>
 </tr>
 <tr>
+<td><a href="utlusercount.php" class="btn btn-primary btn-xs">Page Usage by Date</a></td>
+<td>Count of user id&apos;s requesting web pages by date.</td>
+</tr>
+<tr>
 <td><a href="utladmin.php" class="btn btn-primary btn-xs">User administration</a></td>
 <td>Maintain system user identification and passwords. <br>(NOTE: requires secondary password)</td>
 </tr>

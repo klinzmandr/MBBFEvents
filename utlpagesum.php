@@ -20,8 +20,8 @@ include 'Incls/datautils.inc.php';
 
 $dbinuse = "DB in use: mbbf_mbbfdb<br>";
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
-$sd = isset($_REQUEST['sd']) ? $_REQUEST['sd'] : date('Y-m-d', strtotime("today"));
-$ed = isset($_REQUEST['ed']) ? $_REQUEST['ed'] : date('Y-m-d', strtotime("tomorrow -1 second"));
+$sd = isset($_REQUEST['sd']) ? $_REQUEST['sd'] : date('Y-m-d 00:00:00', strtotime(now));
+$ed = isset($_REQUEST['ed']) ? $_REQUEST['ed'] : date('Y-m-d 23:59:00', strtotime(now));
 $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : '%mbbf/%';
 $testdb = isset($_REQUEST['testdb']) ? $_REQUEST['testdb'] : '';
 
@@ -71,7 +71,7 @@ End: <input type="text" id="ed" name="ed" value="'.$ed.'" placeholder="YYYY-MM-D
 </form>
 <script type="text/javascript">
 $("#sd").datetimepicker({
-    format: "yyyy-mm-dd hh:ii",
+    format: "yyyy-mm-dd hh:ii:ss",
     todayHighlight: true,
     // todayBtn: true,
     // showMeridian: true,
@@ -81,7 +81,7 @@ $("#sd").datetimepicker({
 </script>
 <script type="text/javascript">
 $("#ed").datetimepicker({
-    format: "yyyy-mm-dd hh:ii",
+    format: "yyyy-mm-dd hh:ii:ss",
     todayHighlight: true,
     // todayBtn: true,
     // showMeridian: true,
@@ -99,7 +99,7 @@ if ($type == '') echo "<a href=\"rpt.php\">No page type selected - RETRY</a><br 
 
 //echo "sd: $sd, ed: $ed<br />";
 // generate the report
-$msd = date('Y-m-d 00:00:00', strtotime($sd)); $med = date('Y-m-d 23:59:59', strtotime($ed));
+$msd = date('Y-m-d H:i:s', strtotime($sd)); $med = date('Y-m-d H:i:s', strtotime($ed));
 $sql = "SELECT `DateTime`,`User`,`Page`
 FROM `log`
 WHERE  `DateTime` BETWEEN '$msd' AND '$med'

@@ -15,8 +15,8 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 date_default_timezone_set('America/Los_Angeles');
 
 // echo "<pre>"; print_r($_REQUEST); echo '</pre>';
-$sd = isset($_REQUEST['sd']) ? $_REQUEST['sd'] : date('Y-m-d 00:00', strtotime(now));
-$ed = isset($_REQUEST['ed']) ? $_REQUEST['ed'] : date('Y-m-d 23:59', strtotime(now));
+$sd = isset($_REQUEST['sd']) ? $_REQUEST['sd'] : date('Y-m-d 00:00:00', strtotime(now));
+$ed = isset($_REQUEST['ed']) ? $_REQUEST['ed'] : date('Y-m-d 23:59:59', strtotime(now));
 
 $filter = $_REQUEST['filter'];
 $dbx = $_REQUEST['db'];
@@ -56,7 +56,7 @@ End: <input type="text" id="ed" name="ed" value="$ed" placeholder="YYYY-MM-DD HH
 </form>
 <script type="text/javascript">
 $('#sd').datetimepicker({
-    format: 'yyyy-mm-dd hh:ii',
+    format: 'yyyy-mm-dd hh:ii:ss',
     todayHighlight: true,
     // todayBtn: true,
     // showMeridian: true,
@@ -66,7 +66,7 @@ $('#sd').datetimepicker({
 </script>
 <script type="text/javascript">
 $('#ed').datetimepicker({
-    format: 'yyyy-mm-dd hh:ii',
+    format: 'yyyy-mm-dd hh:ii:ss',
     todayHighlight: true,
     // todayBtn: true,
     // showMeridian: true,
