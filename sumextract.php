@@ -75,6 +75,8 @@ Output columns are:<br>
 <li>Trip#  (Trip number - a sequential number for each day.</li>
 <li>Day (Day of week for event)</li>
 <li>TimeSpan (Event date plus start time - Event date plus end time as YYYY-MM-DD HH:MM)</li>
+<li>Site</li>
+<li>Max Attendees</li>
 <li>CODE (Event "Level" field)</li>
 <li>FEE (Event "FEE" field)</li>
 <li>Event (Event name)</li>
