@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-<h1>Search Event Listings</h1>
+<h2>Plan Your Trip: Search Event Listings</h2>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <?php
