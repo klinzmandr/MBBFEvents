@@ -2,19 +2,16 @@
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 // connect to the database for all pages
 date_default_timezone_set('America/Los_Angeles');
-
 //echo '<pre> SERVER '; print_r($_SERVER); echo '</pre>';
 // check session timeout
 $time = $_SERVER['REQUEST_TIME'];
 //echo "request time: $time<br>";
-
 // for a 30 minute timeout, specified in seconds
 //$timeout_duration = 1800;
 // for a 15 minute timeout, specified in seconds
 $timeout_duration = 900;
 // testing timeout period
 //$timeout_duration = 15;
-
 /**
  * Here we look for the user’s LAST_ACTIVITY timestamp. If
  * it’s set and indicates our $timeout_duration has passed,
@@ -28,14 +25,10 @@ if (isset($_SESSION[LAST_ACTIVITY]) && ($time - $_SESSION[LAST_ACTIVITY]) > $tim
   <a href="index.php" class="btn btn-danger">LOGIN AGAIN</a>';  // timed out - bail back to index.php
   exit; 
   }
-   
 // Finally, update LAST_ACTIVITY so that our timeout is based on it and not the user’s login time.
 $_SESSION[LAST_ACTIVITY] = $time;
-
 include '../.MBBFDBParamInfo';
-
 $mysqli = new mysqli("localhost", DBUserName, DBPassword, ProdDBName);
-
 if ($mysqli->connect_errno) {
 		$errno = $mysqli->connect_errno;
     echo "Failed to connect to MySQL: (" . $errno . ") " . $mysqli->connect_error . "<br>
@@ -45,7 +38,6 @@ if ($mysqli->connect_errno) {
 addlogentry('Page Load');
 // auto returns to code following the 'include' statement
 // echo "Initial Connection Info: ".$mysqli->host_info . "<br><br>";
-
 // ------------------ submit sql statement provided by calling script ----------
 // submit sql statement provided in call
 function doSQLsubmitted($sql) { 
