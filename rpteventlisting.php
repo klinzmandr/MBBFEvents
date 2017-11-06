@@ -10,6 +10,7 @@
 <title>Event Listing</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,16 +28,13 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : "";
 
-echo '
-<div class="container">
-<h1>Event Listing
-<a href="rptindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
-';
+echo '<h3>Event Listing</h3>';
 
 if ($action == '') {
   echo '
@@ -45,13 +43,22 @@ if ($action == '') {
   <p>A download CSV file is created and is available with the same results as shown on the page except that the venue name is in column 1 of each row of the result.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
 
+<script>
+$(document).ready (function() {
+  $("#Day").change (function() {
+    $("#FF").submit();  
+    });
+  });
+
+</script>
 <form id="FF" action="rpteventlisting.php" method="post">
 Day: 
-<select id="Day" name="Day">';
+<select id="Day" name="Day">
+<option value=""></option>';
 echo readlist('Day');
 echo '</select>
 <input type="hidden" name="action" value="genreport">
-<button form="FF" class="btn btn-primary" type="submit">Generate Report</button>
+<!-- <button form="FF" class="btn btn-primary" type="submit">Generate Report</button> -->
 </form>
 </div> <!-- container -->
 </body>
@@ -63,7 +70,6 @@ exit;
 
 // create report
 echo '
-</div>  <!-- container -->
 <a class="hidden-print" href="downloads/eventlisting.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
 
 //Type	Trip	TypeOfEvent	Day	StartTime	EndTime	Event	Site	SiteRoom	MaxAttendees	Leader1	Leader2	Leader3	Leader4

@@ -10,6 +10,7 @@
 <title>Add New Leader</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,9 +28,10 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 echo '
-<h1>New Leader Added</h1>';
+<h3>New Leader Added</h3>';
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 

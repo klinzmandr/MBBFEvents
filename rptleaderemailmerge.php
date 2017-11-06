@@ -10,6 +10,7 @@
 <title>Mail Merge Export</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,6 +28,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
@@ -34,20 +36,18 @@ $type = isset($_REQUEST['Type']) ? $_REQUEST['Type'] : "";
 
 echo '
 <div class="container">
-<h1>Leader Email Merge Extract
-<a href="rptindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
+<h3>Leader Email Merge Extract</h3>
 ';
 
-
 echo '
-<p>This extract examines all &quot;active&quot; events and creates a CSV file to be used for mail merge processing.</p>
-<p>The output file contains 1 line/row for each event with the name of &quot;Leader 1&quot; along with their email address and other event informaton.</p>
-<p>The initial output is sorted in the sequence of event day, start time within the event day, end time within the event day and start time.</p>
+<p>This extract examines all &quot;active&quot; events and creates a list of the email addresses for all the leaders that are assigned ANY leader position.</p>
+<p>The report output is to be highlighted then copy/pasted into the email client.</p>
 ';
 
 // create report
-echo '
-<a class="hidden-print" href="downloads/leadermailmerge.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
+/* echo '
+<a class="hidden-print" href="downloads/leadermailmerge.csv">DOWN LOAD RESULTS<a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
+*/
 
 // create array of leader names and email addresses
 $sql = '
@@ -58,9 +58,11 @@ $rc = $res->num_rows;
 while ($r = $res->fetch_assoc()) {
   $key = $r[FirstName] . ' ' . $r[LastName];
   $leaderemail[$key] = $r[Email];
+  $leadername[$key] = $key;
   }
 //echo '<pre> email array '; print_r($leaderemail); echo '</pre>';
 
+// all leaders -> email in $leaderemail array
 $sql = '
 SELECT `events`.*
 FROM `events` 
@@ -68,43 +70,26 @@ WHERE 1 = 1
   AND `TripStatus` NOT LIKE "Delete"  
 ORDER BY `events`.`Dnbr` ASC, `events`.`StartTime` ASC, `events`.`EndTime` ASC;';
 
-
-//echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
-echo '<br>row count: '.$rc.'<br>';
-// Fields
-// Leader	Day	Day#	StartTime	EndTime	Trip	Event	TripStatus	Duration	Email	Leader1	Leader2	Leader3	Leader4
-
-$csvmask = '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",'."\n";
-$csv = 'Leader,Day,Day#,StartTime,EndTime,Trip,Event,TripStatus,Duration,Email,Leader1,Leader2,Leader3,Leader4'."\n";
-
+// building this array will eliminate any dup email addresses.
 while ($r = $res->fetch_assoc()) {
-  if ($r[Event] == '**New Event**') continue;
-  $st = date("g:i A", strtotime($r[StartTime]));
-  $et = date("g:i A", strtotime($r[EndTime]));
-  $dur = timediff($r[StartTime], $r[EndTime]);
-  $key = $r[Leader1]; 
-  $em = $leaderemail[$key];
-  //echo "key: $key, em: $em<br>";
-  $csv .= sprintf($csvmask,$r[Leader1],$r[Day],$r[Dnbr],$st,$et,$r[Trip],$r[Event],$r[TripStatus],$dur,$em,$r[Leader1],$r[Leader2],$r[Leader3],$r[Leader4]);
-  
-// echo '<pre> event record '; print_r($r); echo '</pre>';
+  $emarray[$leaderemail[$r[Leader1]]] = $leadername[$r[Leader1]]; 
+  $emarray[$leaderemail[$r[Leader2]]] = $leadername[$r[Leader2]];
+  $emarray[$leaderemail[$r[Leader3]]] = $leadername[$r[Leader3]]; 
+  $emarray[$leaderemail[$r[Leader4]]] = $leadername[$r[Leader4]]; 
   }
+echo '<br>Active event count: '.$rc.'<br>';
+echo 'Leader email count: '.count($emarray).'<br>';
+//echo 'results array: '.count($emarray).'<br>';
+//echo '<pre> emarray '; print_r($emarray); echo '</pre>';
 
-// echo "<pre> csv \n"; print_r($csv); echo '</pre>';
-file_put_contents("downloads/leadermailmerge.csv", $csv);
-
-function timediff($start, $end) {
-  $tp1val = strtotime($start);
-  $tp2val = strtotime($end);
-  $diff = $tp2val - $tp1val;
-  $hrs = sprintf("%s", floor($diff/3600));   // diff in hours
-  $mins = (($tp2val - $tp1val) - ($hrs * (60*60)))/60;   // diff in min
-  if ($mins == 0) $fmtdiff = sprintf("%2d Hour(s)", $hrs); 
-  else $fmtdiff = sprintf("%2d Hour(s) %2d Min", $hrs, $mins);
-  return($fmtdiff);
-  }
+echo '<pre>';
+foreach ($emarray as $k => $v) {
+  if ($k == '') continue;
+  echo "$v &lt;$k&gt;,\n";
+  } 
+echo '</pre>';
 
 ?>
 </div>  <!-- container -->

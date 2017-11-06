@@ -10,6 +10,7 @@
 <title>Leader Activity</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,14 +28,14 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 //include 'Incls/listutils.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
 echo '
-<h1>Leader Activity
-<a href="rptindex.php" class="btn btn-primary hidden-print">RETURN</a></h1>
+<h3>Leader Activity</h3>
 ';
 
 if ($action == '') {
@@ -45,9 +46,10 @@ if ($action == '') {
 exit; 
   }
   
-// generate report
+// generate leader activity report
+// excluding events that are marked as deleted
 $sql = '
-SELECT * FROM `events` WHERE 1=1;';
+SELECT * FROM `events` WHERE `TripStatus` NOT LIKE "%Delete%";';
 
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);

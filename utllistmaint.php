@@ -6,14 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 </head>
 <body onchange="flagChange()">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
 <?php
-//include 'Incls/vardump.inc.php';
+//include 'Incls/vardump.inc.php';include 'Incls/datautils.inc.php';
+include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
+include 'Incls/checkcred.inc.php';
+
+if ( !checkcred('Admin') ) {
+//  echo "pw passed<br>";
+  echo 'Incorrect password entered for administrative access.<br>
+  <a href="utlindex.php" class="btn btn-danger">RETURN</a>';
+  exit;
+  }
+
 
 $file = isset($_REQUEST['file'])? $_REQUEST['file'] : "";
 $action = isset($_REQUEST['action'])? $_REQUEST['action'] : "";
@@ -36,9 +48,7 @@ $(document).ready(function() {
 
 	}
 
-echo '<h2>List Maintenance Utility
-<a href="utlindex.php" class="btn btn-primary">Utility Menu</a>
-</h2>';
+echo '<h2>List Maintenance Utility</h2>';
 
 	echo '<p>Choose a menu option to update a specific list.</p>
 	<p>All lists use a free form text file to define the list items used.  Lines that begin with a double slash (//) are provided for comments (which are encouraged.)  The comment lines as well as blank lines are ignored </p>
@@ -58,6 +68,7 @@ Choose list from the following:
 <option value="Transportation">Transportation</option>
 <option value="TripStatus">Trip Status</option>
 <option value="TripType">Trip Type</option>
+<option value="TripTypeCodes">Trip Type Codes</option>
 <option value="TypeOfEvent">Type Of Event</option>
 <option value="EventLevels">Event Levels</option>
 </select>

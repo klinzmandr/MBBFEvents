@@ -10,6 +10,7 @@
 <title>User Administration</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -26,6 +27,7 @@
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 include 'Incls/checkcred.inc.php';
 
 if ( !checkcred('Admin') ) {
@@ -36,8 +38,7 @@ if ( !checkcred('Admin') ) {
   }
 
 echo '
-<h1>Administer Users and Passwords
-<a href="utlindex.php" class="btn btn-primary">Utility Menu</a></h1>
+<h3>Administer Users and Passwords</h3>
 ';
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $ta = isset($_REQUEST['ta']) ? $_REQUEST['ta'] : "";

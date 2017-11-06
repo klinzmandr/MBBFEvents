@@ -10,6 +10,7 @@
 <title>Web Summary</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,6 +28,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 //include 'Incls/listutils.inc.php';
 
 // Process listing based on selected criteria
@@ -35,9 +37,7 @@ $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 if ($action == '') {
   echo '
 <div class="container">
-<h1>Web Summary
-<a href="rptindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
-';
+<h3>Web Summary</h3>';
 
   echo '
 <p>This report duplicates the layout in the web site full summary format.</p>
@@ -49,10 +49,7 @@ if ($action == '') {
 exit;
   }
 // create report
-echo '
-<h1>Web Summary
-<a href="rptindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
-';
+echo '<h3>Web Summary</h3>';
 //$sql = 'SELECT * FROM `events` WHERE 1=1 LIMIT 0,10;';
 //$sql = 'SELECT * FROM `events` WHERE 1=1;';
 $sql = '

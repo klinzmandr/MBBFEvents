@@ -10,6 +10,7 @@
 <title>Add New Event</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -21,12 +22,12 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<div class="container">
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 echo '
 <h1>New Event Added</h1>
@@ -77,7 +78,7 @@ $rc = $res->num_rows;
 $rowid = $r[RowID];
 //echo '<h3>Search for the character string &quot;**New&quot; to display the new record for updates.</h3>
 //<a href="evtlister.php?ss=**New" class="btn btn-success">CONTINUE TO UPDATE NEW EVENT</a>';
-echo '<a href="evtupdateevent.php?ptr=0" class="btn btn-success">CONTINUE TO UPDATE NEW EVENT</a>';
+echo '<a href="evtupdateevent.php?ptr=0" class="btn btn-success">CONTINUE TO ADD A NEW EVENT</a>';
 
 $navarray[] = $rowid;
 $nav['start'] = 0; $nav['prev'] = ''; $nav['curr'] = '';
@@ -87,6 +88,5 @@ $_SESSION['navarray'] = $navarray;
 $_SESSION['nav'] = $nav;
 
 ?>
-</div> <!-- container -->
 </body>
 </html>

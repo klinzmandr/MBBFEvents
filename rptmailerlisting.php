@@ -10,6 +10,7 @@
 <title>Mailer Listing</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -21,35 +22,37 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<div class="container">
+
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 //include 'Incls/listutils.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
 echo '
-<h1>Event Mailer Listing and Extract
-<a href="rptindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
+
 ';
 
 if ($action == '') {
   echo '
+<div class="container">
+<h3>Event Mailer Listing and Extract</h3>
 <p>This report duplicates the columns and layout contained in the event mailer.</p>
 <p>A download CSV file is created and is available with the same results as shown on the page except that the venue name is in column 1 of each row of the result.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
 <a href="rptmailerlisting.php?action=genreport" class="btn btn-primary">Generate Report</a>
-';
+</div>';
 
 exit;
   }
 // create report
 echo '
-</div>  <!-- container -->
+<h3>Event Mailer Listing and Extract</h3>
 <a class="hidden-print" href="downloads/mailerlisting.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
 
 //Trip	StartTime-EndTime	Codes  Events
@@ -93,6 +96,5 @@ echo '</table>';
 file_put_contents("downloads/mailerlisting.csv", $csv);
 // echo '<a href="rptmailerlisting.php">HOLD ON</a>';
 ?>
-</div> <!-- container -->
 </body>
 </html>

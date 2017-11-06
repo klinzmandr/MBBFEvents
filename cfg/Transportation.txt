@@ -8,5 +8,4 @@
 <option value="Personal Vehicle">Personal Vehicle</option>
 <option value="Super Van">Super Van</option>
 <option value="Walking">Walking</option>
-
-
+<option value="Van">Van</option>

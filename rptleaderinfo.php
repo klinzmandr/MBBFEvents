@@ -10,6 +10,7 @@
 <title>Report Page Template</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,6 +28,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 //include 'Incls/listutils.inc.php';
 //include "Incls/letter_print_css.inc.php";
 
@@ -35,33 +37,36 @@ $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $active = isset($_REQUEST['Active']) ? $_REQUEST['Active'] : "";
 
 echo '
-<h1>Leader Info Report
-<a class="btn btn-primary hidden-print" href="rptindex.php">RETURN</a></h1>
-';
+<h3>Leader Info Report</h3>';
 
 if ($action == '') {
-  echo '
+  print <<<formPart
 <div class="container">
 <p>This report is created from all leaders registered on the database.  The choice is available to list all or limit the listing to those that are &quot;active&quot; or not.</p>
 <p>The export file does not exactly mirror the page output and contains all fields.</p>  
   
 <script>
-function chksel() {
+$(document).ready ( function () {
+  
+  $("#SV").change ( function() {
   var sv = $("#SV").val();
   if (sv == "") { return false; }
+  $("form").submit();
   return true;
-  }
+  });
+});
 </script>
 
-<form action=rptleaderinfo.php onsubmit="return chksel()">
+<form action="rptleaderinfo.php">
 List Active: <select id="SV" name="Active">
 <option value=""></option><option value="%">All</option><option value="Yes">Yes</option><option value="No">No</option>
 </select>
 <input type="hidden" name="action" value="genreport">
-<input type="submit" name="submit" value="Create Report">
+<!-- <input type="submit" name="submit" value="Create Report"> -->
 </form>
 </div>
-';
+formPart;
+
 exit;
   }
 
@@ -85,12 +90,14 @@ $(function(){
 });
 </script>
 <div class="hidden-print">
+<button id="em" onclick=\'javascript:$("#tab").toggle();$("#emaddrs").toggle();\'>Show/Hide Email Addresses</button> 
 <button id="btnMORE">Hide/Show Bio Info</button>&nbsp;&nbsp;
 <a href="downloads/leaderinfo.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>
 </div>   <!-- hidden-print -->
-<table>
+<table id="tab">
 <tr><th>Full Name</th><th>Pri Phone</th><th>Sec Phone</th><th>Email Address</th><th>Address 1</th><th>Address 2</th><th>City</th><th>State</th><th>Zip</th><th>Active</th></tr>
 ';
+$emstr = ''; $noemstr = '';
 $csv = '"First Name","Last Name","Pri Phone","Sec Phone","Email Address","Address 1","Address 2","City","State","Zip","Active","Bio"'."\n";
 while ($r = $res->fetch_assoc()) {
   //echo '<pre> full record for '.$r[RowID].' '; print_r($r); echo '</pre>';
@@ -105,8 +112,22 @@ echo '
 </tr>
 <tr><td colspan="10">&nbsp;</td></tr>
 ';
-  }
+if (strlen($r[Email]) > 0) {
+  $emstr .= $r[FirstName].' '.$r[LastName]." &lt;".$r[Email] . "&gt;\n";   }
+else {
+  $noemstr .= $r[FirstName].' '.$r[LastName]."\n";   }
+}
 echo '</table>';
+
+echo '
+<div class="container" style="display: none; " id="emaddrs">
+<pre>'.$emstr.'</pre>
+
+<h3>Leaders without email addresses</h3>
+<pre>'.$noemstr.'</pre>
+</div>
+';
+
 file_put_contents("downloads/leaderinfo.csv", $csv);
 // echo '<pre> CSV'; print_r($csv); echo '</pre>';
 ?>

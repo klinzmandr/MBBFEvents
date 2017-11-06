@@ -10,6 +10,7 @@
 <title>Event Maintenance</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -71,46 +72,16 @@ if (isset($_SESSION['SessionUser'])) {
   $start = date('l, F j, Y', strtotime(geteventstart()));
     //echo "start: $start<br>";
 
+include 'Incls/mainmenu.inc.php';
+
   echo '
-<div class="container">
-<h2>Event System&nbsp;&nbsp;<a href="index.php?action=logout" class="btn btn-danger">Log Out</a>
+<h2>Event Administraton System&nbsp;&nbsp;<a href="index.php?action=logout" class="btn btn-danger">Log Out</a>
 </h2>
-<h4>Event Start Date: '.$start.'</h4>
-<table border="0" class="table">
-<tr><td>
-<a href="evtlister.php" class="btn btn-primary btn-xs">Event Maintenance</a></td>
-<td>Update, duplicate, add and delete event listings.</td>
-</tr>
-<tr>
-<td><a  href="ldrlister.php" class="btn btn-primary btn-xs">Leader Maintenance</a></td>
-<td>Add new, update and delete leader information. </td>
-</tr>
-
-<tr>
-<td><a href="http://morrobaybirdfestival.net/event-planner/" target="_blank" class="btn btn-primary btn-xs">Event Planner Review</a></td>
-<td>View the event planner on the web site. (NOTE: Opens a new window/tab)</td>
-</tr>
-<!-- <tr>
-<td><a href="evtplannerreview.php" class="btn btn-primary btn-xs">Event Planner Review</a></td>
-<td>Test event information web site output to make sure everything looks right.</td>
-</tr>
- --><tr>
-<td><a href="rptindex.php" class="btn btn-primary btn-xs">Reports Menu</a></td>
-<td>List of reports available.</td>
-</tr>
-
-<tr>
-<td><a href="utlindex.php" class="btn btn-primary btn-xs">Utilities Menu</a></td>
-<td>System utilities available.</td>
-</tr>
-
-<tr>
-<td><a href="docs/MBBFUserGuide.pdf" class="btn btn-primary btn-xs" target="_blank">User Guide</a></td>
-<td>User documentatioin.</td>
-</tr>
-
-</table>
-</div> <!-- container -->
+<div class="well">
+<h4>GPL License</h4>
+<p>Event Administration System - Copyright (C) 2017 by Pragmatic Computing, Morro Bay, CA</p>
+    <p>This program comes with ABSOLUTELY NO WARRANTY.  This is free software.  It may be redistributed under certain conditions.  See &apos;Help->About Event Admin&apos; for more information.</p>
+</div>
 </body>
 </html>';
 exit;

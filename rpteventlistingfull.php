@@ -10,6 +10,7 @@
 <title>Full Event Listing</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,16 +28,13 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $type = isset($_REQUEST['Type']) ? $_REQUEST['Type'] : "";
 
-echo '
-<div class="container">
-<h1>Event Listing
-<a href="rptindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
-';
+echo '<div class="container"><h1>Event Listing</h1>';
 
 
 echo '

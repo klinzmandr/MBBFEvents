@@ -23,7 +23,7 @@ if (strlen($pw) == 0) {
   <input id="IF" type="hidden" name="pw" value="">
   </form>
   <button class="btn btn-warning" onclick="return dopw()">Click to log In</button> <br><br>
-  <a href="utlindex.php" class="btn btn-primary">RETURN</a> 
+  <!-- <a href="utlindex.php" class="btn btn-primary">RETURN</a> --> 
    
   ';
   exit;

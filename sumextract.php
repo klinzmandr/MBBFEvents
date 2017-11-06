@@ -72,10 +72,12 @@ if ($action == '') {
 Output columns are:<br>
 <ul>
 <li>Track  (Type of event - nature, birding, etc.)</li>
+<li>Trip Type (Type - presentation, field trip, event, etc.)</li>
 <li>Trip#  (Trip number - a sequential number for each day.</li>
 <li>Day (Day of week for event)</li>
 <li>TimeSpan (Event date plus start time - Event date plus end time as YYYY-MM-DD HH:MM)</li>
 <li>Site</li>
+<li>Site Address</li>
 <li>Max Attendees</li>
 <li>CODE (Event "Level" field)</li>
 <li>FEE (Event "FEE" field)</li>
@@ -118,7 +120,7 @@ ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 
-$csv = "Track|Trip#|Day|Start|End|TimeSpan|Site|MaxAtt|CODE|FEE|Event|Leaders|Program\n";
+$csv = "Track|EventType|Trip#|Day|Start|End|TimeSpan|Site|SiteAddr|MaxAtt|CODE|FEE|Event|Leaders|Program\n";
 $seqno = 1;
 while ($r = $res->fetch_assoc()) {
   list($toe,$whocares) = preg_split('/ /', $r[TypeOfEvent]);
@@ -138,7 +140,8 @@ while ($r = $res->fetch_assoc()) {
   $newevent = convertchrs($r[Event]);
   $newlvl = convertchrs($r[Level]);
   $newsite = convertchrs($r[Site]);
-  $csv .= "$r[TypeOfEvent]|$r[Trip]|$r[Day]|$starttime|$endtime|$stts|\"$newsite\"|$r[MaxAttendees]|\"$newlvl\"|$r[FEE]|\"$newevent\"|\"$newldr\"|\"$newprog\"\n";
+  $newsiteaddr = convertchrs($r[SiteAddr]);
+  $csv .= "$r[TypeOfEvent]|$r[Type]|$r[Trip]|$r[Day]|$starttime|$endtime|$stts|\"$newsite\"|\"$newsiteaddr\"|$r[MaxAttendees]|\"$newlvl\"|$r[FEE]|\"$newevent\"|\"$newldr\"|\"$newprog\"\n";
   $seqno += 1;
   }
 
@@ -177,6 +180,7 @@ function convertchrs($str) {
   $rpl = array_values($chr_map); // pre-calculate these two arrays
   $str = str_replace($chr, $rpl, html_entity_decode($str, ENT_QUOTES, "UTF-8"));
   $str = str_replace("|", "", $str);  // kill vert bar/pipe char used as fld sep
+  $str = str_replace("\n", " ", $str);  // kill return char
   return($str);
   }
 ?>

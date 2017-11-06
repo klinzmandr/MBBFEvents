@@ -10,6 +10,7 @@
 <title>Resequence Events</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -28,12 +29,12 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 include 'Incls/checkcred.inc.php';
 
 if ( !checkcred('ReSeq') ) {
 //  echo "pw passed<br>";
-  echo 'Incorrect password entered for administrative access.<br>
-  <a href="utlindex.php" class="btn btn-danger">RETURN</a>';
+  echo 'Incorrect password entered for administrative access.<br>';
   exit;
   }
 
@@ -41,10 +42,7 @@ if ( !checkcred('ReSeq') ) {
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : "";
 
-echo '
-<h1>Resequence Events
-<a href="utlindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
-';
+echo '<h3>Resequence Events</h3>';
 
 $dayarray[Friday] = 1;$dayarray[Saturday] = 2; $dayarray[Sunday] = 3; $dayarray[Monday] = 4; 
 
@@ -83,7 +81,7 @@ if ($action == 'reseq') {
 $sql = '
 SELECT * FROM `events` 
 WHERE `Day` =   "'.$day.'"
-  AND `TripStatus` NOT LIKE "Delete" 
+  AND (`TripStatus` = "Retain" OR `TripStatus` = "New")  
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 ';
 
@@ -121,7 +119,8 @@ exit;
 //echo 'apply changes<br>';
 $sql = '
 SELECT * FROM `events` 
-WHERE `Day` = "'.$day.'" 
+WHERE `Day` =   "'.$day.'"
+  AND (`TripStatus` = "Retain" OR `TripStatus` = "New")  
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 ';
 

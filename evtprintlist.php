@@ -10,6 +10,7 @@
 <title>Print List</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -21,12 +22,13 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<div class="container">
+
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 //include 'Incls/listutils.inc.php';
 include 'Incls/letter_print_css.inc.php';
 
@@ -34,8 +36,7 @@ include 'Incls/letter_print_css.inc.php';
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
 echo '
-<h1 class="hidden-print">Print Report List
-<a href="evtlister.php" class="hidden-print btn btn-primary">RETURN</a></h1>
+<h3 class="hidden-print">Print Report List</h3>
 ';
 
 if ($action == '') {
@@ -50,7 +51,7 @@ exit;
 
 // generate the output
 echo '
-<h4 class="hidden-print">User the browser &quot;File->Print&quot; function to output the browser page.  If using Chrome, the page output may also be saved as a PDF file.</h4>
+<h4 class="hidden-print">User the browser &quot;File->Print&quot; function to output the event list one event per page.  If using Chrome, the page output may also be saved as a PDF file.</h4>
 ';
 
 $navarray = $_SESSION['navarray'];
@@ -75,7 +76,6 @@ $diff = timediff($r[StartTime],$r[EndTime]);
 $stime = date("g:i A", strtotime($r[StartTime]));
 $etime = date("g:i A", strtotime($r[EndTime]));
 echo '
-</div class="container">
 <h3>Event: '.$r[Event].'</h3>
 <table class="table" border="0">
 <tr><td>
@@ -156,7 +156,6 @@ Program Description: <br>'.$r[Program].'
 Secondary Status (Production Notes):<br>'.$r[SecondaryStatus].'
 </td></tr>
 </table>
-</div>  <!-- container -->
 <div class="page-break"></div>
 ';
   
@@ -174,6 +173,5 @@ function timediff($start, $end) {
   }
 
 ?>
-</div> <!-- container -->
 </body>
 </html>

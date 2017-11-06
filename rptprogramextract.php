@@ -10,6 +10,7 @@
 <title>Program Extract</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -28,38 +29,41 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : "";
 
-echo '
-<div class="container">
-<h1>Program Extract
-<a href="rptindex.php" class="btn btn-primary hidden-print">RETURN</a></h1>
-';
+echo '<h3>Program Extract</h3>';
 
 if ($action == '') {
   echo '
 <p>Extract of specific information from all registered events.</p>
 <p>Rows of this report are available to download as a CSV file for spreadsheet import.</p>
 <p>By default all events will be listed but events for a specific day can also optionally be selected from the selection list.</p>
+<script>
+$(document).ready (function() {
+  $("#Day").change( function() {
+    $("#FF").submit();
+    });
+  });
 
+</script>
 <form id="FF" action="rptprogramextract.php" method="post">
 Day: 
-<select id="Day" name="Day">';
+<select id="Day" name="Day">
+<option value=""></option>';
 echo readlist('Day');
 echo '</select>
 <input type="hidden" name="action" value="genreport">
-<button form="FF" class="btn btn-primary" type="submit">Generate Report</button>
+<!-- <button form="FF" class="btn btn-primary" type="submit">Generate Report</button> -->
 </form>
-</div> <!-- container -->
 </body>
 </html>';
 exit;
   }
 
-echo '</div>  <!-- container for header -->';
 if ($day == '') $day = "%";  
 $sql = '
 SELECT * FROM `events` 

@@ -10,6 +10,7 @@
 <title>Validate Database</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,16 +28,14 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 //include 'Incls/listutils.inc.php';
 include 'Incls/letter_print_css.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
-echo '
-<h1>Validate Database
-<a href="utlindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
-';
+echo '<h3>Validate Database</h3>';
 
   echo '
 <h4>Database Info</h4>
@@ -45,7 +44,7 @@ Client Info: '.$mysqli->client_info.'<br>
 Server Info: '.$mysqli->server_info.'<br /><br>
 <h4>Overview</h4>
 <p>This program will perform various database validations including those listed:</p>
-Examine all event records and report:
+Examine all ACTIVE event records and report:
 <ol>
 	<li>any with missing Site Codes.</li>
 	<li>any that do not have a Leader 1 identified.</li>
@@ -61,6 +60,7 @@ Examine all leader records and report:
 <ol>
 	<li>any leader not having a primary phone number registered.</li>
 	<li>any leader without an email address.</li>
+	<li>any leader with a duplicated email address.</li>
 </ol>
 <br /><br>
 ';
@@ -85,7 +85,10 @@ while ($r = $res->fetch_assoc()) {
 
 // ========== read and validate events
 $sql = '
-SELECT * FROM `events` WHERE 1=1 AND `TripStatus` NOT LIKE "Delete";';
+SELECT * FROM `events` 
+-- WHERE `TripStatus` IS NULL
+WHERE 1=1
+ORDER BY `Trip` ASC;';
 
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
@@ -93,7 +96,7 @@ $eventrc = $res->num_rows;
 
 $err = array();
 while ($r = $res->fetch_assoc()) {
-//  echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
+  //echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   if ($r[SiteCode] == '') $err[$r[Trip]][] = "Missing the site code";
   if ($r[Leader1] == '' ) $err[$r[Trip]][] = "Has no Leader 1 defined";
   if (($r[Leader1] != '') AND (!array_key_exists($r[Leader1], $ldrs))) 
@@ -117,8 +120,11 @@ while ($r = $res->fetch_assoc()) {
   }
 
 // check out leader info
+$ema = array();
 foreach ($ldrs as $k => $v) {
   if ($v[Email] == '') $ldrerr[$k][] = "Leader missing email address.";
+  if (!in_array($v[Email], $ema)) $ema[] = $v[Email];
+  else $ldrerr[$k][] = "Leader email address is a duplicate.";  
   if ($v[PrimaryPhone] == '') $ldrerr[$k][] = "Leader missing primary phone number.";
   }
   

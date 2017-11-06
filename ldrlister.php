@@ -10,6 +10,7 @@
 <title>Update Lister</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,12 +28,10 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 echo '
-<h2>Leader List
-&nbsp;<a class="hidden-print" href="ldraddleader.php"><span title="Add New Leader" class="hidden-print glyphicon glyphicon-plus" style="color: blue; font-size: 30px"></span></a>&nbsp;
-<a href="index.php" class="hidden-print btn btn-primary">Main Menu</a>
-</h2>
+<h3>Leader List</h3>
 ';
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $ss = isset($_REQUEST['ss']) ? $_REQUEST['ss'] : "";
@@ -74,13 +73,13 @@ function resetflds() {
 <form id="F1" action="ldrlister.php" method="post" class="hidden-print ">
 Leader Active?:
 <select  id="ACTIVE" name="Active">
-<option value=""></option><option value="Yes">Yes</option>
+<option value=""></option>
+<option value="Yes">Yes</option>
 <option value="No">No</option></select>
 <input id="SS" type=text value="" name="ss" placeholder="SEARCH FILTER" title="Enter a single word or short character string to search leader fields.">&nbsp;
 <input type=hidden name=action value="list">
-<button class="btn btn-primary" type="submit" form="F1">SEARCH</button>
-<button class="btn btn-warning" onclick="return resetflds()">Clear Form</button>
-<a class="btn btn-primary" href="ldrlister.php?ss=%">List All</a>
+<button class="btn btn-primary" type="submit" form="F1" data-toggle="tooltip" data-placement="left" title="Search for % to list all">SEARCH</button>
+<button class="btn btn-warning" onclick="return resetflds()">Reset</button>
 </form>
 ';
 

@@ -10,6 +10,7 @@
 <title>Update Lister</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,14 +28,10 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 echo ' 
-<h2 class="hidden-print">Search Events
-&nbsp;&nbsp;<a href="evtprintlist.php"><span title="Print ALL In List" class="glyphicon glyphicon-print" style="color: blue; font-size: 30px"></span></a>
-&nbsp;&nbsp;<a href="evtaddevent.php"><span title="Add NEW Event" class="glyphicon glyphicon-plus" style="color: blue; font-size: 30px"></span></a>
-
-<a href="index.php" class="btn btn-primary">Main Menu</a>
-</h2>
+<h3>Event List</h3>
 ';
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $day = isset($_REQUEST['day']) ? $_REQUEST['day'] : ""; // event day of week
@@ -105,7 +102,7 @@ function resetflds() {
 }
 </script>
 
-<h4 class="hidden-print">Select one or more selection criteria and continue: </h4>
+<h4 class="hidden-print">Select from list or enter selection criteria to search: </h4>
 <form class="hidden-print" id="F1" action="evtlister.php" method="post">
 <select id="S1" name=day>';
 echo readlist('Day');
@@ -117,9 +114,8 @@ echo '</select>
 
 <input id="SS" type=text value="" name=ss placeholder="Search Filter" title="Enter a single word or short character string to search all program descriptions.">&nbsp;
 <input type=hidden name=action value="list">
-<button class="btn btn-primary" type="submit" form="F1">SEARCH</button>
+<button class="btn btn-primary" type="submit" form="F1" data-toggle="tooltip" data-placement="left" title="Search for % to list all">SEARCH</button>
 <button class="btn btn-warning" onclick="return resetflds()">Reset</button>
-<a class="btn btn-primary" href="evtlister.php?et=%">List All</a>
 
 <div class="HIDE">
 
@@ -145,7 +141,8 @@ if (strlen($day) > 0) {
 if (strlen($et) > 0) {
   $sql .= '`Type` LIKE "%'.$et.'%" AND '; }
 if (strlen($site) > 0) {
-  $sql .= '`Site` LIKE "'.$site.'" AND '; }
+  list($s,$c) = explode(':', $site);
+  $sql .= '`Site` LIKE "'.$s.'" AND '; }
 if (strlen($transportneeded) > 0) {
   $sql .= '`TransportNeeded` = "'.$transportneeded.'" AND '; }
 if (strlen($tripstatus) > 0) {

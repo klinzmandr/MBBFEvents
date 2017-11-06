@@ -10,6 +10,7 @@
 <title>Leader Update</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -28,6 +29,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
@@ -48,21 +50,6 @@ $lnav['next'] = $lnav['curr'] + 1; if ($nav['lnext'] > $lnav['last'])
 $lnav['next'] = $lnav['last'];
 //echo '<pre> AFTER '; print_r($nav); echo '</pre>';
 
-echo '
-<script>
-var updcnt = 0;         // global variable to count updated fields
-
-$(document).ready(function(){
-    $("input").change(function(){
-        updcnt = updcnt + 1; });
-    $("textarea").change(function(){
-        updcnt = updcnt + 1; });
-    $("select").change(function(){
-        updcnt = updcnt + 1; });
-}); 
-</script>
-
-';
 // PROCESS UPDATE ACTION IF INDICATED
 if ($action == 'update') {
   $flds = array();
@@ -93,11 +80,6 @@ $r = $res->fetch_assoc();
 //echo '<pre> full record '; print_r($r); echo '</pre>';
 if ($r[FirstName] == '**New**') $r[FirstName] = '';
 echo '
-<table border="0" class="table hidden-print">
-<tr><td width="33%">
-<h2 class="hidden-print">Leader Update</h2></td>
-<td width="33%" align="center">
-<br><a class="btn btn-primary" href="ldrlister.php?ss='.$ss.'&Active='.$active.'" type="submit" onclick="return chkupd()">RETURN</a></td>
 <script>
 function confirmContinue() {
 	var r=confirm("This action cannot be reversed.\\n\\nConfirm this action by clicking OK or CANCEL"); 
@@ -105,11 +87,17 @@ function confirmContinue() {
 	return false;
 	}
 </script>
-<td align="center"><br><a onclick="return confirmContinue()" 
+
+<table border="0" class="table hidden-print">
+<tr><td width="33%">
+<h2 class="hidden-print">Leader Update</h2></td>
+
+<td align="right"><br><a onclick="return confirmContinue()" 
 href="ldrlister.php?rowid='.$r[RowID].'&ss='.$ss.'&action=delete&Active='.$active.'">
 <span title="Delete Leader" class="glyphicon glyphicon-trash" style="color: blue; font-size: 40px;"></span></a>&nbsp;&nbsp;
 
-</td><tr></table>
+</td></tr>
+</table>
 <div class="hidden-print" align="center"><button form="F1" class="btn btn-success" type="submit">UPDATE LEADER</button></div>
 
 
@@ -199,14 +187,13 @@ Zip:
 <input type="text" name="flds[Zip]" value="'.$r[Zip].'">
 </td></tr>
 </table>
-<table>
+<table border=0>
 <tr><td>
 Biography:<br>
 <textarea name="flds[Bio]" rows="10" cols="40">'.$r[Bio].'</textarea>
 </td><td>
 Notes:<br>
 <textarea name="flds[Notes]" rows="10" cols="40">'.$r[Notes].'</textarea>
-
 </td</tr></table>
 ';
 

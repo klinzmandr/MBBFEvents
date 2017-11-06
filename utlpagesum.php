@@ -7,16 +7,18 @@
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet"> 
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
+</head>
+<body>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
-</head>
-<body>
+
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 $dbinuse = "DB in use: mbbf_mbbfdb<br>";
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
@@ -50,7 +52,7 @@ function setval() {
   }
 </script>
 
-<h3>Report on Page Usage <a href="utlindex.php" class="btn btn-primary">Utility Menu</a></h3>
+<h3>Report on Page Usage</h3>
 '.$dbinuse.'<br>
 <!-- <h4>Page useage selected: '.$type.'</h4> -->
 <form name="inform" action="utlpagesum.php" method="post">

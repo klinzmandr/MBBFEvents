@@ -12,6 +12,7 @@
 <script type="text/javascript" src="js/jquery.timepicker.js"></script>
 </head>
 <body>
+
 <?php
 
 $tp1 = isset($_REQUEST['tp1']) ? $_REQUEST['tp1'] : '';
@@ -20,7 +21,7 @@ $tp2 = isset($_REQUEST['tp2']) ? $_REQUEST['tp2'] : '';
 $tp1val = strtotime($tp1);
 $tp2val = strtotime($tp2);
 $diff = $tp2val - $tp1val;
-$hrs = sprintf("$s",$diff/3600);   // diff in hours
+$hrs = sprintf("%s",$diff/3600);   // diff in hours
 $mins = (($tp2val - $tp1val) - ($hrs * (60*60)))/60;   // diff in min
  
 $fmtdiff = sprintf("%2d Hours %2d Min", $hrs, $mins);
@@ -31,21 +32,17 @@ echo "tp1: $tp1, tp2: $tp2, diff: $hrs fmtdiff: $fmtdiff<br>";
 
 ?>
 <h1>Time Picker Testing</h1>
-
+<p>Time selected as the end time can not be a time prior to the start time.  The values of the end time are autormatically limited by the start time selected.  Parmeters of the picker function define the min and max and increments to be used for time selections.</p>
 <form action="timepicker.php" method="post"  id="F1">
 
-1: 
-<input class="tpick" id="tp1" name="tp1" type="text" value="<?=$tp1?>">
+tp1:<input class="tpick" id="tp1" name="tp1" type="text" value="<?=$tp1?>">
 <br>
-2: 
-<input class="tpick" id="tp2" name="tp2" type="text" value="<?=$tp2?>"/>
+tp2:<input class="tpick" id="tp2" name="tp2" type="text" value="<?=$tp2?>"/>
 <br>
 
 <input type="submit" name="submit" value="Submit">
-<input type="reset" name="reset" value="Reset">
 </form>
 <br>
-<div id="dur">xxxxx</div>
 <script>
 $(document).ready(function(){
     $("input.tpick").timepicker({ 
@@ -56,19 +53,6 @@ $(document).ready(function(){
     });
 });
 </script>
-<!-- <script>
-$("#tp1").blur(function(){
-  $("#tp2:text").val("");
-});
-$("").blur(function(){
-  var t1 = $("#tp1").val(); var t2 = $("#tp2").val();
-  var t1val = Date.parse(t1); var t2val = Date.parse(t2);
-  alert("t1val: " + t1);
-  var diff = t2 - t1;
-  $("#dur:text").val(diff);
-});
-</script> -->
-
 
 </body>
 </html>

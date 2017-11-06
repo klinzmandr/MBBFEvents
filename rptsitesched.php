@@ -10,6 +10,7 @@
 <title>Comm Ctr Schedule</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -28,21 +29,21 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $site = isset($_REQUEST['Site']) ? $_REQUEST['Site'] : "";
 
-echo '
-<h1>Venue Schedule of Events
-<a href="rptindex.php" class="hidden-print btn btn-primary">RETURN</a></h1>
-';
+echo '<h3>Venue Schedule of Events</h3>';
 
 if ($action == '') {
 echo '
 <script>
 $(document).ready(function() {
-  $("#Site").val("Community Center");
+  $("#Site").change ( function() {
+    $("#FF").submit();
+  });
 });
 </script>
 
@@ -54,10 +55,11 @@ $(document).ready(function() {
 <form id="FF" action="rptsitesched.php" method="post">
 Site: 
 <select id="Site" name="Site">';
+echo '<option value=""></option>';
 echo readlist('Site');
 echo '</select>
 <input type="hidden" name="action" value="genreport">
-<button form="FF" class="btn btn-primary" type="submit">Generate Report</button>
+<!-- <button form="FF" class="btn btn-primary" type="submit">Generate Report</button> -->
 </form>
 </div> <!-- container -->
 </body>

@@ -13,6 +13,7 @@ date_default_timezone_set('America/Los_Angeles');?>
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link rel="stylesheet" href="css/jquery.timepicker.css" type="text/css"/>
 <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+<link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,6 +35,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
+include 'Incls/mainmenu.inc.php';
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
@@ -52,38 +54,29 @@ $nav['next'] = $nav['curr'] + 1; if ($nav['next'] > $nav['last'])
 $nav['next'] = $nav['last'];
 //echo '<pre> AFTER '; print_r($nav); echo '</pre>';
 
-echo '
-<script>
-var updcnt = 0;         // global variable to count field updates
-
-$(document).ready(function(){
-    $("input").change(function(){
-        updcnt += 1; });
-    $("textarea").change(function(){
-        updcnt += 1; });
-    $("select").change(function(){
-        updcnt += 1; });
-}); 
-</script>
-';
-
 // PROCESS UPDATE ACTION IF INDICATED
 if ($action == 'update') {
   $flds = array();
   $flds = $_REQUEST['flds'];
   $flds[StartTime] = date("H:i:s", strtotime($flds[StartTime]));
   $flds[EndTime] = date("H:i:s", strtotime($flds[EndTime]));
-  if ($flds[Day] == "Friday") $flds[Dnbr] = 1; if ($flds[Day] == "Saturday") $flds[Dnbr] = 2;
-  if ($flds[Day] == "Sunday") $flds[Dnbr] = 3; if ($flds[Day] == "Monday") $flds[Dnbr] = 4; 
-  if ($flds[TripStatus] == 'Delete') $flds[Trip] = '999';
+  if ($flds[Day] == "Friday") $flds[Dnbr] = 1; 
+  if ($flds[Day] == "Saturday") $flds[Dnbr] = 2;
+  if ($flds[Day] == "Sunday") $flds[Dnbr] = 3; 
+  if ($flds[Day] == "Monday") $flds[Dnbr] = 4; 
+  if ($flds[TripStatus] == 'Delete') { 
+    $flds[Trip] = '999';
+    $flds[Leader1] = ''; $flds[Leader2] = '';
+    $flds[Leader3] = ''; $flds[Leader4] = '';
+    } 
 // handle multiselect Event Codes field
   $codes = isset($_REQUEST['Codes']) ? $_REQUEST['Codes'] : '';
 //  print_r($codes);
   if ($codes != "") $flds[Level] = implode(",", $codes);
   else $flds[Level] = "";
-//  echo "<br>flds[Level]: ".$flds[Level]."<br>";
+// echo "<br>flds[Level]: ".$flds[Level]."<br>";
 // handle site:sitecode split - ONLY place site portion into db field
-//   the SiteCode field is already initialized
+// the SiteCode field is already initialized
   if (isset($flds[Site])) {
     list($s, $sc) = explode(':',$flds[Site]); 
     $flds[Site] = $s;
@@ -99,7 +92,7 @@ $(document).ready(function() {
 </script>
 <h3 style="color: red; " id="X">Update Completed.</h3>
 '; 
-  }
+  }   // END UPDATE ACTION 
 
 // ----------------- display event info --------------------- 
 $rowid = $navarray[$ptr];  
@@ -117,26 +110,16 @@ if ($r[Site] != '') {
   $r[Site] = $r[Site] . ':' . $r[SiteCode];
 }
 echo '
-<script>
-function chkupd() {
-  if (updcnt > 0) {
-    if (confirm("Updates made without saving saving them.\\n\\nCancel action or OK to continue.")) 
-      { return true; }
-    return false;
-    }
-  }
-</script>
-
 <table border="0" class="hidden-print table table-condensed">
 <tr>
 <td width="33%" valign="top">
 <h2>Event Update</h2></td>
 <td align="center"><br>
-<a href="evtupdateevent.php?ptr='.$nav['start'].'" onclick="return chkupd()"><span title="START" class="glyphicon glyphicon-fast-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
-<a href="evtupdateevent.php?ptr='.$nav['prev'].'" onclick="return chkupd()"><span title="PREV" class="glyphicon glyphicon-step-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
-<a href="evtlister.php" class="btn btn-primary" onclick="return chkupd()">SEARCH</a>&nbsp;&nbsp;
-<a href="evtupdateevent.php?ptr='.$nav['next'].'" onclick="return chkupd()"><span title="NEXT" class="glyphicon glyphicon-step-forward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
-<a href="evtupdateevent.php?ptr='.$nav['last'].'" onclick="return chkupd()"><span title="LAST" class="glyphicon glyphicon-fast-forward" style="color: blue; font-size: 20px;"></span></a><br>
+<a class="clk" href="evtupdateevent.php?ptr='.$nav['start'].'"><span title="START" class="glyphicon glyphicon-fast-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
+<a class="clk" href="evtupdateevent.php?ptr='.$nav['prev'].'"><span title="PREV" class="glyphicon glyphicon-step-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
+<a href="evtlister.php" class="clk btn btn-primary">SEARCH</a>&nbsp;&nbsp;
+<a class="clk" href="evtupdateevent.php?ptr='.$nav['next'].'"><span title="NEXT" class="glyphicon glyphicon-step-forward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
+<a class="clk" href="evtupdateevent.php?ptr='.$nav['last'].'"><span title="LAST" class="glyphicon glyphicon-fast-forward" style="color: blue; font-size: 20px;"></span></a><br>
 </td>
 <script>
 function confirmContinue() {
@@ -146,11 +129,13 @@ function confirmContinue() {
 	}
 </script>
 
-<td width="33%" align="center">
+<td width="33%" align="right" valign="center">
 <br>
-<a onclick="return confirmContinue()" href="evtlister.php?rowid='.$r[RowID].'&action=delete"><span title="Delete THIS Event" class="glyphicon glyphicon-trash" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="evtduplicateevent.php?rowid='.$r[RowID].'"><span title="Duplicate THIS Event" class="glyphicon glyphicon-duplicate" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;<a href="evtaddevent.php"><span title="Add NEW Event" class="glyphicon glyphicon-plus" style="color: blue; font-size: 30px"></span></a>
+<a class="clk" onclick="return confirmContinue()" href="evtlister.php?rowid='.$r[RowID].'&action=delete"><span title="Delete THIS Event" class="glyphicon glyphicon-trash" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="clk" href="evtduplicateevent.php?rowid='.$r[RowID].'"><span title="Duplicate THIS Event" class="glyphicon glyphicon-duplicate" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;
+<a class="clk" href="evtaddevent.php"><span title="Add NEW Event" class="glyphicon glyphicon-plus" style="color: blue; font-size: 30px"></span></a>
+
 </td></tr></table>
 ';
 
@@ -158,13 +143,21 @@ echo '
 <script>
 function validate() {
   var error = "";
+  
+  var tp1 = Date.parse("1/1/2016 "+$("#StartTime").val());
+  var tp2 = Date.parse("1/1/2016 "+$("#EndTime").val());
+  // console.log("starttime: "+tp1+", endtime: "+tp2);
+  if (tp1 >= tp2) {
+    error += "End time is before or same as start time\\n";
+    }
+
   var d = $("#Trip").val();
   if (d.length < 3) {
     error += "New Trip number must be at least 3 digits.\\n";
     }
     
   if (error.length > 0) {
-    alert(error);
+    alert("Please correct the following:\\n\\n"+error);
     return false;
     }
   var v = new String($("#Program").val());
@@ -195,7 +188,7 @@ $(document).ready(function() {
 });
 </script>';
 
-$ldrlist = setupta();
+$ldrlist = setupta();     // set up type ahead for lead name input fields
 //echo "ldrlist: $ldrlist<br>";
 
 // FORM FIELD DEF's
@@ -305,6 +298,12 @@ Site Room:
 <input id="SiteRoom" type="text" name="flds[SiteRoom]" value="'.$r[SiteRoom].'">
 </td>
 </tr>
+<tr>
+<td valign="top">Site Address or Directions:</td>
+<td id="sa" colspan="2">
+<textarea name="flds[SiteAddr]" cols="50"  colid="SiteAddr">'.$r[SiteAddr].'</textarea>
+</td>
+</tr>
 </table>
 
 <table border="0">
@@ -404,6 +403,7 @@ $(document).ready(function(){
 </html>
 
 <?php
+// set up type ahead for leader input fields
 function setupta() {
   $sql = "SELECT `FirstName`,`LastName` from `leaders` 
   WHERE `Active` = 'YES'
