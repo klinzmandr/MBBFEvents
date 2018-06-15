@@ -34,7 +34,7 @@ echo '
 // create report
 echo '
 <br>
-<a class="hidden-print" href="downloads/starterlisting.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>
+<a class="hidden-print" href="downloads/starterlisting.csv">DOWN LOAD RESULTS&nbsp;&nbsp;<span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span></a>
 </div>
 ';
 

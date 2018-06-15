@@ -1,12 +1,70 @@
 <?php
-$active = isset($_SESSION['SessionUser']) ? $_SESSION['SessionUser'] : '';
-if ($active == '') {
-  echo '<h3>Session time expired.</h3>
-  <a href="index.php" class="btn btn-danger">Login</a>';   
-  exit; 
-  }
 
-print <<<menupart1
+?>
+
+<script src="js/bootstrap-session-timeout.js"></script> 
+<script>
+$(document).ready(function() { 
+  $.sessionTimeout({
+      title: 'SESSION TIMEOUT ALERT',
+      message: '<h3>Your session is about to expire.</h3>',
+      keepAlive: false,
+      logoutUrl: 'indexsto.php',
+      redirUrl: 'indexsto.php',
+      warnAfter:  15*60*1000,
+      redirAfter: 20*60*1000,
+      countdownMessage: 'Time remaining:',
+      countdownBar: true,
+      showButtons: false
+  });
+});
+</script>
+
+<script>
+<!-- Form change variable must be global -->
+var chgFlag = 0;
+
+$(document).ready(function() {
+// disable all buttons of class updb  
+  $('.updb').prop('disabled', true);
+// increment change counts on fields  
+$("form").change(function()  {
+    chgFlag += 1; 
+    $('.updb').prop('disabled', false);    
+    $(".updb").css({"background-color": "red", "color":"black"});
+    // setInterval(blink_text, 1000);
+    });
+$("div.nicEdit-main").change(function(){
+    chgFlag += 1; 
+    $('.updb').prop('disabled', false);    
+    $(".updb").css({"background-color": "red", "color":"black"});
+    // setInterval(blink_text, 1000);
+    });
+
+// reset change count 
+$("[name=reset]").click(function() {
+    // alert("reset clicked")
+    chgFlag = 0;
+    $('.updb').prop('disabled', true);    
+    $(".updb").css({"background-color": "green", "color":"white"});
+    });
+
+// check any class of dropdown or clk before exit allowed
+$(".dropdown,.clk").click(function() {
+    // alert ("form submit done");
+  	if (chgFlag <= 0) { return true; }
+  	var r=confirm("WARNING: All changes made will be LOST.\n\nClick OK to confirm leaving page.\nClick CANCEL to stay on page.");	
+  	if (r == true) { chgFlag = 0; return true; }
+  		return false;
+    });
+});
+
+function blink_text() {
+    $('.updb').fadeOut(500);
+    $('.updb').fadeIn(500);
+}
+</script>
+
 <div class="hidden-print">
 <!-- add padding to top of each page for fixed navbar -->
 <style>
@@ -21,11 +79,27 @@ body { padding-top: 50px; }
 <!-- set nav bar fix to top of every page -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+</div>
+<!-- end hamburger button-->
+
+<!-- collects all tab defs for collapse -->
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+
+<!-- define the menu bar -->
 <ul class="nav nav-tabs">
 <!-- home page -->  
   <li class="dropdown">
     <a id="dLabel" role="button" class="btn btn-default" 
-    href="index.php">Home </a>  
+      href="index.php">Home </a>  
   </li> <!-- dropdown -->
 
 <!-- events -->
@@ -57,9 +131,10 @@ body { padding-top: 50px; }
     <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-default" 
     href="#">Leaders <span class="caret"></span></a>
 		<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-      <li><a href="ldrlister.php?ss=%">List All Leaders</a></li>
-      <li><a href="ldrlister.php">Search Leaders</a></li>
+      <li><a href="ldrlister.php">List All Leaders</a></li>
+<!--       <li><a href="ldrlister.php">Search Leaders</a></li> -->
       <li><a href="ldraddleader.php">Add New Leader</a></li>
+      <li><a href="ldrimagerepomgr.php">Manage Leader Photos</a></li>
       <li class="divider"></li>      
       <li class="dropdown-submenu">
         <a href="#">Leader Reports</a>
@@ -67,6 +142,27 @@ body { padding-top: 50px; }
           <li><a href="rptleaderinfo.php">Leader Info Report</a></li>
           <li><a href="rptleaderactivity.php">Leader Activity Report</a></li>
           <li><a href="rptleaderemailmerge.php">Leader Mail Merge Report</a></li>
+          <!-- <li><a href="#">Item</a></li> -->
+        </ul>  <!-- dropdown-menu -->
+      </li>  <!-- dropdown-submenu -->
+      <li class="divider"></li>
+      <!-- <li><a href="#">Item</a></li> -->
+    </ul>  <!-- dropdown-menu multi-level -->
+  </li>  <!-- dropdown  -->
+
+<!-- venues -->
+  <li class="dropdown">
+    <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-default" 
+    href="#">Venues <span class="caret"></span></a>
+		<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+      <li><a href="venlister.php?ss=%">List All Venues</a></li>
+      <li><a href="venadder.php">Add/Delete Venue(s)</a></li>
+      <li class="divider"></li>      
+      <li class="dropdown-submenu">
+        <a href="#">Venue Reports</a>
+        <ul class="dropdown-menu">
+          <li><a href="rptvenuelist.php">Venue List`</a></li>
+          <li><a href="rptvenueinfo.php">Venue Info Report</a></li>
           <!-- <li><a href="#">Item</a></li> -->
         </ul>  <!-- dropdown-menu -->
       </li>  <!-- dropdown-submenu -->
@@ -84,6 +180,7 @@ body { padding-top: 50px; }
       <li><a href="rptwebsummary.php">Web Site Full Summary Listing</a></li>
       <li><a href="rptstarterlist.php">Starter Report</a></li>
       <li><a href="rptsitesched.php">Site Schedule Report</a></li>
+      <li><a href="rptvalidatedb.php">Event Validation Report</a></li>
       <!-- <li><a href="#">Item</a></li> -->
     </ul>  <!-- dropdown-menu multi-level -->
   </li>  <!-- dropdown  -->
@@ -100,8 +197,11 @@ body { padding-top: 50px; }
       <li><a href="utladmin.php">User Administration</a></li>
       <li><a href="utlresequence.php">Resequence Day Events</a></li>
       <li><a href="utlresetstatus.php">Reset All Event Status</a></li>
-      <li><a href="utlvalidatedb.php">Validate Database</a></li>
       <li><a href="sumextract.php" target="_blank" >SignUp Masters Extract</a></li>
+      <li class=divider></li>
+      <li><a href="planner.php" target="_blank" class="btn btn-success">Planner Preview</a></li>
+      <li><a href="eventleaders.php" target="_blank" class="btn btn-success">Event Leader Preview</a></li>
+      <li><a href="familydayleaders.php" target="_blank" class="btn btn-success">Family Day Leader Preview</a></li>
       <!-- <li><a href="#">Item</a></li> -->
     </ul>  <!-- dropdown-menu multi-level -->
   </li>  <!-- dropdown  -->
@@ -117,11 +217,6 @@ body { padding-top: 50px; }
     </ul>  <!-- dropdown-menu multi-level -->
   </li>  <!-- dropdown  -->
   
-<!-- planner -->  
-  <li class="dropdown">
-    <a id="dLabel" role="button" class="btn btn-success" 
-    href="plannerwithmainmenu.php">Planner Preview </a>  
-  </li> 
 <!-- menu tester -->  
 <!--   <li class="dropdown">
     <a id="dLabel" role="button" class="btn btn-default" 
@@ -130,42 +225,12 @@ body { padding-top: 50px; }
  -->
 </ul>  <!-- class="nav nav-tabs" -->
 
-</nav>  <!-- class = "navbar" -->
+</div>  <!-- class="collapse navbar-collapse" -->
+
+</nav>  <!-- class="navbar" -->
 
 <!-- end menu bar -->
 
-<script>
-<!-- Form change variable must be global -->
-var chgFlag = 0;
-
-$(document).ready(function(){
-// increment change counts on fields  
-  $("input").change(function(){
-    chgFlag += 1; });
-  $("textarea").change(function(){
-    chgFlag += 1; });
-  $("select").change(function(){
-    chgFlag += 1; });
-// reset change count 
-  $("[name=reset]").click ( function() {
-    // alert("reset clicked")
-    chgFlag = 0;
-    });
-
-// check any class of dropdown or clk before exit allowed
-  $(".dropdown,.clk").click ( function() {
-    // alert ("form submit done");
-  	if (chgFlag <= 0) { return true; }
-  	var r=confirm("WARNING: All changes made will be LOST.\\n\\nClick OK to confirm leaving page.\\nClick CANCEL to stay on page.");	
-  	if (r == true) { chgFlag = 0; return true; }
-  		return false;
-    });
-}); 
-
-</script>
-menupart1;
-
-print <<<theModal
 <!-- start of modal -->
  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">
@@ -184,10 +249,9 @@ print <<<theModal
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>  <!-- modal-footer -->
-</div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div>  <!-- /.modal-content -->
+</div>  <!-- /.modal-dialog -->
+</div>  <!-- /.modal -->
 <!-- end of modal -->
-theModal;
-echo '</div>';
-?>
+
+</div>  <!-- class="hidden-print" -->

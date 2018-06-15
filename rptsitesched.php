@@ -22,7 +22,20 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<div class="container">
+<script>
+$(document).ready(function() {
+  $("#helptext").hide();
+
+$("#Site").change ( function() {
+    $("#FF").submit();
+  });
+
+$("#help").click (function (){
+  $("#helptext").toggle();
+  });
+});
+</script>
+
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
@@ -35,38 +48,21 @@ include 'Incls/mainmenu.inc.php';
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $site = isset($_REQUEST['Site']) ? $_REQUEST['Site'] : "";
 
-echo '<h3>Venue Schedule of Events</h3>';
-
-if ($action == '') {
 echo '
-<script>
-$(document).ready(function() {
-  $("#Site").change ( function() {
-    $("#FF").submit();
-  });
-});
-</script>
+<h3>Venue Schedule of Events
+<span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h3>
+';
 
+echo '
+<div id="helptext">
 <p>This report provides the scheduled actvities for the venue seleted.</p>
 <p>Selection of the first selection item (a blank) will select all venues and list all events for each.</p>
 <p>A download CSV file is created and is available with the same results as shown on the page except that the venue name is in column 1 of each row of the result.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
-
-<form id="FF" action="rptsitesched.php" method="post">
-Site: 
-<select id="Site" name="Site">';
-echo '<option value=""></option>';
-echo readlist('Site');
-echo '</select>
-<input type="hidden" name="action" value="genreport">
-<!-- <button form="FF" class="btn btn-primary" type="submit">Generate Report</button> -->
-</form>
-</div> <!-- container -->
+</div>
 </body>
-</html>
-';
-exit;
-}
+</html>';
+
 // echo '<h3>'.$site.'</h3>';
 if ($site == '') $site = '%';
 else list($site, $code) = explode(':', $site);
@@ -80,10 +76,6 @@ ORDER BY `Site` ASC, `Dnbr` ASC, `StartTime` ASC;';
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 
-if ($rc == 0) {
-  echo '<h3>No events found for site: '.$site.'</h3>';
-  exit;
-  }
 // Day	Start Time	Event (count)
 //  second line (hidden): Site Event  1 line per event
 $venuearray = array();
@@ -98,9 +90,23 @@ $mask = '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
 $csvmask = '"%s","%s","%s","%s","%s","%s"'."\n";
 $csv = 'Site,Day,StartTime,Duration,Event,SiteRoom'."\n";
 
-echo '
-<a class="hidden-print" href="downloads/siteschedule.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
+echo '<table><tr><td>
+<form id="FF" action="rptsitesched.php" method="post">
+<select id="Site" name="Site">
+<option value="">Sites</option>';
+echo readvenlist('Site');
+echo '</select>
+<input type="hidden" name="action" value="genreport">
+<!-- <button form="FF" class="btn btn-primary" type="submit">Generate Report</button> -->
+</form>
+</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>
+<a class="hidden-print" href="downloads/siteschedule.csv">DOWN LOAD RESULTS&nbsp;&nbsp;<span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span></a>
+</td></tr></table>';
 
+if ($rc == 0) {
+  echo '<h3>No events found for site: '.$site.'</h3>';
+  exit;
+  }
 
 foreach ($venuearray as $k => $v) {
   //echo "<pre> venue $k "; print_r($v); echo '</pre>';

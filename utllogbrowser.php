@@ -11,6 +11,19 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
+<script>
+$(document).ready(function() {
+  $("#helptext").hide();
+
+$("#Site").change ( function() {
+    $("#FF").submit();
+  });
+
+$("#help").click (function (){
+  $("#helptext").toggle();
+  });
+});
+</script>
 
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -27,8 +40,7 @@ $ed = isset($_REQUEST['ed']) ? $_REQUEST['ed'] : date('Y-m-d 23:59:59', strtotim
 $filter = $_REQUEST['filter'];
 $dbx = $_REQUEST['db'];
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
-
-print <<<scriptForm
+?>
 <script>
 function chkform() {
   var d1 = $('#sd').val(); var d2 = $('#ed').val();
@@ -52,10 +64,11 @@ function setval() {
   return true;
   }
 </script>
-<h3>Database Log Inspector</h3>
+<h3>Database Log Inspector
+<span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h3>
 <form action="utllogbrowser.php" method="post" onsubmit="return chkform()">
-Start: <input type="text" id="sd" name="sd" value="$sd" placeholder="YYYY-MM-DD HH:MM" onchange="return setval()">
-End: <input type="text" id="ed" name="ed" value="$ed" placeholder="YYYY-MM-DD HH:MM">
+Start: <input type="text" id="sd" name="sd" value="<?=$sd?>" placeholder="YYYY-MM-DD HH:MM" onchange="return setval()">
+End: <input type="text" id="ed" name="ed" value="<?=$ed?>" placeholder="YYYY-MM-DD HH:MM">
 <input autofocus type="text" id="filter" name="filter" value="" placeholder="Filter">
 <input type="hidden" name="action" value="go">
 <input type="submit" name="submit" value="submit">
@@ -81,17 +94,15 @@ $('#ed').datetimepicker({
 });
 </script>
 
-scriptForm;
-
-if ($action == '') {
-  echo "<h3>Database Activity Log Viewer</h3>
-<p>This utility allows the activity log of the either the mbr/vol database or the cts2 database to be examined.  These logs are where all database requests are recorded along with the date/time, the originating page address and userid performing the action.</p>
+<?php
+echo "
+<div id='helptext'?<p>This utility allows the activity log of the either the mbr/vol database or the cts2 database to be examined.  These logs are where all database requests are recorded along with the date/time, the originating page address and userid performing the action.</p>
 <p>All actions within the date/time range are listed.  If there is a search string entered, it will be used to filter those actions listing only those that have matching strings in the userid and log activity fields.</p>
 <p>The date format will default to the system standard of &apos;YYYY-MM-DD HH:MM:SS&apos; for any date entered.  This will allow very narrow date/time ranges to be specific - right down to the second.</p>
 <p>Default date range is from midnight of the current date to midnight of the date 30 days prior.</p>
+</div>  <!-- helptext -->
 </div>";  
-exit;
-  }
+
 // do log lookup using db indicated
 if (strlen($filter) > 0) $filter = "%$filter%";
 else $filter = '%';

@@ -3,30 +3,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 // connect to the database for all pages
 date_default_timezone_set('America/Los_Angeles');
 //echo '<pre> SERVER '; print_r($_SERVER); echo '</pre>';
-// check session timeout
-$time = $_SERVER['REQUEST_TIME'];
-//echo "request time: $time<br>";
-// for a 30 minute timeout, specified in seconds
-//$timeout_duration = 1800;
-// for a 15 minute timeout, specified in seconds
-$timeout_duration = 900;
-// testing timeout period
-//$timeout_duration = 15;
-/**
- * Here we look for the user’s LAST_ACTIVITY timestamp. If
- * it’s set and indicates our $timeout_duration has passed,
- * blow away any previous $_SESSION data and start a new one.
- */
-if (isset($_SESSION[LAST_ACTIVITY]) && ($time - $_SESSION[LAST_ACTIVITY]) > $timeout_duration) {
-  session_unset();    
-  session_destroy();
-  echo '<h3>Session timed out.</h3>
-  <h4>No activity in last '.$timeout_duration.' seconds</h4>
-  <a href="index.php" class="btn btn-danger">LOGIN AGAIN</a>';  // timed out - bail back to index.php
-  exit; 
-  }
-// Finally, update LAST_ACTIVITY so that our timeout is based on it and not the user’s login time.
-$_SESSION[LAST_ACTIVITY] = $time;
+
 include '../.MBBFDBParamInfo';
 $mysqli = new mysqli("localhost", DBUserName, DBPassword, ProdDBName);
 if ($mysqli->connect_errno) {
@@ -82,12 +59,14 @@ foreach ($fields as $k => $v) {
 $f = rtrim($f, ', ');
 $sql .= $f . ' WHERE ' . $where;
 // echo "Update SQL: $sql<br>";
-addlogentry($sql);
+addlogentry("Update: ".$sql);
 $res = $mysqli->query($sql);
 $rows = $mysqli->affected_rows;
 if (!$res) {
- 	showError($res);	
+ 	showError($res);
+ 	return(0);	
 	}
+if ($rows == 0) $rows = 1;  // catch update with no fields
 return($rows);
 }
 
@@ -122,7 +101,7 @@ if (!$res) {
 	$err = showError($res);
 	return($err);
 	}
-addlogentry($sql);
+addlogentry("Insert: ".$sql);
 //echo "Insert SQL: $sql<br>";
 //echo "affected rows: $rows<br>";
 return($rows);
@@ -160,7 +139,8 @@ errMsg;
 function addlogentry($text) {
 	global $mysqli; $errno = '';
 	if (isset($_SESSION['DB_ERROR'])) { echo 'Error!<br>'; return(FALSE); }
-	$user = isset($_SESSION['SessionUser']) ? $_SESSION['SessionUser']: 'Web User';
+	$loc = $_SERVER['REMOTE_ADDR'];
+	$user = isset($_SESSION['SessionUser']) ? $_SESSION['SessionUser']."@$loc": "Web User@$loc";
 	$seclevel = isset($_SESSION['SecLevel']) ? $_SESSION['SecLevel'] : 'Normal';
 	$page = $_SERVER['PHP_SELF'];
 	$txt = addslashes($text);

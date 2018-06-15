@@ -22,6 +22,16 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+  $("#helptext").hide();
+
+$("#help").click (function (){
+  $("#helptext").toggle();
+  });
+});
+</script>
+
 <div class="container">
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -31,20 +41,14 @@ include 'Incls/datautils.inc.php';
 include 'Incls/mainmenu.inc.php';
 //include 'Incls/listutils.inc.php';
 
-// Process listing based on selected criteria
-$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
+echo '
+<h3>Leader Activity&nbsp;&nbsp;
+<span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h3>
+';
 
 echo '
-<h3>Leader Activity</h3>
+<p id="helptext">The report lists all event leaders that have assigned events in at least one of the four leader roles.  Each leader is listed with their assignments listed by day and event start time and duratiion hours. The event location and name are also listed.</p>
 ';
-
-if ($action == '') {
-  echo '
-<p>The report lists all event leaders that have assigned events in at least one of the four leader roles.  Each leader is listed with their assignments listed by day and event start time and duratiion hours. The event location and name are also listed.</p>
-<a class="btn btn-primary" href="rptleaderactivity.php?action=genreport"> CONTINUE</a>
-';
-exit; 
-  }
   
 // generate leader activity report
 // excluding events that are marked as deleted

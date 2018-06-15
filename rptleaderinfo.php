@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- The above 3 meta tags *must* come first in the head; -->
 <!-- any other head content must come *after* these tags -->
-<title>Report Page Template</title>
+<title>Leader Info</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
@@ -35,6 +35,7 @@ include 'Incls/mainmenu.inc.php';
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $active = isset($_REQUEST['Active']) ? $_REQUEST['Active'] : "";
+$ldrtype = isset($_REQUEST['ldrtype']) ? $_REQUEST['ldrtype'] : "";
 
 echo '
 <h3>Leader Info Report</h3>';
@@ -46,9 +47,8 @@ if ($action == '') {
 <p>The export file does not exactly mirror the page output and contains all fields.</p>  
   
 <script>
-$(document).ready ( function () {
-  
-  $("#SV").change ( function() {
+$(document).ready ( function () {  
+$("#SV").change ( function() {
   var sv = $("#SV").val();
   if (sv == "") { return false; }
   $("form").submit();
@@ -58,26 +58,37 @@ $(document).ready ( function () {
 </script>
 
 <form action="rptleaderinfo.php">
-List Active: <select id="SV" name="Active">
-<option value=""></option><option value="%">All</option><option value="Yes">Yes</option><option value="No">No</option>
+List Active: <select name="Active">
+<option value=""></option>
+<option value="%">All</option>
+<option value="Yes">Yes</option>
+<option value="No">No</option>
+</select>&nbsp;&nbsp;&nbsp;&nbsp;
+Leader Type: 
+<select id=LT name=ldrtype>
+<option value=''></option>
+<option value='LdrEvent'>Event Leaders</option>
+<option value='LdrDay'>Day Leaders</option>
+<option value=''>Both</option>
 </select>
 <input type="hidden" name="action" value="genreport">
-<!-- <input type="submit" name="submit" value="Create Report"> -->
+<input type="submit" name="submit" value="Create Report">
 </form>
 </div>
 formPart;
-
 exit;
   }
 
-$sql = 'SELECT * FROM `leaders` 
-WHERE `Active` LIKE "'.$active.'" ORDER BY `LastName` ASC;';
+if (strlen($ldrtype)) $s = " AND `$ldrtype` = 'TRUE' "; 
 
-//echo "<br>sql: $sql<br>";
+$sql = "SELECT * FROM `leaders` 
+WHERE `Active` LIKE '$active' $s ORDER BY `LastName` ASC;";
+
+// echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 if ($rc == 0) {
-  echo '<h4>Row '.$rowid.' not found</h4>';
+  echo '<h3>No results to list.</h3>';
   exit;
   }
 
@@ -102,6 +113,8 @@ $csv = '"First Name","Last Name","Pri Phone","Sec Phone","Email Address","Addres
 while ($r = $res->fetch_assoc()) {
   //echo '<pre> full record for '.$r[RowID].' '; print_r($r); echo '</pre>';
 if ($r[Bio] == "") $r[Bio] = "None provided";
+$r[Bio] = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $r[Bio]);
+
 $csv .= '"'.$r[FirstName].'","'.$r[LastName].'","'.$r[PrimaryPhone].'","'.$r[SecondaryPhone].'","'.$r[Email].'","'.$r[Address1].'","'.$r[Address2].'","'.$r[City].'","'.$r[State].'","'.$r[Zip].'","'.$r[Active].'","'.$r[Bio].'"'."\n";
 echo '
 <tr>

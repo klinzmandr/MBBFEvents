@@ -3,8 +3,9 @@
 function checkcred($uid) {
 $pw = isset($_REQUEST['pw']) ? $_REQUEST['pw'] : $_SESSION[$uid];
 $combo = $uid .':'. $pw;
+// echo "combo: $combo<br>";
 if (strlen($pw) == 0) { 
-//  echo "pw: $pw<br>";
+  // echo "pw: $pw<br>";
   echo '
   <script>
   function dopw() {
@@ -28,22 +29,23 @@ if (strlen($pw) == 0) {
   ';
   exit;
   }
-$pwds = file('../.MBBFSecFile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-//echo '<pre> pwds '; print_r($pwds); echo '</pre>';
-//echo '<pre> combo '; print_r($combo); echo '</pre>';
+// echo "reading passwords<br>";
+$pwds = readlistarray('Users');
+// echo '<pre> pwds '; print_r($pwds); echo '</pre>';
+// echo '<pre> combo '; print_r($combo); echo '</pre>';
 
 if (!in_array($combo, $pwds)) {
   unset($_SESSION[$uid]);
-//  echo 'Not in file<br>';
+  echo 'Userid and Password not registered.<br>';
   return(false);
   } 
-//echo 'Found userid and password';
+// echo 'Found userid and password';
 $_SESSION[$uid] = $pw;
 return(true);
 }
 
 function geteventstart() {
-  $pwds = file('../.MBBFSecFile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  $pwds = readlistarray('Users');
 //echo '<pre> pwds '; print_r($pwds); echo '</pre>';
 //echo '<pre> combo '; print_r($combo); echo '</pre>';
   foreach ($pwds as $l) {
@@ -52,4 +54,17 @@ function geteventstart() {
   }
   return($startdate);
   }
+
+function getregstart() {
+  return('xxxxx');
+  $pwds = readlistarray('Users');
+//echo '<pre> pwds '; print_r($pwds); echo '</pre>';
+//echo '<pre> combo '; print_r($combo); echo '</pre>';
+  foreach ($pwds as $l) {
+    list($key, $startdate) = explode(':', $l);
+    if ($key == 'regstart') break;
+  }
+  return($startdate);
+  }
+  
 ?>

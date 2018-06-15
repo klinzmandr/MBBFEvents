@@ -22,10 +22,9 @@ include 'Incls/checkcred.inc.php';
 if ( !checkcred('Admin') ) {
 //  echo "pw passed<br>";
   echo 'Incorrect password entered for administrative access.<br>
-  <a href="utlindex.php" class="btn btn-danger">RETURN</a>';
+  <a href="index.php" class="btn btn-danger">RETURN</a>';
   exit;
   }
-
 
 $file = isset($_REQUEST['file'])? $_REQUEST['file'] : "";
 $action = isset($_REQUEST['action'])? $_REQUEST['action'] : "";
@@ -50,12 +49,11 @@ $(document).ready(function() {
 
 echo '<h2>List Maintenance Utility</h2>';
 
-	echo '<p>Choose a menu option to update a specific list.</p>
+echo '<p>Choose a menu option to update a specific list.</p>
 	<p>All lists use a free form text file to define the list items used.  Lines that begin with a double slash (//) are provided for comments (which are encouraged.)  The comment lines as well as blank lines are ignored </p>
 ';
 	
 	echo "<p>Make sure to save your changes after performaing any updates.</p>";
-	
 
 // NOTE: 'value' parameter of option tag MUST be the filename (without .txt) in the cfg folder 
 echo '

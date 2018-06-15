@@ -6,27 +6,31 @@ date_default_timezone_set('America/Los_Angeles');?>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; -->
-<!-- any other head content must come *after* these tags -->
 <title>Event Update</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link rel="stylesheet" href="css/jquery.timepicker.css" type="text/css"/>
 <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+
+<style>
+.default {
+  cursor: default;
+  }
+.mod { 
+  color: blue; 
+  font-weight: 
+  bold; text-decoration: 
+  underline; 
+  cursor: pointer;  
+  }
+</style>
 
 <div class="container">
 <?php
@@ -35,7 +39,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
-include 'Incls/mainmenu.inc.php';
+include 'Incls/mainmenu.inc.php'; 
 
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
@@ -70,11 +74,12 @@ if ($action == 'update') {
     $flds[Leader3] = ''; $flds[Leader4] = '';
     } 
 // handle multiselect Event Codes field
-  $codes = isset($_REQUEST['Codes']) ? $_REQUEST['Codes'] : '';
-//  print_r($codes);
-  if ($codes != "") $flds[Level] = implode(",", $codes);
-  else $flds[Level] = "";
+  $lvls = isset($_REQUEST['Codes']) ? $_REQUEST['Codes'] : '';
+//  print_r($lvls);
+  if ($lvls != "") $flds[Level] = implode(",", $lvls);  // string levels for db update
+  else $flds[Level] = "";                               // no levels selected for update
 // echo "<br>flds[Level]: ".$flds[Level]."<br>";
+
 // handle site:sitecode split - ONLY place site portion into db field
 // the SiteCode field is already initialized
   if (isset($flds[Site])) {
@@ -91,13 +96,13 @@ $(document).ready(function() {
 });
 </script>
 <h3 style="color: red; " id="X">Update Completed.</h3>
-'; 
+  ';
   }   // END UPDATE ACTION 
 
 // ----------------- display event info --------------------- 
 $rowid = $navarray[$ptr];  
 //echo "ptr: $ptr, rowid: $rowid<br>";
-$sql = 'SELECT * FROM `events` WHERE `RowID` = "'.$rowid.'";';
+$sql = "SELECT * FROM `events` WHERE `RowID` = \"$rowid\";";
 
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
@@ -109,17 +114,18 @@ $r = $res->fetch_assoc();
 if ($r[Site] != '') {
   $r[Site] = $r[Site] . ':' . $r[SiteCode];
 }
-echo '
+?>
+
 <table border="0" class="hidden-print table table-condensed">
 <tr>
 <td width="33%" valign="top">
 <h2>Event Update</h2></td>
 <td align="center"><br>
-<a class="clk" href="evtupdateevent.php?ptr='.$nav['start'].'"><span title="START" class="glyphicon glyphicon-fast-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
-<a class="clk" href="evtupdateevent.php?ptr='.$nav['prev'].'"><span title="PREV" class="glyphicon glyphicon-step-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
+<a class="clk" href="evtupdateevent.php?ptr=<?=$nav['start']?>"><span title="START" class="glyphicon glyphicon-fast-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
+<a class="clk" href="evtupdateevent.php?ptr=<?=$nav['prev']?>"><span title="PREV" class="glyphicon glyphicon-step-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
 <a href="evtlister.php" class="clk btn btn-primary">SEARCH</a>&nbsp;&nbsp;
-<a class="clk" href="evtupdateevent.php?ptr='.$nav['next'].'"><span title="NEXT" class="glyphicon glyphicon-step-forward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
-<a class="clk" href="evtupdateevent.php?ptr='.$nav['last'].'"><span title="LAST" class="glyphicon glyphicon-fast-forward" style="color: blue; font-size: 20px;"></span></a><br>
+<a class="clk" href="evtupdateevent.php?ptr=<?=$nav['next']?>"><span title="NEXT" class="glyphicon glyphicon-step-forward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
+<a class="clk" href="evtupdateevent.php?ptr=<?=$nav['last']?>"><span title="LAST" class="glyphicon glyphicon-fast-forward" style="color: blue; font-size: 20px;"></span></a><br>
 </td>
 <script>
 function confirmContinue() {
@@ -131,15 +137,12 @@ function confirmContinue() {
 
 <td width="33%" align="right" valign="center">
 <br>
-<a class="clk" onclick="return confirmContinue()" href="evtlister.php?rowid='.$r[RowID].'&action=delete"><span title="Delete THIS Event" class="glyphicon glyphicon-trash" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a class="clk" href="evtduplicateevent.php?rowid='.$r[RowID].'"><span title="Duplicate THIS Event" class="glyphicon glyphicon-duplicate" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="clk" onclick="return confirmContinue()" href="evtlister.php?rowid=<?=$r[RowID]?>&action=delete"><span title="Delete THIS Event" class="glyphicon glyphicon-trash" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="clk" href="evtduplicateevent.php?rowid=<?=$r[RowID]?>"><span title="Duplicate THIS Event" class="glyphicon glyphicon-duplicate" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;
 <a class="clk" href="evtaddevent.php"><span title="Add NEW Event" class="glyphicon glyphicon-plus" style="color: blue; font-size: 30px"></span></a>
-
 </td></tr></table>
-';
 
-echo '
 <script>
 function validate() {
   var error = "";
@@ -168,26 +171,26 @@ function validate() {
   $("#Event").val(v);
   return true;
   }
-</script>';
+</script>
 
-// SELECT FIELD ON-LOAD SETUPS
-echo '
 <script>
+// SELECT FIELD ON-LOAD SETUPS
 $(document).ready(function() {
-  $("#Day").val("'.$r[Day].'");
-  $("#Type").val("'.$r[Type].'");
-  $("#TripStatus").val("'.$r[TripStatus].'");
-  $("#Transportation").val("'.$r[Transportation].'");
-  $("#TransportNeeded").val("'.$r[TransportNeeded].'");
-  $("#FeeRequired").val("'.$r[FeeRequired].'");
-  $("#MultiEvent").val("'.$r[MultiEvent].'");
-  $("#TypeOfEvent").val("'.$r[TypeOfEvent].'");
-  $("#SC").text("'.$r[SiteCode].'");
-  $("#Site").val("'.$r[Site].'");
-  $("#SiteCode").val("'.$r[SiteCode].'");  
+  $("#Day").val("<?=$r[Day]?>");
+  $("#Type").val("<?=$r[Type]?>");
+  $("#TripStatus").val("<?=$r[TripStatus]?>");
+  $("#Transportation").val("<?=$r[Transportation]?>");
+  $("#TransportNeeded").val("<?=$r[TransportNeeded]?>");
+  $("#FeeRequired").val("<?=$r[FeeRequired]?>");
+  $("#MultiEvent").val("<?=$r[MultiEvent]?>");
+  $("#TypeOfEvent").val("<?=$r[TypeOfEvent]?>");
+  $("#SC").text("<?=$r[SiteCode]?>");
+  $("#Site").val("<?=$r[Site]?>");
+  $("#SiteCode").val("<?=$r[SiteCode]?>");  
 });
-</script>';
+</script>
 
+<?php
 $ldrlist = setupta();     // set up type ahead for lead name input fields
 //echo "ldrlist: $ldrlist<br>";
 
@@ -196,130 +199,168 @@ $t = sprintf("%03s",$r[Trip]);
 $diff = timediff($r[StartTime],$r[EndTime]);
 $stime = ($r[StartTime] != '') ? date("g:i A", strtotime($r[StartTime])) : ''; 
 $etime = ($r[EndTime]   != '') ? date("g:i A", strtotime($r[EndTime])) : '';
+
 // set up multi select init string for Level code field
-// echo '<pre> codes '; print_r($codes); echo '</pre>';
+// echo '<pre>lvls '; print_r($lvls); echo '</pre>';
 if ($r[Level] != "") {
   $valarray = explode(',',$r[Level]);
   $vals = "['" . implode("','", $valarray) . "']";
   }
 else $vals = "[]";
-// echo "<br>vals: $vals<br>";
+// echo "dblevels: $r[Level], vals: $vals<br>";
+?>
 
-echo '
-<button form="F1" class="btn btn-success hidden-print" type="submit">APPLY UPDATES TO EVENT: </button>&nbsp;<font size="+2">'.$r[Event].'</font>
+<button form="F1" class="updb btn btn-success hidden-print" type="submit">APPLY UPDATES TO EVENT: </button>&nbsp;<font size="+2"><?=$r[Event]?></font>
 
 <form id="F1" action="evtupdateevent.php" method="post" onsubmit="return validate()">
-<table border="0">
-<input type="hidden" name="flds[RowID]" value="'.$r[RowID].'">
+<table border="1">
+<input type="hidden" name="flds[RowID]" value="<?=$r[RowID]?>">
 <tr><td>
 Trip Number: 
-<input autofocus type="text" name="flds[Trip]" value="'.$t.'" size="5" id="Trip">
+<input autofocus type="text" name="flds[Trip]" value="<?=$t?>" size="5" id="Trip">
 </td><td>
 Day: 
-<select id="Day" name="flds[Day]">';
-echo readlist('Day');
-echo '</select>
+<select id="Day" name="flds[Day]">
+<?php echo readlist('Day'); ?>
+</select>
 </td><td>
 Trip Status: 
-<select id="TripStatus" name="flds[TripStatus]">';
-echo readlist('TripStatus');
-echo '</select>
+<select id="TripStatus" name="flds[TripStatus]">
+<?php echo readlist('TripStatus'); ?>
+</select>
 </td></tr>
 <tr><td>
 Start Time: 
-<input type="text" name="flds[StartTime]" value="'.$stime.'" size="15" class="tpick" id="StartTime">
+<input type="text" name="flds[StartTime]" value="<?=$stime?>" size="15" class="tpick" id="StartTime">
 </td><td>
 End Time: 
-<input type="text" name="flds[EndTime]" value="'.$etime.'" size="15" class="tpick" id="EndTime">
+<input type="text" name="flds[EndTime]" value="<?=$etime?>" size="15" class="tpick" id="EndTime">
 </td><td>
-Duration: <span id="DUR">'.$diff.'</span>
+Duration: <span id="DUR"><?=$diff?></span>
 </td></tr>
 <tr><td colspan="3">
 Event Name: 
-<input type="text" name="flds[Event]" value="'.$r[Event].'" size="60" id="Event">
+<input type="text" name="flds[Event]" value="<?=$r[Event]?>" size="60" id="Event">
 </td>
 </tr>
 <tr>
 <td>
 Trip Type:
-<select id="Type" name="flds[Type]">';
-echo readlist('TripType');
-echo '</select>
+<select id="Type" name="flds[Type]">
+<?php echo readlist('TripType'); ?>
+</select>
 </td>
 <td>
 Event Type: 
-<select id="TypeOfEvent" name="flds[TypeOfEvent]">';
-echo readlist('TypeOfEvent');
-echo '</select>
+<select id="TypeOfEvent" name="flds[TypeOfEvent]">
+<?php echo readlist('TypeOfEvent'); ?>
+</select>
 </td>
 <script type="text/javascript">
 $(document).ready(function () {
-
-  var initValues = '.$vals.';
-  $("#Codes").val(initValues);
-  $("#Codes").multiselect({
+  var initValues = <?=$vals?>;
+  $("#Codex").val(initValues);
+  $("#Codex").multiselect({
     numberDisplayed: 5,
     delimiterText: ",",
     nonSelectedText: "None Selected"
     });
-  $("#Codes").multiselect("refresh");
-
+  $("#Codex").multiselect("refresh");
 });
 </script>
 <td>
 Event Level: 
-<select id="Codes" name="Codes[]" multiple>';
-echo readlist('EventLevels');
-echo '</select>
+<select id="Codex" name="Codes[]" multiple>
+<?php echo readlist('EventLevels'); ?>
+</select>
 </td></tr>
 <script>
 // get site code from Site drop down list and update site code fields
 $(document).ready(function() {
-  $("#Site").change(function() {
+// split site name and site code when it is changed  
+$("#Site").change(function() {
     var x = $("#Site").val();
     var parts = x.split(":");
     $("#SC").text(parts[1]);
     $("#SiteCode").val(parts[1]);
   });
+// get modal for a leader  
+$(".ld").click(function() {
+    var ldrname = $(this).find('input').val();
+    if (ldrname.length == 0) return;
+    // alert("ldr cell clicked for: " + ldrname);
+    ldrname = ldrname.replace(/[,\s]/g, "");
+    // alert("Modal button clicked: " + ldrname);
+    $.post("plannerldrjson.php",
+      {
+          name: ldrname
+      },
+      function(data, status){
+        // alert("Data: " + data + "\\nStatus: " + status);
+        $("#content").html(data); 
+        $("#ModalLabel").text("Leader Information"); 
+        $('#ldrModal').modal('toggle', { keyboard: true });
+        });  // end $.post logic 
+      });
+ 
+// get modal for a venue/site  
+  $("#VID").click(function() {
+    var vencode = $("#SC").html();
+    vencode = vencode.replace(/[,\s]/g, "");
+    // alert("Modal button clicked: " + vencode);
+    $.post("evtvenuejson.php",
+      {
+        vencode: vencode
+      },
+      function(data, status) {
+        // alert("Data: " + data + "\\nStatus: " + status);
+        $("#content").html(data);
+        $("#ModalLabel").text("Venue Information"); 
+        $('#ldrModal').modal('toggle', { keyboard: true });
+        });  // end $.post logic 
+    });
 });
 </script>
+
 <tr><td>
 Site:
-<select id="Site" name="flds[Site]">';
-echo readlist('Site');
-echo '</select>
+<select id="Site" name="flds[Site]">
+<?php echo readvenlist('Site'); ?>
+</select>
 </td>
-<td>
+<td class="mod" id="VID">
 Site Code: <span id="SC"></span>
 <input id="SiteCode" type="hidden" name="flds[SiteCode]" value="">
 </td>
 <td> 
 Site Room: 
-<input id="SiteRoom" type="text" name="flds[SiteRoom]" value="'.$r[SiteRoom].'">
+<input id="SiteRoom" type="text" name="flds[SiteRoom]" value="<?=$r[SiteRoom]?>">
 </td>
 </tr>
 <tr>
 <td valign="top">Site Address or Directions:</td>
 <td id="sa" colspan="2">
-<textarea name="flds[SiteAddr]" cols="50"  colid="SiteAddr">'.$r[SiteAddr].'</textarea>
+<textarea name="flds[SiteAddr]" cols="50"  colid="SiteAddr"><?=$r[SiteAddr]?></textarea>
 </td>
 </tr>
 </table>
 
 <table border="0">
-<tr><td>
+<tr><td class="ld mod">
 Leader 1: 
-<input  class="LDR" data-provide="typeahead" id="Leader1" type="text" name="flds[Leader1]" value="'.$r[Leader1].'">
-</td><td colspan="2">
+<input  class="LDR" data-provide="typeahead" id="Leader1" type="text" name="flds[Leader1]" value="<?=$r[Leader1]?>">
+</td>
+<td class="ld mod" colspan="2">
 Leader 2: 
-<input class="LDR" data-provide="typeahead" id="Leader2" type="text" name="flds[Leader2]" value="'.$r[Leader2].'">
-</td></tr>
-<tr><td>
+<input class="LDR" data-provide="typeahead" id="Leader2" type="text" name="flds[Leader2]" value="<?=$r[Leader2]?>">
+</td></tr><tr>
+<td class="ld mod">
 Leader 3: 
-<input class="LDR" data-provide="typeahead" id="Leader3" type="text" name="flds[Leader3]" value="'.$r[Leader3].'">
-</td><td>
+<input class="LDR" data-provide="typeahead" id="Leader3" type="text" name="flds[Leader3]" value="<?=$r[Leader3]?>">
+</td>
+<td class="ld mod">
 Leader 4: 
-<input class="LDR" data-provide="typeahead" id="Leader4" type="text" name="flds[Leader4]" value="'.$r[Leader4].'">
+<input class="LDR" data-provide="typeahead" id="Leader4" type="text" name="flds[Leader4]" value="<?=$r[Leader4]?>">
 </td></tr>
 </table>
 <table border="0">
@@ -330,7 +371,7 @@ Fee Required(Y/N):
 </select>
 </td><td colspan="2">
 FEE: 
-<input id="FEE" type="text" name="flds[FEE]" value="'.$r[FEE].'" size="6" ><br>
+<input id="FEE" type="text" name="flds[FEE]" value="<?=$r[FEE]?>" size="6" ><br>
 </td></tr>
 <tr><td>
 Transport Needed(Y/N): 
@@ -339,13 +380,13 @@ Transport Needed(Y/N):
 </select>
 </td><td colspan="2">
 Transportation:
-<select id="Transportation" name="flds[Transportation]">';
-echo readlist('Transportation');
-echo '</select><br>
+<select id="Transportation" name="flds[Transportation]">
+<?php echo readlist('Transportation'); ?>
+</select><br>
 </td></tr>
 <tr><td>
 Maximum Attendees: 
-<input type="text" name="flds[MaxAttendees]" value="'.$r[MaxAttendees].'" size="5" id="MaxAttendees">
+<input type="text" name="flds[MaxAttendees]" value="<?=$r[MaxAttendees]?>" size="5" id="MaxAttendees">
 </td><td>
 Multi-Event(Y/N): 
 <select id="MultiEvent" name="flds[MultiEvent]">
@@ -353,31 +394,46 @@ Multi-Event(Y/N):
 </select>
 </td><td>
 Multi Event Code(s): 
-<input id="MultiEventCode" type="text" name="flds[MultiEventCode]" value="'.$r[MultiEventCode].'">
+<input id="MultiEventCode" type="text" name="flds[MultiEventCode]" value="<?=$r[MultiEventCode]?>">
 </td></tr>
 <tr><td>
 </table>
 <table>
 <tr><td>
 Program Description: <br>
-<textarea id="Program" name="flds[Program]" rows="10" cols="40">'.$r[Program].'</textarea>
-</td><td valign="top">
-Secondary Status (Production Notes):<br>
-<textarea id="SecondaryStatus" name="flds[SecondaryStatus]" rows="10" cols="40">'.$r[SecondaryStatus].'</textarea>
+<textarea id="Program" name="flds[Program]" rows="5" cols="100"><?=$r[Program]?></textarea>
+</td></tr>
+<tr><td valign="top">
+Production Notes:<br>
+<textarea id="SecondaryStatus" name="flds[SecondaryStatus]" rows="5" cols="100"><?=$r[SecondaryStatus]?></textarea>
 </td></tr>
 <tr><td align="center" colspan="3">
-<button form="F1" class="btn btn-success hidden-print" type="submit">APPLY UPDATES</button>
+<button form="F1" class="updb btn btn-success hidden-print" type="submit">APPLY UPDATES</button>
 </td></tr></table>
 
-';
-// HIDDEN FORM FIELDS
-echo '
+<!-- HIDDEN FORM FIELDS -->
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="ptr" value="'.$ptr.'">
+<input type="hidden" name="ptr" value="<?=$ptr?>">
 </form>
 </div> <!-- container -->
-';
-?>
+
+<!-- Modal definition -->
+ <div class="modal fade" id="ldrModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<h4 class="modal-title" id="ModalLabel"></h4>
+</div>  <!-- modal header -->
+<div class="modal-body">
+
+<div id="content" style="overflow-y:scroll; height:400px;">
+</div>
+</div>  <!-- modal body -->
+</div><!-- modal-content -->
+</div><!-- modal-dialog -->
+</div><!-- modal -->
+<!-- end of modal -->
 
 <script type="text/javascript" src="js/jquery.timepicker.js"></script>
 <script>
@@ -407,6 +463,7 @@ $(document).ready(function(){
 function setupta() {
   $sql = "SELECT `FirstName`,`LastName` from `leaders` 
   WHERE `Active` = 'YES'
+  AND `LdrEvent` = 'TRUE' 
   ORDER BY `LastName` ASC;";
 $res = doSQLsubmitted($sql);
 $rowcount = $res->num_rows;
@@ -422,8 +479,11 @@ $ldrs = '[';		// create string for form typeahead
 while ($r = $res->fetch_assoc()) {
 	$ldrfn = preg_replace("/[\(\)\.\-\ \/\&]/i", "", $r[FirstName]);
 	$ldrln = preg_replace("/[\(\)\.\-\ \/\'\&]/i", "", $r[LastName]);
-	$ldrs .= "'$ldrfn $ldrln',";
-	}
+	if ($ldrln == '')
+  	$ldrs .= "'$ldrfn',";
+  else 	
+    $ldrs .= "'$ldrfn $ldrln',";
+  }
 $ldrs = rtrim($ldrs,',') . ']';
 return($ldrs);
 

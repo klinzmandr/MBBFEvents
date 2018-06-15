@@ -23,6 +23,17 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<script>
+$(document).ready(function() {
+  $("#helptext").hide();
+
+$("#help").click (function (){
+  $("#helptext").toggle();
+  });
+});
+</script>
+
+
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
@@ -34,22 +45,18 @@ include 'Incls/mainmenu.inc.php';
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
-if ($action == '') {
-  echo '
-<div class="container">
-<h3>Web Summary</h3>';
+print <<<helpPart
+<h2>Web Detail Report<span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h2>
 
-  echo '
+<div id="helptext">
 <p>This report duplicates the layout in the web site full summary format.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
 <p>Special formatting may be accomplished by doing a &quot;Selecy All/Copy/Paste&quot; into a word processor or spreadsheet.</p>
-<a href="rptwebsummary.php?action=genreport" class="btn btn-primary">Generate Report</a>
-</div>    <!-- container -->';
 
-exit;
-  }
-// create report
-echo '<h3>Web Summary</h3>';
+</div>
+
+helpPart;
+
 //$sql = 'SELECT * FROM `events` WHERE 1=1 LIMIT 0,10;';
 //$sql = 'SELECT * FROM `events` WHERE 1=1;';
 $sql = '
@@ -74,7 +81,7 @@ while ($r = $res->fetch_assoc()) {
   $codeout = implode('&nbsp;&nbsp;&nbsp;&nbsp;',$codes);
   $st = date('h:i a', strtotime($r[StartTime]));
   $et = date('h:i a', strtotime($r[EndTime]));
-  $timerange = $st.' - '.$et;
+  $timerange = $r[Day] . ', ' . $st.' - '.$et;
   printf("<tr><td><b>%s</b></td><td>%s</td><td colspan=3>%s&nbsp;%s</td></tr>", 
     $r[Trip], $r[Event], $r[TypeOfEvent], $r[Type]);
   printf("<tr><td colspan=2>%s</td><td>%s</td><td colspan=2>%s</td></tr>",$timerange,$r[Site],$codeout);

@@ -49,7 +49,7 @@ if ($rc == 1) {
 //  echo '<pre> Just created '; print_r($r); echo '</pre>';
   $rowid = $r[RowID];
 //  echo '<a href=ldrupdate.php?rowid='.$rowid.' class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
-  echo '<a href="ldrupdate.php?lptr=0" class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
+  echo '<a href="ldrupdate.php?rowid='.$rowid.'" class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
   $navarray[] = $rowid;
   $nav['start'] = 0; $nav['prev'] = ''; $nav['curr'] = '';
   $nav['next'] = ''; $nav['last'] = count($navarray) - 1;
@@ -70,7 +70,7 @@ $rc = $res->num_rows;
 // echo '<pre> Exiting New '; print_r($r); echo '</pre>';
 $rowid = $r[RowID];
 //echo '<a href=ldrupdate.php?rowid='.$rowid.' class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
-echo '<a href="ldrupdate.php?lptr=0" class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
+echo '<a href="ldrupdate.php?rowid='.$rowid.'" class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
 $navarray[] = $rowid;
 $nav['start'] = 0; $nav['prev'] = ''; $nav['curr'] = '';
 $nav['next'] = ''; $nav['last'] = count($navarray) - 1;

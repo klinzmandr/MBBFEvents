@@ -119,8 +119,9 @@ echo '</select>
 
 <div class="HIDE">
 
-<select id="Site" name="Site">';
-echo readlist('Site');
+<select id="Site" name="Site">
+<option value="">Sites</option>';
+echo readvenlist('Site');
 echo '</select>
 
 <select id="TypeOfEvent" name="TypeOfEvent">';
@@ -198,14 +199,14 @@ while ($r = $res->fetch_assoc()) {
 echo "<tr onclick=\"window.location='evtupdateevent.php?ptr=$ptr'\" style='cursor: pointer;'>";
 $stime = ($r[StartTime] != '') ? date("g:i A", strtotime($r[StartTime])) : '';
 echo '
-<td><font size="0">'.$r[Day].'</font></td>
-<td><font size="0">'.$r[TripStatus].'</font></td>
-<td><font size="0">'.$r[Type].'</font></td>
-<td><font size="0">'.$stime.'</font></td>
-<td><font size="0">'.$r[TypeOfEvent].'</font></td>
-<td><font size="0">'.$r[Site].'</font></td>
-<td><font size="0">'.$r[Trip].'&nbsp;'.$r[Event].'</font></td>
-<td><font size="0">'.$r[Leader1].'</font></td>
+<td>'.$r[Day].'</font></td>
+<td>'.$r[TripStatus].'</font></td>
+<td>'.$r[Type].'</font></td>
+<td>'.$stime.'</font></td>
+<td>'.$r[TypeOfEvent].'</font></td>
+<td>'.$r[Site].'</font></td>
+<td>'.$r[Trip].'&nbsp;'.$r[Event].'</font></td>
+<td>'.$r[Leader1].'</font></td>
 </tr>
 ';
 $ptr += 1;

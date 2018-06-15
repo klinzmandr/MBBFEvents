@@ -5,43 +5,70 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; -->
-<!-- any other head content must come *after* these tags -->
-<title>MBWBF Demo</title>
+<title>MBWBF Planner</title>
 <!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<link href="css/bootstrap.min.css" rel="stylesheet"  media="all">
 </head>
 <body>
-<h2>Plan Your Trip: Search Event Listings</h2>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<h2>Plan Your Trip: Search Event Listings</h2>
 <?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+// error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-//include 'Incls/vardump.inc.php';
+// include 'Incls/vardump.inc.php';
 include 'Incls/datautils.planner.inc.php';
 include 'Incls/listutils.inc.php';
 
-$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
-$day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : "";
-$et = isset($_REQUEST['Type']) ? $_REQUEST['Type'] : "";
+$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
+$day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : '';
+$et = isset($_REQUEST['Type']) ? $_REQUEST['Type'] : '';
 $ss = isset($_REQUEST['ss']) ? $_REQUEST['ss'] : '';   // event search string
 
-echo'
+$caller = $_SERVER['REQUEST_URI'];
+
+?>
+
 <script type="text/javascript">
 // set up select lists
 $(document).ready(function () { 
 	//alert("first the inline function");
-//	$("#SS").val("'.$ss.'");
-	$("#Day").val("'.$day.'");
-	$("#Type").val("'.$et.'");
-	});
+//	$("#SS").val("$ss");
+	$("#Day").val("<?=$day?>");
+	$("#Type").val("<?=$et?>");
+	
+$(".mod").click(function(){
+  var ldrname = $(this).text();
+  ldrname = ldrname.replace(/[,\s]/g, "");
+  // alert("Modal button clicked: " + ldrname);
+  $.post("plannerldrjson.php",
+    {
+        name: ldrname
+    },
+    function(data, status){
+      // alert("Data: " + data + "\\nStatus: " + status);
+      $("#title").html("Leader Information");
+      $("#content").html(data); 
+      $('#ldrModal').modal('toggle', { keyboard: true });
+    });  // end $.post logic
+  });
+
+$(".ven").click(function() {
+  var venname = $(this).text();
+  // alert ("venue link clicked: "+ venname);
+  $.post("plannervenjson.php",
+    {
+        name: venname
+    },
+    function(data, status){
+      // alert("Data: " + data + "\\nStatus: " + status);
+      $("#title").html("Venue Information");
+      $("#content").html(data); 
+      $('#ldrModal').modal('toggle', { keyboard: true });
+    });  // end $.post logic
+  }); 
+});
+
 </script>
 <script type="text/javascript">
 function resetflds() { 
@@ -51,27 +78,25 @@ function resetflds() {
 </script>
 
 <h3>Select one or more selection criteria and continue:</h3> 
-<form id="f1" action="planner.php" method="post">
-Day: 
-<select id="Day" name="Day">';
-echo readlist('Day');
-echo '</select>
-&nbsp;
-
-Trip Type: 
-<select id="Type" name="Type">';
-echo readlist('TripType');
-echo '</select>
-<input id="SS" type=text value="'.$ss.'" name="ss" placeholder="Search" title="Enter a single word or short character string to search all program descriptions.">&nbsp;
+<form id="f1" action="<?=$caller?>" method="post">
+<select id="Day" name="Day">
+<?php echo readlist('Day'); ?>
+</select>&nbsp;
+<select id="Type" name="Type">
+<?php echo readlist('TripType'); ?>
+</select>
+<input id="SS" type=text value="<?=$ss?>" name="ss" placeholder="Search" title="Enter a single word or short character string to search all program descriptions.">&nbsp;
 <input type=hidden name=action value="list">
+
 <button class="btn btn-primary" type="submit" form="f1">SEARCH EVENTS</button>
 <button class="btn btn-warning" onclick="return resetflds()">Clear Form</button>
-';
+</form>
 
+<?php
 // Process listing based on selected criteria
 $sql = '
 SELECT * FROM `events` 
-WHERE `TripStatus` NOT LIKE "Delete" AND ';
+WHERE `TripStatus` NOT LIKE "Delete" AND `TripStatus` = "Retain" AND ';
 $sqllen = strlen($sql);
 if (strlen($day) > 0) { 
   $sql .= '`Day` LIKE "%'.$day.'%" AND '; }
@@ -107,11 +132,35 @@ $rc = $res->num_rows;
 
 echo '<h3>Events meeting selected criteria</h3>
 <p>Events selected: '.$rc.'.  Click on the title for more details regarding that event.</p>
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">';
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
+<style>
+.default {
+  cursor: default;
+  }
+.mod, .ven { 
+  color: blue; 
+  font-weight: 
+  bold; text-decoration: 
+  underline; 
+  cursor: pointer;  
+  }
+</style>';
 
+$rarray = array(); 
 while ($r = $res->fetch_assoc()) {
+  $rarray[$r[RowID]] = $r;
+  }
+// echo '<pre> results '; print_r($rarray); echo '</pre>';
+// echo '<pre> leader '; print_r($ldrarray); echo '</pre>';
+
+foreach ($rarray as $k => $r) {
 //  echo '<pre> full record '; print_r($r); echo '</pre>';
+  $ldrstr = !empty($r[Leader1]) ? "<b><span class=mod>$r[Leader1]</span></b>" : '';
+  $ldrstr .= !empty($r[Leader2]) ? ", <b><span class=mod>$r[Leader2]</span></b>" : '';
+  $ldrstr .= !empty($r[Leader3]) ? ", <b><span class=mod>$r[Leader3]</span></b>" : '';
+  $ldrstr .= !empty($r[Leader4]) ? ", <b><span class=mod>$r[Leader4]</span></b>" : '';
+// echo '<pre> leaders '; echo $ldrs; echo '</pre>';
   if ($r[FEE] == '') $r[FEE] = 'No Charge';
   else $r[FEE] = '$'.$r[FEE];  
   $r[StartTime] = date("g:i A", strtotime($r[StartTime]));
@@ -134,9 +183,11 @@ while ($r = $res->fetch_assoc()) {
 <td>Event Hours: '.$r[StartTime].' to '.$r[EndTime].'</td>
 </tr>
 <tr>
-<td>Guide/Speaker: '.$r[Leader1].'</td>
+<td>Guide/Speaker: '.
+$ldrstr
+.'</td>
 <td>FEE: '.$r[FEE].'</td>
-<td>Site: '.$r[Site].'</td>
+<td>Site: <b><span class=ven>'.$r[Site].'</span></b></td>
 </tr>
 <tr><td colspan=3 border=1>'.$r[Program].'</td></tr>
 </table>
@@ -149,8 +200,28 @@ while ($r = $res->fetch_assoc()) {
 echo '
 </div> <!-- panel panel-default -->
 ';
-
 ?>
+
+<div class="modal fade" id="ldrModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<h4 id=title class="modal-title" id="myModalLabel"></h4>
+</div>  <!-- modal header -->
+<div class="modal-body">
+<div id="content" style="overflow-y:scroll; height:400px;">
+Test content.
+</div>
+</div>  <!-- modal body -->
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+</div>  <!-- modal footer -->
+</div><!-- modal-content -->
+</div><!-- modal-dialog -->
+</div><!-- modal -->
+<!-- end of modal -->
+
 </div> <!-- panel-group -->
 </body>
 </html>

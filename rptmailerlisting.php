@@ -23,6 +23,16 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<script>
+$(document).ready(function() {
+  $("#helptext").hide();
+
+$("#help").click (function (){
+  $("#helptext").toggle();
+  });
+});
+</script>
+
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
@@ -34,26 +44,22 @@ include 'Incls/mainmenu.inc.php';
 // Process listing based on selected criteria
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
-echo '
-
-';
-
-if ($action == '') {
-  echo '
+print <<<helpPart
 <div class="container">
-<h3>Event Mailer Listing and Extract</h3>
+<h3>Event Mailer Listing and Extract
+<span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span>
+</h3>
+<div id="helptext">
 <p>This report duplicates the columns and layout contained in the event mailer.</p>
 <p>A download CSV file is created and is available with the same results as shown on the page except that the venue name is in column 1 of each row of the result.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
-<a href="rptmailerlisting.php?action=genreport" class="btn btn-primary">Generate Report</a>
-</div>';
+</div>  <!-- helptext -->
 
-exit;
-  }
+helpPart;
+
 // create report
 echo '
-<h3>Event Mailer Listing and Extract</h3>
-<a class="hidden-print" href="downloads/mailerlisting.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
+<a class="hidden-print" href="downloads/mailerlisting.csv">DOWN LOAD RESULTS&nbsp;&nbsp;<span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span></a>';
 
 //Trip	StartTime-EndTime	Codes  Events
 
@@ -70,11 +76,11 @@ ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
-$mask = "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
+$mask = "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
 $html = '';
-$csv[] = "Trip, TypeOfEvent, Time, CODES, Event\n";
+$csv[] = "Trip, TypeOfEvent, Day, Time, CODES, Event\n";
 echo '<table class="table">
-<tr><th>#</th><th>TypeOfEvent</th><th>Time</th><th>CODES</th><th>Event</th></tr>';
+<tr><th>#</th><th>TypeOfEvent</th><th>Day</th><th>Time</th><th>CODES</th><th>Event</th></tr>';
 
 while ($r = $res->fetch_assoc()) {
   //echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
@@ -88,8 +94,8 @@ while ($r = $res->fetch_assoc()) {
   $st = date('h:ia', strtotime($r[StartTime]));
   $et = date('h:ia', strtotime($r[EndTime]));
   $timerange = $st.'-'.$et; 
-  printf($mask, $r[Trip], $r[TypeOfEvent], $timerange, $codeout, $r[Event]);
-  $csv[] .= "$r[Trip], $r[TypeOfEvent], $timerange, $codeout, \"$r[Event]\"\n";
+  printf($mask, $r[Trip], $r[TypeOfEvent], $r[Day], $timerange, $codeout, $r[Event]);
+  $csv[] .= "$r[Trip], $r[TypeOfEvent], $r[Day], $timerange, $codeout, \"$r[Event]\"\n";
   }
 echo '</table>';
 // echo "<pre> csv \n"; print_r($csv); echo '</pre>';

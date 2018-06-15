@@ -5,18 +5,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; -->
-<!-- any other head content must come *after* these tags -->
-<title>Event Maintenance</title>
+<title>Event Planning</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
 
@@ -30,27 +22,17 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
+include 'Incls/listutils.inc.php';
 include 'Incls/checkcred.inc.php';
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 
-// process logout
-if ($action == 'logout') {
-  addlogentry("Logged Out");
-  unset($_SESSION['SessionUser']);
-  session_unset();    
-  //session_destroy();
-  //session_start(); 
-  $action = '';
-  }
-  
 // process login info validation
 if ($action == 'auth') {
   $uid = isset($_REQUEST['uid']) ? $_REQUEST['uid'] : "";
   $pw = isset($_REQUEST['pw']) ? $_REQUEST['pw'] : "";
   $combo = $uid . ':' . $pw;
-  // echo "combined: $combo<br>";
-  $pwds = file('../.MBBFSecFile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  $pwds = readlistarray('Users');
   if (!in_array($combo, $pwds)) {
     echo '<h3 style="color: red; ">Invalid user id and/or password.</h3>';
     session_unset();    
@@ -61,6 +43,7 @@ if ($action == 'auth') {
   else {
     // echo 'user id and password valid<br>';
     $_SESSION['SessionUser'] = $uid;
+    $_SESSION['EPSSessionActive'] = date("Y-m-d H:i:s");
     addlogentry("Logged In");
     $action = '';
     }
@@ -68,18 +51,18 @@ if ($action == 'auth') {
 
 // output menu if session var is loaded
 if (isset($_SESSION['SessionUser'])) {
-  $_SESSION[LAST_ACTIVITY] = $_SERVER['REQUEST_TIME'];
+  echo '<script src="js/bootstrap-session-timeout.js"></script>';
   $start = date('l, F j, Y', strtotime(geteventstart()));
     //echo "start: $start<br>";
 
 include 'Incls/mainmenu.inc.php';
 
   echo '
-<h2>Event Administraton System&nbsp;&nbsp;<a href="index.php?action=logout" class="btn btn-danger">Log Out</a>
+<h2>Event Planning System&nbsp;&nbsp;<a href="indexsto.php?lo=lo" class="btn btn-danger">Log Out</a>
 </h2>
 <div class="well">
 <h4>GPL License</h4>
-<p>Event Administration System - Copyright (C) 2017 by Pragmatic Computing, Morro Bay, CA</p>
+<p>Event Planning System - Copyright (C) 2017 by Pragmatic Computing, Morro Bay, CA</p>
     <p>This program comes with ABSOLUTELY NO WARRANTY.  This is free software.  It may be redistributed under certain conditions.  See &apos;Help->About Event Admin&apos; for more information.</p>
 </div>
 </body>
@@ -91,7 +74,7 @@ exit;
 if ($action == '') {
   echo '
 <div clas="container">
-<h1>Event Maintenance System</h1>
+<h1>Event Planning System</h1>
 <h3>Please provide login information:</h3>
 <form action="index.php" method="post"  id="login">
 <input type="text" name="uid"  placeholder="User Name" autofocus>
@@ -102,7 +85,7 @@ if ($action == '') {
 <br><br>
 <div class="well">
 <h4>GPL License</h4>
-<p>Event Maintenance System -- Copyright (C) 2013 by Pragmatic Computing, Morro Bay, CA</p>
+<p>Event Planning System -- Copyright (C) 2013 by Pragmatic Computing, Morro Bay, CA</p>
     <p>This program comes with ABSOLUTELY NO WARRANTY.  This is free software.  It may be redistributed under certain conditions.  See <a href="LICENSE.pdf" target="_blank" title="Software License">this PDF of the GNU Public License</a> for more information.</p>
 </div>
 ';

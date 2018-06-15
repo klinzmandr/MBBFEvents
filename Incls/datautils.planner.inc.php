@@ -4,7 +4,6 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 date_default_timezone_set('America/Los_Angeles');
 
 include '../.MBBFDBParamInfo';
-
 $mysqli = new mysqli("localhost", DBUserName, DBPassword, ProdDBName);
 
 if ($mysqli->connect_errno) {
@@ -13,17 +12,17 @@ if ($mysqli->connect_errno) {
     for database $db<br>";
     exit;
     }
+// echo "Initial Connection Info: ".$mysqli->host_info . "<br><br>";
 addlogentry('Page Load');
 // auto returns to code following the 'include' statement
-// echo "Initial Connection Info: ".$mysqli->host_info . "<br><br>";
 
-// ------------------ submit sql statement provided by calling script ----------
+// ---- submit sql statement provided by calling script ----
 // submit sql statement provided in call
 function doSQLsubmitted($sql) { 
 global $mysqli;
 
 if (isset($_SESSION['DB_ERROR'])) return(FALSE);
-//echo "sql: ".$sql."<br>";
+// echo "sql: ".$sql."<br>";
 $res = $mysqli->query($sql);
 if (substr_compare($sql,"DELETE",0,6,TRUE) == 0) {
 	//echo "<br>Delete command seen - return affected_rows<br>";
@@ -41,7 +40,7 @@ addlogentry($sql);
 return($res);
 }
 
-// --------- update existing row in table from assoc array provided -------------
+// --- update existing row in table from assoc array provided ----
 function sqlupdate($table, $fields, $where) {
 global $mysqli;
 
@@ -107,7 +106,7 @@ addlogentry($sql);
 return($rows);
 }
 
-// --------------------- generalized error display for all DB functions ----------
+// ----- generalized error display for all DB functions -----
 function showError($res) {
 global $mysqli;
 	$errno = $mysqli->errno;
