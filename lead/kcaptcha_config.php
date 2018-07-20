@@ -12,8 +12,8 @@ $allowed_symbols = "23456789abcdeghkmnpqsuvxyz"; #alphabet without similar symbo
 $fontsdir = 'fonts';	
 
 # CAPTCHA string length
-$length = mt_rand(5,6); # random 5 or 6
-//$length = 6;
+//$length = mt_rand(5,6); # random 5 or 6
+$length = 4;
 
 # CAPTCHA image size (you do not need to change it, whis parameters is optimal)
 $width = 120;
@@ -27,7 +27,7 @@ $no_spaces = false;
 
 # show credits
 $show_credits = false; # set to false to remove credits line. Credits adds 12 pixels to image height
-$credits = 'www.captcha.ru'; # if empty, HTTP_HOST will be shown
+$credits = ''; # if empty, HTTP_HOST will be shown
 
 # CAPTCHA image colors (RGB, 0-255)
 //$foreground_color = array(0, 0, 0);
