@@ -14,6 +14,7 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-form-restore.js"></script>
 <style>
   input[type=checkbox] { transform: scale(1.5); }
 </style> 
@@ -93,7 +94,7 @@ function lc(event, link) {
   $("#hiddenlink").val(lx);
   $("#link").html(l);
   $("#ldrModal").modal("toggle");
-  chgFlag += 1;         // bump change flag + toggle update button
+  chgFlag += 1; // bump change flag + toggle update button
   $(".updb").css({"background-color": "red", "color":"black"});
   $('.updb').prop('disabled', false);    
   }  
@@ -115,12 +116,19 @@ function validate() {
   else if ($("#LDRDv").val() == 'TRUE') { }
   else { alert("Leader type not specified"); return false; }
   // if ($("#isAgeSelected").is(':checked'))
-  var v = new String($("#Notes").val());
-  v = v.replace(/\<|\>/g, "");
+  var v = new String($("#Notes").val());    // sanitize notes
+  v = v.replace(/<|>/g, "");
   $("#Notes").val(v);
-  var v = new String($("#Bio").val());
-  v = v.replace(/\<|\>/g, "");
+  var v = new String($("#Bio").val());      // sanitize bio info
+  v = v.replace(/<|>/g, "");
   $("#Bio").val(v);
+  v = new String($("#fn").val());           // sanitize first name
+  v = v.replace(/'|"/g, "");
+  $("#fn").val(v);  
+  v = new String($("#ln").val());           // sanitize last name
+  v = v.replace(/'|"/g, "");
+  $("#ln").val(v);  
+  
   return true;
   }
 </script>
@@ -147,14 +155,13 @@ $("#LDRD").change(function() {
   // alert ("ldrday changed");
 });
 
-  
 // change image button clicked;
 $(".mod").click(function () {
   var ln = $("#ln").val();
   if (ln.length == 0) ln = $("#fn").val();
   $.post("ldrupdatejson.php",
     {
-        name: ln
+name: ln
     },
     function(data, status){
       // alert("Data: " + data + "\nStatus: " + status);
@@ -257,14 +264,14 @@ Zip:
   </td>
   <td>&nbsp;</td>
   <td><b>Biography:</b><br>
-  <textarea name="flds[Bio]" rows="10" cols="80"><?=$r[Bio]?></textarea>
+  <textarea id=Bio name="flds[Bio]" rows="10" cols="80"><?=$r[Bio]?></textarea>
   </td>
   </tr>
   </table>
 </td></tr>
 <tr><td>
 <b>Notes:</b><br>
-<textarea name="flds[Notes]" rows="5" cols="100"><?=$r[Notes]?></textarea>
+<textarea id=Notes name="flds[Notes]" rows="5" cols="100"><?=$r[Notes]?></textarea>
 </td</tr></table>
 
 <input type="hidden" name="action" value="update">
@@ -273,7 +280,9 @@ Zip:
 <input type="hidden" name="ss" value="<?=$ss?>">
 <input type="hidden" name="Active" value="<?=$active?>">
 </form>
-<div class="hidden-print" align="center"><button form="F1" class="updb btn btn-success" type="submit">UPDATE LEADER</button></div>
+<div class="hidden-print" align="center">
+<button name=reset title="Cancel all changes and restore form to its initial state.">RESET FORM</button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button form="F1" class="updb btn btn-success" type="submit">UPDATE LEADER</button></div>
 <br><br><br><br>
 
 <!-- Modal definition -->

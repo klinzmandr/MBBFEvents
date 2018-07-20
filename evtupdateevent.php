@@ -18,6 +18,7 @@ date_default_timezone_set('America/Los_Angeles');?>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="js/jquery-form-restore.js"></script>
 
 <style>
 .default {
@@ -286,7 +287,7 @@ $("#Site").change(function() {
   });
 // get modal for a leader  
 $(".ld").click(function() {
-    var ldrname = $(this).find('input').val();
+    var ldrname = $(this).parent().find('input').val();
     if (ldrname.length == 0) return;
     // alert("ldr cell clicked for: " + ldrname);
     ldrname = ldrname.replace(/[,\s]/g, "");
@@ -325,7 +326,11 @@ $(".ld").click(function() {
 <tr><td>
 Site:
 <select id="Site" name="flds[Site]">
-<?php echo readvenlist('Site'); ?>
+<?php 
+$site = readvenlist('Site');
+echo $site; 
+// echo '<pre>sites '; print_r(htmlentities($site)); echo '</pre>';
+?>
 </select>
 </td>
 <td class="mod" id="VID">
@@ -346,20 +351,20 @@ Site Room:
 </table>
 
 <table border="0">
-<tr><td class="ld mod">
-Leader 1: 
+<tr><td>
+<span class="ld mod">Leader 1:</span> 
 <input  class="LDR" data-provide="typeahead" id="Leader1" type="text" name="flds[Leader1]" value="<?=$r[Leader1]?>">
 </td>
-<td class="ld mod" colspan="2">
-Leader 2: 
+<td colspan="2">
+<span class="ld mod">Leader 2:</span> 
 <input class="LDR" data-provide="typeahead" id="Leader2" type="text" name="flds[Leader2]" value="<?=$r[Leader2]?>">
 </td></tr><tr>
-<td class="ld mod">
-Leader 3: 
+<td>
+<span  class="ld mod">Leader 3:</span> 
 <input class="LDR" data-provide="typeahead" id="Leader3" type="text" name="flds[Leader3]" value="<?=$r[Leader3]?>">
 </td>
-<td class="ld mod">
-Leader 4: 
+<td>
+<span  class="ld mod">Leader 4:</span> 
 <input class="LDR" data-provide="typeahead" id="Leader4" type="text" name="flds[Leader4]" value="<?=$r[Leader4]?>">
 </td></tr>
 </table>
@@ -407,7 +412,9 @@ Program Description: <br>
 Production Notes:<br>
 <textarea id="SecondaryStatus" name="flds[SecondaryStatus]" rows="5" cols="100"><?=$r[SecondaryStatus]?></textarea>
 </td></tr>
-<tr><td align="center" colspan="3">
+<tr>
+<td align="center">
+<!-- <button name=reset title="Cancel all changes and restore form to its initial state.">RESET FORM</button>&nbsp;&nbsp;&nbsp;&nbsp; -->
 <button form="F1" class="updb btn btn-success hidden-print" type="submit">APPLY UPDATES</button>
 </td></tr></table>
 
@@ -438,15 +445,21 @@ Production Notes:<br>
 <script type="text/javascript" src="js/jquery.timepicker.js"></script>
 <script>
 $(document).ready(function(){
-    $("input.tpick").timepicker({ 
-    timeFormat: "h:mm p",
-    dynamic:    true,
-    startTime:  "7:00 a",
-    minTime:    "6:00 a",
-    maxTime:    "6:00 p",
-    interval:   15,
-    scrollbar:  true
-    });
+$("input.tpick").timepicker({ 
+  timeFormat: "h:mm p",
+  dynamic:    true,
+  startTime:  "7:00 a",
+  minTime:    "6:00 a",
+  maxTime:    "6:00 p",
+  interval:   15,
+  scrollbar:  true,
+  change: function() {      // note any change to form
+    chgFlag += 1; 
+    $('.updb').prop('disabled', false);    
+    $(".updb").css({"background-color": "red", "color":"black"});
+  }
+});
+
 });
 </script>
 

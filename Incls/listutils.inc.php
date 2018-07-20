@@ -32,7 +32,7 @@ function readvenlist($listname) {
 	// echo "sql: $sqldb\n<br>";
 	$res = doSQLsubmitted($sqldb);
 	$rc = $res->num_rows;
-	$r = $res->fetch_assoc();
+	// $r = $res->fetch_assoc();
 	$str = '';
   while ($r = $res -> fetch_assoc()) {
   	// echo '<pre>'; print_r($r); echo '</pre>';

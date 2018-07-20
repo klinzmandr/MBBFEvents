@@ -3,6 +3,7 @@
 ?>
 
 <script src="js/bootstrap-session-timeout.js"></script> 
+<script src="js/jquery-form-restore.js"></script> 
 <script>
 $(document).ready(function() { 
   $.sessionTimeout({
@@ -25,34 +26,38 @@ $(document).ready(function() {
 var chgFlag = 0;
 
 $(document).ready(function() {
-// disable all buttons of class updb  
+// disable all apply update buttons of class updb  
   $('.updb').prop('disabled', true);
-// increment change counts on fields  
-$("form").change(function()  {
-    chgFlag += 1; 
-    $('.updb').prop('disabled', false);    
-    $(".updb").css({"background-color": "red", "color":"black"});
-    // setInterval(blink_text, 1000);
-    });
-$("div.nicEdit-main").change(function(){
-    chgFlag += 1; 
-    $('.updb').prop('disabled', false);    
-    $(".updb").css({"background-color": "red", "color":"black"});
-    // setInterval(blink_text, 1000);
-    });
 
-// reset change count 
-$("[name=reset]").click(function() {
-    // alert("reset clicked")
-    chgFlag = 0;
-    $('.updb').prop('disabled', true);    
-    $(".updb").css({"background-color": "green", "color":"white"});
-    });
+// detect and change on form
+var $form = $('form');
+var formValues = $('form').getFormValues();  // save form in case of reset
+var origForm = $form.serialize();   // to save field values on initial load
+  
+$('form :input').on('change input', function() {
+  if ($form.serialize() !== origForm) {         // check for any changes
+    chgFlag++;
+    $('.updb').prop('disabled', false);    
+    $(".updb").css({"background-color": "red", "color":"white"});
+    // console.log("chgFlag: "+chgFlag);
+    return;
+    }
+  });
+
+$("[name=reset]").click(function(evt) {
+  evt.preventDefault();
+  $('form').restoreFormValues(formValues);  // restore form to initial load state
+  chgFlag = 0;
+  $('.updb').prop('disabled', true);    
+  $(".updb").css({"background-color": "green", "color":"white"});
+  // console.log("reset chgcount: "+chgFlag);
+  // alert("reset clicked");
+  });
 
 // check any class of dropdown or clk before exit allowed
-$(".dropdown,.clk").click(function() {
-    // alert ("form submit done");
-  	if (chgFlag <= 0) { return true; }
+$(".dropdown, .clk").click(function() {
+    // alert ("navigate button clicked");
+    if (chgFlag <= 0) { return true; }
   	var r=confirm("WARNING: All changes made will be LOST.\n\nClick OK to confirm leaving page.\nClick CANCEL to stay on page.");	
   	if (r == true) { chgFlag = 0; return true; }
   		return false;

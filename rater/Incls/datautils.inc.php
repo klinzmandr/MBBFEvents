@@ -4,7 +4,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 date_default_timezone_set('America/Los_Angeles');
 //echo '<pre> SERVER '; print_r($_SERVER); echo '</pre>';
 
-include '../.MBBFDBParamInfo';
+include '../../.MBBFDBParamInfo';
 $mysqli = new mysqli("localhost", DBUserName, DBPassword, ProdDBName);
 if ($mysqli->connect_errno) {
 		$errno = $mysqli->connect_errno;
@@ -27,16 +27,15 @@ if (substr_compare($sql,"DELETE",0,6,TRUE) == 0) {
 	//echo "<br>Delete command seen - return affected_rows<br>";
 	$rowsdeleted = $mysqli->affected_rows;
 	//echo "delete count: $rowsdeleted<br>";	
-	// addlogentry($sql);
+	addlogentry($sql);
 	return($rowsdeleted);
 	}
 // NOTE:  could do a check to see if DELETE or REPLACE was done and 
 //        return 'affected_rows' instead of select results 
 if (!$res) {
     showError($res);
-    addlogentry("SQL ERROR on: " . $sql);
 		}
-// addlogentry($sql);
+addlogentry($sql);
 return($res);
 }
 
