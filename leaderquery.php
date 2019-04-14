@@ -48,7 +48,7 @@ $leader = $l[FirstName] . ' ' . $l[LastName];
 
 addlogentry("ldrqry for $leader");
 
-echo '<img src="http://morrobaybirdfestival.net/wp-content/uploads/2016/08/LOGO3.png" alt="bird festival logo" >';
+echo '<img src="http://morrobaybirdfestival.org/wp-content/uploads/2016/08/LOGO3.png" alt="bird festival logo" >';
 echo "<h1>Scheduled Events for $leader </h1>";
  
 // generate activity report

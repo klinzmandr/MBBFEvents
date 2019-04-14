@@ -104,6 +104,7 @@ $ldrs = array();
 while ($r = $res->fetch_assoc()) {
 //  echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   $key = $r[FirstName] . ' ' . $r[LastName];
+  $key = rtrim($key, ' ');
   if ($r[LastName] == '') $key = $r[FirstName];
   if ($r[FirstName] == '') $key = $r[LastName];
   $ldrs[$key] = $r;
@@ -137,10 +138,10 @@ $eventrc = $res->num_rows;
 
 $err = array();
 while ($r = $res->fetch_assoc()) {
-  //echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
+  // echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   if($r[Trip] == 999) continue;  // ignore those parked
   if ($r[SiteCode] == '') $err[$r[Trip]][] = "is missing a site code";
-  if (!in_array($r[SiteCode], $venarray)) 
+  if (!array_key_exists($r[SiteCode], $venarray)) 
     $err[$r[Trip]][] = "site code $r[SiteCode] is not defined.";
   $venused[$r[SiteCode]] += 1;
   if ($r[Leader1] == '' ) $err[$r[Trip]][] = "has no Leader 1 defined";
@@ -172,13 +173,14 @@ while ($r = $res->fetch_assoc()) {
   if ($r[Level] == '') $err[$r[Trip]][] = "has no experience levels defined.";
   }
 
-//echo '<pre>ldrs '; print_r($ldrs); echo '</pre>';
-//echo '<pre>ldrasssigned '; print_r($ldrassigned); echo '</pre>';
+// echo '<pre>ldrs '; print_r($ldrs); echo '</pre>';
+// echo '<pre>ldrassigned '; print_r($ldrassigned); echo '</pre>';
 
 // check out leader info
 $ema = array();
 foreach ($ldrs as $k => $v) {
   $ldrfull = $v[FirstName] . " " . $v[LastName];
+  $ldrfull = rtrim($ldrfull, ' ');
   if ($v[Email] == '') $ldrerr[$k][] = "Leader missing email address.";
   if (!in_array($v[Email], $ema)) $ema[] = $v[Email];
   else $ldrerr[$k][] = "Leader email address is a duplicate.";  

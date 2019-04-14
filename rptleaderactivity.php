@@ -1,22 +1,17 @@
-<?php session_start(); ?>
+<?php session_start(); 
+$lt = isset($_REQUEST['lt']) ? $_REQUEST['lt'] : 'both';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; -->
-<!-- any other head content must come *after* these tags -->
 <title>Leader Activity</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
 
@@ -24,32 +19,59 @@
 <script src="js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function() {
-  $("#helptext").hide();
+  $("#help").hide();
+  if ('<?=$lt?>' == 'el') $("#el").attr("checked", true);
+  if ('<?=$lt?>' == 'dl') $("#dl").attr("checked", true);
+  if ('<?=$lt?>' == 'both') $("#both").attr("checked", true);
 
-$("#help").click (function (){
-  $("#helptext").toggle();
+$(".ltype").change(function() {
+  $('form').submit();
+  });
+
+$("#helpbtn").click (function (){
+  $("#help").toggle();
   });
 });
 </script>
 
 <div class="container">
+
+<h3>Leader Activity&nbsp;&nbsp;
+<span id="helpbtn" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h3>
+<div id=help>
+<p>The report lists all event leaders that have assigned events in at least one of the four leader roles.  Each leader is listed with their assignments listed by day and event start time and duratiion hours. The event location and name are also listed.</p>
+<p>By default both Event and Day Leaders are included in the report.</p>
+</div>
+<form 'action=rptleaderactvity.php'>
+Leader type:  <input class=ltype type=radio name=lt id=el value=el>Event&nbsp;&nbsp;
+<input class=ltype type=radio name=lt id=dl value=dl>Day&nbsp;&nbsp;
+<input class=ltype type=radio name=lt id=both value=both checked>Both<br>
+</form>
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-//include 'Incls/vardump.inc.php';
+// include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/mainmenu.inc.php';
 //include 'Incls/listutils.inc.php';
 
-echo '
-<h3>Leader Activity&nbsp;&nbsp;
-<span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h3>
-';
+// select leaders to include
+$ldrsql = 'SELECT * FROM `leaders` WHERE 1=1;';
+if ($lt == 'el')
+  $ldrsql = 'SELECT * FROM `leaders` WHERE `LdrEvent` = "TRUE";';
+if ($lt == 'dl')
+  $ldrsql = 'SELECT * FROM `leaders` WHERE `LdrDay` = "TRUE";';
+// echo "sql: $ldrsql<br>";
+$ldrres = doSQLsubmitted($ldrsql);
+$ldrrc = $ldrres->num_rows;
+// echo "ldrrc: $ldrrc<br>";
+while ($l = $ldrres->fetch_assoc()) {
+  $fullname = $l[FirstName] . ' ' . $l[LastName];
+  $fullname = rtrim($fullname, ' ');
+  $leaders[] = $fullname;
+  }
+// echo '<pre>leaders '; print_r($leaders); echo '</pre>';
 
-echo '
-<p id="helptext">The report lists all event leaders that have assigned events in at least one of the four leader roles.  Each leader is listed with their assignments listed by day and event start time and duratiion hours. The event location and name are also listed.</p>
-';
-  
 // generate leader activity report
 // excluding events that are marked as deleted
 $sql = '
@@ -72,13 +94,13 @@ while ($r = $res->fetch_assoc()) {
   if ($r[Leader3] != '')
   $ldrarray[$r[Leader3]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";
   if ($r[Leader4] != '')
-  $ldrarray[$r[Leader4]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";
-  
+  $ldrarray[$r[Leader4]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";  
   }
 ksort($ldrarray);
 // echo '<pre> leaderarray '; print_r($ldrarray); echo '</pre>';
 
 foreach ($ldrarray as $k => $v) {
+  if (!in_array($k, $leaders)) continue;
   echo "<h4>$k</h4>";
   //echo "<pre> leader $k "; print_r($v); echo '</pre>';
   foreach ($v as $kk => $vv) {

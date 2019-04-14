@@ -48,7 +48,7 @@ $(document).ready(function () {
 </script>
 
 <div id="Validation-Form">
-<ul><img src="http://morrobaybirdfestival.net/wp-content/uploads/2016/08/LOGO3.png" alt="bird festival logo" >
+<ul><img src="http://morrobaybirdfestival.org/wp-content/uploads/2016/08/LOGO3.png" alt="bird festival logo" >
 <h2>Leader Information</h2></ul>
 <table class="table" border="0" align="center" width="80%">
 <tr>

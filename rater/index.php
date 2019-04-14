@@ -28,7 +28,7 @@ $evtlist = '["' . implode('", "', $triparray) . '"]';
 ?>
 
 <body>
-<img src="http://morrobaybirdfestival.net/wp-content/uploads/2016/08/LOGO3.png" alt="bird festival logo" >
+<img src="http://morrobaybirdfestival.org/wp-content/uploads/2016/08/LOGO3.png" alt="bird festival logo" >
 <script src="js/bootstrap3-typeahead.js"></script>
 <script>
 $(function () {

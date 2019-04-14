@@ -36,7 +36,7 @@ $active = isset($_REQUEST['Active']) ? $_REQUEST['Active'] : "";
 // echo '<pre> REQUEST '; print_r($_SERVER); echo '</pre>';
 $proto = $_SERVER['REQUEST_SCHEME'];
 $host = $_SERVER['HTTP_HOST'];
-$imgpath = $proto . '://' . 'morrobaybirdfestival.net/mbbfLeaderPics/';
+$imgpath = $proto . '://' . 'morrobaybirdfestival.org/mbbfLeaderPics/';
 // if ($host == 'localhost') 
 //   $imgpath = $proto . '://' . 'localhost/www/dev/mbbfLeaderPics/';  // dev system
 // echo "imgpath: $imgpath<br>";

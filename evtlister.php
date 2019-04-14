@@ -188,7 +188,7 @@ echo '
 <h4>Events Listed&nbsp;&nbsp;(Listed: '.$rc.')
 
 <table border="1" class="table table-condensed table-hover">
-<tr><th><font size="0">Day</font></th><th><font size="0">TripStatus</font></th><th><font size="0">Trip Type</font></th><th><font size="0">StartTime</font></th><th><font size="0">Event</font></th><th><font size="0">Site</font></th><th><font size="0">EventTitle</font></th><th><font size="0">Leader</font></th></tr>';
+<tr><th>Day</th><th>TripStatus</th><th>Trip Type</th><th>StartTime</th><th>Event</th><th>Site</th><th>EventTitle</th><th>Leader</th></tr>';
 $navarray = array(); $var = array(); $ptr = 0;
 while ($r = $res->fetch_assoc()) {
   //if ($r['Type'] == '**New**') continue;

@@ -14,8 +14,6 @@
 <body>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jsURLconverter.js"></script> 
-
 <script>
 // set up select lists
 $(document).ready(function () { 
@@ -34,7 +32,7 @@ $(document).ready(function () {
           name: ldrname
       },
       function(data, status){ 
-        //alert("Data: " + data + "\\nStatus: " + status);
+        // alert("Data: " + data + "\\nStatus: " + status);
         $("#content").html(data); 
         $('#ldrModal').modal('toggle', { keyboard: true });
         });  // end $.post logic 
@@ -59,6 +57,7 @@ SELECT `FirstName`,`LastName`, `ImgURL`
 $res = doSQLsubmitted($sql);
 while ($r = $res->fetch_assoc()) {
   $fullname = $r[FirstName] . ' ' . $r[LastName];
+  $fullname = rtrim($fullname, ' ');
   $imgarray[$fullname] = $r[ImgURL];
   // $imgarray[$fullname][type] = $r[LDREvent];
   }
@@ -87,8 +86,9 @@ function bldldr($name) {
   global $ldrarray, $imgarray;
   if (strlen($name) == 0) return;
   $name = rtrim($name);
+  $l = '';
   list($f, $l) = preg_split('/ /', $name);
-  
+  // echo "f: $f, l: $l<br>";
   $picurl = "<img src='npa.png' width='100' height='75'>";
   if (array_key_exists($name, $imgarray)) 
     $picurl = "<img src='$imgarray[$name]' width='100' height='75'>";
