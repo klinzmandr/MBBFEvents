@@ -136,6 +136,7 @@ function validate() {
 <script>
 $(document).ready(function() {
   $("#ACTIVE").val("<?=$r[Active]?>");
+  $("#ShirtSize").val("<?=$r[ShirtSize]?>");
   
   var e = $("#LDREv").val();
   if (e == 'TRUE') $("#LDRE").attr("checked", true);
@@ -171,6 +172,17 @@ name: ln
   eval();
   });
 
+// leader info icon clicked
+$("#LIL").click(function() {
+  // alert("LIL icon clicked");
+  var em = $("#Event").val();
+  var rid = "<?=$rowid?>";
+  console.log("addr: "+em+", rowid: "+rid);
+  var url = "leaderquery.php?rowid="+rid+"&eaddr="+em;
+  console.log("url: "+url);
+  window.location.href = url;
+  });
+
 });
 </script>
 
@@ -185,6 +197,7 @@ if ($r[ImgURL] <> '') $imgurl = $r[ImgURL];
 <font size="+2"><b><?=$r[FirstName]?> <?=$r[LastName]?></b></font>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <button form="F1" class="updb btn btn-success" type="submit">UPDATE LEADER</button></td>
+<td><span id="LIL" title="Leader Info Listing" class="glyphicon glyphicon-blackboard" style="color: blue; font-size: 25px;"></span></td>
 <td align="right"><a onclick="return confirmContinue()" 
 href="ldrlister.php?rowid=<?=$r[RowID]?>&ss=<?=$ss?>&action=delete&Active=<?=$active?>">
 <span title="Delete Leader" class="glyphicon glyphicon-trash" style="color: blue; font-size: 25px;"></span></a>&nbsp;&nbsp;
@@ -201,54 +214,66 @@ Leader Active?:
  
 </td>
 <td>
-<input type=hidden id=LDREv name="flds[LdrEvent]" value="<?=$r[LdrEvent]?>"> 
+<input type=hidden id=LDREv name="flds[LdrEvent]" value="<?=$r['LdrEvent']?>"> 
 Leader Type: Event&nbsp;<input type="checkbox" id="LDRE">&nbsp;
-<input type=hidden id=LDRDv name="flds[LdrDay]" value="<?=$r[LdrDay]?>"> 
+<input type=hidden id=LDRDv name="flds[LdrDay]" value="<?=$r['LdrDay']?>"> 
 Family Day&nbsp;<input type="checkbox" id="LDRD">
 </td>
 </tr>
 <tr><td>
 First Name: 
-<input id=fn type="text" name="flds[FirstName]" value="<?=$r[FirstName]?>" autofocus>&nbsp;
+<input id=fn type="text" name="flds[FirstName]" value="<?=$r['FirstName']?>" autofocus>&nbsp;
 </td><td>
 Last Name: 
-<input id=ln type="text" name="flds[LastName]" value="<?=$r[LastName]?>">
+<input id=ln type="text" name="flds[LastName]" value="<?=$r['LastName']?>">
 </td></tr>
 </table>
-<table>
+<table border="0">
 <tr><td>
 Primary Phone: 
-<input type="text" name="flds[PrimaryPhone]" value="<?=$r[PrimaryPhone]?>">&nbsp;
+<input type="text" name="flds[PrimaryPhone]" value="<?=$r['PrimaryPhone']?>">&nbsp;
 </td><td>
 Secondary Phone: 
-<input type="text" name="flds[SecondaryPhone]" value="<?=$r[SecondaryPhone]?>"><br>
+<input type="text" name="flds[SecondaryPhone]" value="<?=$r['SecondaryPhone']?>"><br>
 </td><td></td></tr>
 </table>
-<table>
-<tr><td colspan="3">
+<table  border="0">
+<tr><td>
 Email Address: 
 <input type="text" name="flds[Email]" value="<?=$r[Email]?>" size="40" id="Event">
+</td>
+<td>Shirt Size:
+<select id=ShirtSize name="flds[ShirtSize]">
+<option value=''></option>
+<option value=XS>Extra Small</option>
+<option value=S>Small</option>
+<option value=M>Medium</option>
+<option value=L>Large</option>
+<option value=XL>Extra Large</option>
+<option value=2XL>2X Large</option>
+<option value=3XL>3X Large</option>
+</select>
 </td></tr>
 </table>
 <table>
 <tr><td>
 Address Line 1: 
-<input type="text" name="flds[Address1]" value="<?=$r[Address1]?>">&nbsp;
+<input type="text" name="flds[Address1]" value="<?=$r['Address1']?>">&nbsp;
 </td><td>
 Address Line 2: 
-<input type="text" name="flds[Address2]" value="<?=$r[Address2]?>">
+<input type="text" name="flds[Address2]" value="<?=$r['Address2']?>">
 </td></tr>
 </table>
 <table>
 <tr><td>
 City: 
-<input type="text" name="flds[City]" value="<?=$r[City]?>">
+<input type="text" name="flds[City]" value="<?=$r['City']?>">
 </td><td>
 State: 
-<input type="text" name="flds[State]" value="<?=$r[State]?>" maxlength="2">
+<input type="text" name="flds[State]" value="<?=$r['State']?>" maxlength="2">
 </td><td>
 Zip: 
-<input type="text" name="flds[Zip]" value="<?=$r[Zip]?>">
+<input type="text" name="flds[Zip]" value="<?=$r['Zip']?>">
 </td></tr>
 </table>
 <table border=0>
@@ -260,18 +285,18 @@ Zip:
   <img id="pic" src="<?=$imgurl?>" width="200" height="150" alt="" /><br>
   <a class="mod btn btn-primary btn-xs">CHANGE</a>
   <br>
-  <input id="hiddenlink" type="hidden" name="flds[ImgURL]" value="<?=$r[ImgURL]?>">
+  <input id="hiddenlink" type="hidden" name="flds[ImgURL]" value="<?=$r['ImgURL']?>">
   </td>
   <td>&nbsp;</td>
   <td><b>Biography:</b><br>
-  <textarea id=Bio name="flds[Bio]" rows="10" cols="80"><?=$r[Bio]?></textarea>
+  <textarea id=Bio name="flds[Bio]" rows="10" cols="80"><?=$r['Bio']?></textarea>
   </td>
   </tr>
   </table>
 </td></tr>
 <tr><td>
 <b>Notes:</b><br>
-<textarea id=Notes name="flds[Notes]" rows="5" cols="100"><?=$r[Notes]?></textarea>
+<textarea id=Notes name="flds[Notes]" rows="5" cols="100"><?=$r['Notes']?></textarea>
 </td</tr></table>
 
 <input type="hidden" name="action" value="update">

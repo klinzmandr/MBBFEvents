@@ -29,7 +29,7 @@ $day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : "";
 echo '
 <div class="container">
 <h3>Starter Event Listing (Download only)</h3>
-<p>All scheduled events are listed in a download CSV spreadsheet file.</p>
+<p>All scheduled events with a status of &apos;<b>RETAIN</b>&apos; are listed in a downloaded CSV spreadsheet file.</p>
 ';
 // create report
 echo '
@@ -42,8 +42,7 @@ echo '
 
 $sql = '
 SELECT * FROM `events` 
-WHERE 1=1
-  AND `TripStatus` NOT LIKE "Delete" 
+WHERE `TripStatus` LIKE "%Retain%" 
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
 $day = 'ALL';
 

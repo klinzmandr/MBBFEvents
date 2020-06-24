@@ -1,5 +1,7 @@
 <?php session_start(); 
-date_default_timezone_set('America/Los_Angeles');?>
+date_default_timezone_set('America/Los_Angeles');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +19,8 @@ date_default_timezone_set('America/Los_Angeles');?>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="js/jquery-form-restore.js"></script>
+<script src="js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script src="js/jquery-form-restore.js" type="text/javascript"></script>
 
 <style>
 .default {
@@ -61,19 +63,28 @@ $nav['next'] = $nav['last'];
 
 // PROCESS UPDATE ACTION IF INDICATED
 if ($action == 'update') {
+  // first setup event day sequence number array 
+  // based on 'Day' config values
+  $dayarray = array();
+  $days = readlistarray('Day');
+  $daynbr = 1;
+  foreach ($days as $v) {
+    preg_match('/^.*>(.*)<.*$/i', $v, $matches);
+    if ($matches[1] == 'Day') continue;
+    // echo '<pre>'; print_r($matches[1]); echo '</pre>';
+    $dayarray[$matches[1]] = $daynbr;
+    $daynbr += 1;
+    }
+  // echo '<pre>dayarray '; print_r($dayarray); echo '</pre>';
+  // now update the event record
   $flds = array();
   $flds = $_REQUEST['flds'];
   $flds[StartTime] = date("H:i:s", strtotime($flds[StartTime]));
   $flds[EndTime] = date("H:i:s", strtotime($flds[EndTime]));
-  if ($flds[Day] == "Friday") $flds[Dnbr] = 1; 
-  if ($flds[Day] == "Saturday") $flds[Dnbr] = 2;
-  if ($flds[Day] == "Sunday") $flds[Dnbr] = 3; 
-  if ($flds[Day] == "Monday") $flds[Dnbr] = 4; 
-  if ($flds[TripStatus] == 'Delete') { 
-    $flds[Trip] = '999';
-    $flds[Leader1] = ''; $flds[Leader2] = '';
-    $flds[Leader3] = ''; $flds[Leader4] = '';
-    } 
+  
+  // day seq nbr based on day of event
+  $flds[Dnbr] = $dayarray[$flds[Day]]; 
+
 // handle multiselect Event Codes field
   $lvls = isset($_REQUEST['Codes']) ? $_REQUEST['Codes'] : '';
 //  print_r($lvls);
@@ -100,10 +111,10 @@ $(document).ready(function() {
   ';
   }   // END UPDATE ACTION 
 
-// ----------------- display event info --------------------- 
+// ----- display event info 
 $rowid = $navarray[$ptr];  
 //echo "ptr: $ptr, rowid: $rowid<br>";
-$sql = "SELECT * FROM `events` WHERE `RowID` = \"$rowid\";";
+$sql = "SELECT * FROM `events` WHERE `RowID` = '$rowid';";
 
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
@@ -138,7 +149,7 @@ function confirmContinue() {
 
 <td width="33%" align="right" valign="center">
 <br>
-<a class="clk" onclick="return confirmContinue()" href="evtlister.php?rowid=<?=$r[RowID]?>&action=delete"><span title="Delete THIS Event" class="glyphicon glyphicon-trash" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="clk" onclick="return confirmContinue()" href="evtlister.php?rowid=<?=$r[RowID]?>&action=delete"><span title="Remove THIS Event from the database." class="glyphicon glyphicon-trash" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a class="clk" href="evtduplicateevent.php?rowid=<?=$r[RowID]?>"><span title="Duplicate THIS Event" class="glyphicon glyphicon-duplicate" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;
 <a class="clk" href="evtaddevent.php"><span title="Add NEW Event" class="glyphicon glyphicon-plus" style="color: blue; font-size: 30px"></span></a>
@@ -147,21 +158,18 @@ function confirmContinue() {
 <script>
 function validate() {
   var error = "";
-  
   var tp1 = Date.parse("1/1/2016 "+$("#StartTime").val());
   var tp2 = Date.parse("1/1/2016 "+$("#EndTime").val());
   // console.log("starttime: "+tp1+", endtime: "+tp2);
   if (tp1 >= tp2) {
-    error += "End time is before or same as start time\\n";
+    error += "End time is before or same as start time\n";
     }
-
   var d = $("#Trip").val();
   if (d.length < 3) {
-    error += "New Trip number must be at least 3 digits.\\n";
+    error += "New Trip number must be at least 3 digits.\n";
     }
-    
   if (error.length > 0) {
-    alert("Please correct the following:\\n\\n"+error);
+    alert("Please correct the following:\n\n"+error);
     return false;
     }
   var v = new String($("#Program").val());
@@ -187,7 +195,41 @@ $(document).ready(function() {
   $("#TypeOfEvent").val("<?=$r[TypeOfEvent]?>");
   $("#SC").text("<?=$r[SiteCode]?>");
   $("#Site").val("<?=$r[Site]?>");
-  $("#SiteCode").val("<?=$r[SiteCode]?>");  
+  $("#SiteCode").val("<?=$r[SiteCode]?>");
+
+// change status field to 'Delete' implies trip number == 999
+// and all leader fields set to empty. 
+$("#TripStatus").change(function() {
+  var loadedts = "<?=$r[TripStatus]?>";
+  var newts = $("#TripStatus").val();
+  if (newts == 'Delete') {
+    r = confirm("This action will:\n1. set the trip status to Delete,\n2. set the trip number to 999,\n3. clear the day field.\n\n\nClick OK to confirm.\n");
+    if (r) {
+      // alert("Event status set to DELETE");
+      $("#Trip").val("999");
+      $("#Day").val("Day");
+      // $(".LDR").val("");
+      // json call to update event record         
+      $.post("evtupdateeventjson.php",
+        {
+          eventrow: "<?=$r[RowID]?>"
+        },
+    function(data, status){
+        // alert("Data: " + data + "\nStatus: " + status);
+        // clear submit button and change flag count
+        chgFlag = 0;
+        $('.updb').prop('disabled', true);    
+        $(".updb").css({"background-color": "green", "color":"white"});
+        $("#content").html("<h3>Event Update Successful</h3><p>A listing of all 'deleted/parked' events may be obtained by doing a search with the 'Status' field set to 'Delete'.</p><p>An event may be re-used ('un-parked') by merely changing the 'Trip' number and the 'Trip Status' fields.  Other distinguishing fields such as the event day, start time, end time, event leaders, etc. would also, probably, be modified as well.</p><p>Use the trashcan icon to permanently remove an event from the database.</p>"); 
+        $("#ModalLabel").text("Event Delete/Park"); 
+        $('#ldrModal').modal('toggle', { keyboard: true });
+      });  // end $.post logic 
+      return;   // end of confirm OK logic 
+      }
+    // alert("cancelled trip status update"); 
+    $("#TripStatus").val(loadedts);
+    }
+  });  
 });
 </script>
 
@@ -210,8 +252,7 @@ if ($r[Level] != "") {
 else $vals = "[]";
 // echo "dblevels: $r[Level], vals: $vals<br>";
 ?>
-
-<button form="F1" class="updb btn btn-success hidden-print" type="submit">APPLY UPDATES TO EVENT: </button>&nbsp;<font size="+2"><?=$r[Event]?></font>
+<button form="F1" id="updb1" class="updb btn btn-success hidden-print" type="submit">APPLY UPDATES TO EVENT: </button>&nbsp;<font size="+2"><?=$r[Event]?></font>
 
 <form id="F1" action="evtupdateevent.php" method="post" onsubmit="return validate()">
 <table border="1">
@@ -329,10 +370,9 @@ Site:
 <?php 
 $site = readvenlist('Site');
 echo $site; 
+echo '</select></td>';
 // echo '<pre>sites '; print_r(htmlentities($site)); echo '</pre>';
 ?>
-</select>
-</td>
 <td class="mod" id="VID">
 Site Code: <span id="SC"></span>
 <input id="SiteCode" type="hidden" name="flds[SiteCode]" value="">
@@ -490,8 +530,8 @@ if ($res->num_rows == 0) {
 // now create the string for the javascript arrays to download
 $ldrs = '[';		// create string for form typeahead
 while ($r = $res->fetch_assoc()) {
-	$ldrfn = preg_replace("/[\(\)\.\-\ \/\&]/i", "", $r[FirstName]);
-	$ldrln = preg_replace("/[\(\)\.\-\ \/\'\&]/i", "", $r[LastName]);
+	$ldrfn = preg_replace("/[\(\)\.\ \/\&]/i", "", $r[FirstName]);
+	$ldrln = preg_replace("/[\(\)\.\ \/\'\&]/i", "", $r[LastName]);
 	if ($ldrln == '')
   	$ldrs .= "'$ldrfn',";
   else 	

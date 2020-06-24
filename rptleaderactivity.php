@@ -39,7 +39,7 @@ $("#helpbtn").click (function (){
 <h3>Leader Activity&nbsp;&nbsp;
 <span id="helpbtn" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h3>
 <div id=help>
-<p>The report lists all event leaders that have assigned events in at least one of the four leader roles.  Each leader is listed with their assignments listed by day and event start time and duratiion hours. The event location and name are also listed.</p>
+<p>The report lists all event leaders that have assigned events with the status of &apos;<b>RETAIN</b>&apos; in at least one of the four leader roles.  Each leader is listed with their assignments listed by day and event start time and duratiion hours. The event location and name are also listed.</p>
 <p>By default both Event and Day Leaders are included in the report.</p>
 </div>
 <form 'action=rptleaderactvity.php'>
@@ -53,7 +53,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 // include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/mainmenu.inc.php';
-//include 'Incls/listutils.inc.php';
+include 'Incls/listutils.inc.php';
 
 // select leaders to include
 $ldrsql = 'SELECT * FROM `leaders` WHERE 1=1;';
@@ -72,10 +72,25 @@ while ($l = $ldrres->fetch_assoc()) {
   }
 // echo '<pre>leaders '; print_r($leaders); echo '</pre>';
 
+// setup day sequence number array  
+$dayarray = array();
+$days = readlistarray('Day');
+// echo '<pre>days list '; print_r($days); echo '</pre>';
+$daynbr = 1;
+foreach ($days as $v) {
+  preg_match('/^.*>(.*)<.*$/i', $v, $matches);
+  if ($matches[1] == 'Day') continue;
+  // echo "matches: $matches[1]<br>";
+  // $trimmed = trim($matches[1]);
+  $dayarray[$matches[1]] = $daynbr;
+  $daynbr += 1;
+  }
+// echo '<pre>day number '; print_r($dayarray); echo '</pre>';
+
 // generate leader activity report
-// excluding events that are marked as deleted
+// for events that are marked as RETAIN
 $sql = '
-SELECT * FROM `events` WHERE `TripStatus` NOT LIKE "%Delete%";';
+SELECT * FROM `events` WHERE `TripStatus` LIKE "%Retain%";';
 
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
@@ -84,9 +99,8 @@ $rc = $res->num_rows;
 //report cols: Leader	Day	StartTime	Duration	TripStatus Site Event
 $ldrarray = array();
 while ($r = $res->fetch_assoc()) {
-  // echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
-  if ($r[Day] == 'Friday') $d = 1; if ($r[Day] == 'Saturday') $d = 2;
-  if ($r[Day] == 'Sunday') $d = 3;if ($r[Day] == 'Monday') $d = 4;
+  $d = $dayarray[$r[Day]];
+  // echo "d: $d<br>";  
   if ($r[Leader1] != '') 
   $ldrarray[$r[Leader1]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";
   if ($r[Leader2] != '')
@@ -97,18 +111,21 @@ while ($r = $res->fetch_assoc()) {
   $ldrarray[$r[Leader4]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";  
   }
 ksort($ldrarray);
-// echo '<pre> leaderarray '; print_r($ldrarray); echo '</pre>';
+// echo '<pre> ldrarray '; print_r($ldrarray); echo '</pre>';
 
 foreach ($ldrarray as $k => $v) {
   if (!in_array($k, $leaders)) continue;
   echo "<h4>$k</h4>";
-  //echo "<pre> leader $k "; print_r($v); echo '</pre>';
+  // echo "<pre> leader $k "; print_r($v); echo '</pre>';
   foreach ($v as $kk => $vv) {
-    //echo "Day $kk<br>";
+    // echo "Day $kk<br>";
     echo '<ul>';
-    if ($kk == 1) $dx='Friday '; if ($kk == 2) $dx='Saturday ';
-    if ($kk == 3) $dx='Sunday '; if ($kk == 4) $dx='Monday ';
-    // echo "<pre> day $kk "; print_r($vv); echo '</pre>';
+    // echo "days indexed: -$days[$kk]-";
+    preg_match('/^.*>(.*)<.*$/i', $days[$kk], $matches);
+    $dx = $matches[1];
+    if (strlen($dx) == 0) $dx = "**INVALID EVENT DAY**<br>";
+    // echo "dx: -$dx-<br>";
+    // echo "<pre> day: $kk, dx: $dx "; print_r($vv); echo '</pre>';
     foreach ($vv as $kkk => $vvv) {
       //echo "$kkk ";
       //echo "<pre> hour $kkk "; print_r($vvv); echo '</pre>';
@@ -117,7 +134,7 @@ foreach ($ldrarray as $k => $v) {
       $st = date("g:i A", strtotime($kkk));
       $et = date("g:i A", strtotime($r[EndTime]));
       
-      echo "$dx $st (Duration: $dur) <b>site:</b> $site <b>event:</b> $event<br>";
+      echo "<b>$dx</b> $st (Duration: $dur) <b>site:</b> $site <b>event:</b> $event<br>";
       }
     echo '</ul>';
     }

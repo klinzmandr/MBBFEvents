@@ -25,40 +25,46 @@
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-//include 'Incls/vardump.inc.php';
+// include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
 include 'Incls/mainmenu.inc.php';
 
 // Process listing based on selected criteria
-$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : "";
 
 echo '<h3>Event Listing</h3>';
 
-if ($action == '') {
+if ($day == '') {
   echo '
-  <p>A listing of specific events.</p>
-  <p>All scheduled events will be listed if no selection is made.</p>
+  <div class=container>
+  <p>A listing of specific events marked with the status of &apos;<b>RETAIN</b>&apos; for the selected day.</p>
+  <p>All scheduled events for all days will be listed if the choice of &apos;Day&apos; is selected.</p>
   <p>A download CSV file is created and is available with the same results as shown on the page except that the venue name is in column 1 of each row of the result.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
 
 <script>
 $(document).ready (function() {
   $("#Day").change (function() {
+    var day = $("#Day").val();
+    console.log("Day: " + day);
     $("#FF").submit();  
     });
   });
 
-</script>
-<form id="FF" action="rpteventlisting.php" method="post">
+</script>';
+$daylist = readlistarray('Day');
+// echo '<pre>day list before '; print_r($daylist); echo '</pre>';
+$daylist[0] = '<option value="all">All Days</option>';
+// echo '<pre>day list after '; print_r($daylist); echo '</pre>';
+echo '<form id="FF" action="rpteventlisting.php" method="post">
 Day: 
 <select id="Day" name="Day">
-<option value=""></option>';
-echo readlist('Day');
+<option value="">Select Day</option>';
+foreach ($daylist as $d) {
+  echo $d;
+}
 echo '</select>
-<input type="hidden" name="action" value="genreport">
-<!-- <button form="FF" class="btn btn-primary" type="submit">Generate Report</button> -->
 </form>
 </div> <!-- container -->
 </body>
@@ -77,22 +83,21 @@ echo '
 $sql = '
 SELECT * FROM `events` 
 WHERE `Day` =   "'.$day.'"
-  AND `TripStatus` NOT LIKE "Delete" 
+  AND `TripStatus` LIKE "%Retain%" 
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 ';
-if ($day == '') { 
+if ($day == 'all') { 
 $sql = '
 SELECT * FROM `events` 
-WHERE 1=1
-  AND `TripStatus` NOT LIKE "Delete" 
+WHERE `TripStatus` LIKE "%Retain%" 
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
-$day = 'ALL';
+$day = 'All Days';
 }
 
-//echo "<br>sql: $sql<br>";
+// echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
-echo '<h3>Listing for Day: '.$day.'</h3>row count: '.$rc.'<br>';
+echo '<h3>Listing for: '.$day.'</h3>row count: '.$rc.'<br>';
 $mask = '
 <tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
 $csvmask = '"%s","%s","%s","%s",%s,%s,"%s","%s","%s",%s,"%s","%s","%s","%s"'."\n";

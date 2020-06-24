@@ -41,7 +41,7 @@ if ( !checkcred('SUMUser') ) {
 
 if ($action == '') {
   echo '
-<p>Produces an extract of the "active" events in a download CSV file using the vertical bar (&apos;pipe&apos;) character as the field separator.</p>
+<p>Produces an extract of the "active" events with a status of &apos;<b>RETAIN</b>&apos; in a download CSV file using the vertical bar (&apos;pipe&apos;) character as the field separator.</p>
 <a class="btn btn-primary" href="sumextract.php?action=createextract">Create Downlod File</a>
 <br><br>
 Output columns are:<br>
@@ -87,7 +87,7 @@ echo '
 
 $sql = '
 SELECT * FROM `events` 
-WHERE `TripStatus` NOT LIKE "Delete"
+WHERE `TripStatus` LIKE "%Retain%"
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
 
 //echo "<br>sql: $sql<br>";   2016-01-15 06:45	2016-01-15 14:00

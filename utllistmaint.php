@@ -62,7 +62,7 @@ Choose list from the following:
 <select name="file" onchange="this.form.submit()">
 <option value=""></option>
 <option value="Day">Day</option>
-<option value="Site">Sites</option>
+<!-- <option value="Site">Sites</option> -->
 <option value="Transportation">Transportation</option>
 <option value="TripStatus">Trip Status</option>
 <option value="TripType">Trip Type</option>

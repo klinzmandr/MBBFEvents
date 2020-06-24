@@ -105,20 +105,20 @@ $(function(){
 <button id="btnMORE">Hide/Show Bio Info</button>&nbsp;&nbsp;
 <a href="downloads/leaderinfo.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>
 </div>   <!-- hidden-print -->
-<table id="tab">
-<tr><th>Full Name</th><th>Pri Phone</th><th>Sec Phone</th><th>Email Address</th><th>Address 1</th><th>Address 2</th><th>City</th><th>State</th><th>Zip</th><th>Active</th></tr>
+<table id="tab" border=0>
+<tr><th>Full Name</th><th>Pri Phone</th><th>Sec Phone</th><th>Email Address</th><th>ShirtSize</th><th>Address 1</th><th>Address 2</th><th>City</th><th>State</th><th>Zip</th><th>Active</th></tr>
 ';
 $emstr = ''; $noemstr = '';
-$csv = '"First Name","Last Name","Pri Phone","Sec Phone","Email Address","Address 1","Address 2","City","State","Zip","Active","Bio"'."\n";
+$csv = '"First Name","Last Name","Pri Phone","Sec Phone","Email Address","ShirtSize","Address 1","Address 2","City","State","Zip","Active"'."\n";
 while ($r = $res->fetch_assoc()) {
   //echo '<pre> full record for '.$r[RowID].' '; print_r($r); echo '</pre>';
 if ($r[Bio] == "") $r[Bio] = "None provided";
 $r[Bio] = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $r[Bio]);
 
-$csv .= '"'.$r[FirstName].'","'.$r[LastName].'","'.$r[PrimaryPhone].'","'.$r[SecondaryPhone].'","'.$r[Email].'","'.$r[Address1].'","'.$r[Address2].'","'.$r[City].'","'.$r[State].'","'.$r[Zip].'","'.$r[Active].'","'.$r[Bio].'"'."\n";
+$csv .= '"'.$r[FirstName].'","'.$r[LastName].'","'.$r[PrimaryPhone].'","'.$r[SecondaryPhone].'","'.$r[Email].'","'.$r[ShirtSize].'","'.$r[Address1].'","'.$r[Address2].'","'.$r[City].'","'.$r[State].'","'.$r[Zip].'","'.$r[Active].'"'."\n";
 echo '
 <tr>
-<td>'.$r[FirstName].'&nbsp;'.$r[LastName].'</td><td>'.$r[PrimaryPhone].'</td><td>'.$r[SecondaryPhone].'</td><td>'.$r[Email].'</td><td>'.$r[Address1].'</td><td>'.$r[Address2].'</td><td>'.$r[City].'</td><td>'.$r[State].'</td><td>'.$r[Zip].'</td><td align="center">'.$r[Active].'</td>   
+<td>'.$r[FirstName].'&nbsp;'.$r[LastName].'</td><td>'.$r[PrimaryPhone].'</td><td>'.$r[SecondaryPhone].'</td><td>'.$r[Email].'</td><td>'.$r[ShirtSize].'</td><td>'.$r[Address1].'</td><td>'.$r[Address2].'</td><td>'.$r[City].'</td><td>'.$r[State].'</td><td>'.$r[Zip].'</td><td align="center">'.$r[Active].'</td>   
 </tr>
 <tr class="RH">
 <td>&nbsp;</td><td colspan="9"><b>BIO: </b>'.$r[Bio].'</td>

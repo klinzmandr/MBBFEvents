@@ -11,12 +11,6 @@
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
 
@@ -49,9 +43,9 @@ print <<<helpPart
 <h2>Web Detail Report<span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h2>
 
 <div id="helptext">
-<p>This report duplicates the layout in the web site full summary format.</p>
+<p>This report lists all events with a status of &apos;<b>RETAIN</b>&apos; and duplicates the layout in the web site full summary format.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
-<p>Special formatting may be accomplished by doing a &quot;Selecy All/Copy/Paste&quot; into a word processor or spreadsheet.</p>
+<p>Special formatting may be accomplished by doing a &quot;Select All/Copy&quot; in the web pge and &quot;Paste&quot; into a word processor or spreadsheet.</p>
 
 </div>
 
@@ -61,8 +55,7 @@ helpPart;
 //$sql = 'SELECT * FROM `events` WHERE 1=1;';
 $sql = '
 SELECT * FROM `events` 
-WHERE 1=1 
-  AND `TripStatus` NOT LIKE "Delete" 
+WHERE `TripStatus` LIKE "%Retain%" 
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 ';
 

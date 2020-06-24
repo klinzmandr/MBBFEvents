@@ -11,12 +11,6 @@
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
 
@@ -38,9 +32,7 @@ echo '<div class="container"><h1>Event Listing</h1>';
 
 
 echo '
-  <p>This report produces a complete file of all fields for all events in a CSV format file to download and open with a spreadsheet program.</p>
-  <p>This will produce an input file suitable for import into a spreadsheed where various updates may be performed.  The resulting file may then be used to upload back into the database.  However, care must be taken to not change the names of any column nor add columns as this will make the import incompatable with the defined fields of the database.</p>
-  <p>Also of note is the time fields.  They are held in the database in international date format and are exported in that format.  Changing this format will cause incorrect values to be imported into the database.</p>
+  <p>This report produces a complete list of ALL events regardless of the their status and all fields for each in a CSV format file to download and open with a spreadsheet program.</p>
 ';
 
 // create report

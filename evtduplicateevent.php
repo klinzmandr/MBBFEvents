@@ -63,7 +63,7 @@ if ($action == '') {
 <script>
 function chktrip() {
   var l = $("#T1").val().length
-  if (l <> 3) {
+  if (l < 3) {
     alert("Trip number must be 3 digits.\\n\\nPlease re-enter.");
     return false;
     }
@@ -74,6 +74,7 @@ function chktrip() {
 <p>Duplication of an existing Trip numbered "'.$r[Trip].'" with the description of "'.$r[Event].'" has been requested.</p>
 <h4>Please enter the new trip number to use for the duplicate record.</h4>
 <p>Please note that the trip number must be 3 digits long. Numbering scheme is for 100 series numbers are used for day 1 events, 200 series numbers for day 2 and so on.  Renumbering of events may be necessary if numbers are duplicated.</p>
+<p><b>It is recommended that the &quot;Multi-event Code&quot; field be defined before cloning to allow for a search of a group of similar events to be done.</b></p>
 <form action="evtduplicateevent.php" method="post" onsubmit="return chktrip()">
 <input id="T1" type="text" name="newtrip" value="'.$newtrip.'">
 <input type="hidden" name="action" value="addnew">

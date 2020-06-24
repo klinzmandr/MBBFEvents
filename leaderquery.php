@@ -20,9 +20,13 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.planner.inc.php';
 //include 'Incls/listutils.inc.php';
+if (isset($_REQUEST['rowid'])) {
+  $rowid = $_REQUEST['rowid'];
+  echo "<a class='btn btn-success' href=\"ldrupdate.php?rowid=$rowid\">RETURN</a><br>";
+  }
+// add return button if called from ldrupdate.php
 
 // Process listing based on selected criteria
-
 $eaddr = isset($_REQUEST['eaddr']) ? $_REQUEST['eaddr'] : "";
 
 $sql = "SELECT * FROM `leaders` WHERE `Email`='$eaddr';";
@@ -32,23 +36,23 @@ $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 
 if ($rc == 0) {
-  echo '<h2>ERROR: email address is not regstered</h2>';
+  echo '<h2>ERROR: email address not associated with any registered leader.</h2>';
   exit;
   }  
 
 if ($rc > 1) {
-  echo '<h2>ERROR: multiple leaders have the same email address</h2>
-  <h4>Please notify the event coordinator.</h4>';
-  exit;
+  echo "<h2>NOTE: multiple leaders have the same email address</h2>
+  <h4>Following $rc leaders share the email address of &quot;$eaddr&quot;.</h4>";
   }  
 
+echo '<img src="http://morrobaybirdfestival.org/wp-content/uploads/2016/08/LOGO3.png" alt="bird festival logo" >';
 // there should be only 1 record returned so process it here
-$l = $res->fetch_assoc();
+// but output them all if more than one
+while ($l = $res->fetch_assoc()) {
 $leader = $l[FirstName] . ' ' . $l[LastName];
 
 addlogentry("ldrqry for $leader");
 
-echo '<img src="http://morrobaybirdfestival.org/wp-content/uploads/2016/08/LOGO3.png" alt="bird festival logo" >';
 echo "<h1>Scheduled Events for $leader </h1>";
  
 // generate activity report
@@ -62,8 +66,8 @@ WHERE (`Leader1` LIKE '$leader'
 ORDER BY `Trip` ASC;";
 
 //echo "<br>sql: $sql<br>";
-$res = doSQLsubmitted($sql);
-$rc = $res->num_rows;
+$rese = doSQLsubmitted($sql);
+$rc = $rese->num_rows;
 
 if ($rc == 0) {
   echo '<ul><h3>Leader not registered for any ACTIVE event.</h3></ul>'; }
@@ -73,7 +77,7 @@ else {
   <tr><th>Trip#</th><th>Day</th><th>Time</th>
   <th>Site</th><th>SiteRm</th>
   <th>Event</th><th>Leader Group</th></tr>';
-  while ($r = $res->fetch_assoc()) {
+  while ($r = $rese->fetch_assoc()) {
     $kk = $r[Dnbr];
     if ($kk == 1) $dx='Friday '; if ($kk == 2) $dx='Saturday ';
     if ($kk == 3) $dx='Sunday '; if ($kk == 4) $dx='Monday ';
@@ -115,8 +119,9 @@ print <<<infoPart
 <tr><td valign="top"><b>Biography</b></td><td>$bio</td></tr>
 </table>
 </td></tr></table>
-<br><br><br>
+==========<br><br><br>
 infoPart;
+}
 ?>
 </body>
 </html>

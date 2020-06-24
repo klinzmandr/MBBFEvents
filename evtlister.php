@@ -1,4 +1,17 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
+$day = isset($_REQUEST['day']) ? $_REQUEST['day'] : ""; // event day of week
+$et = isset($_REQUEST['et']) ? $_REQUEST['et'] : "";    // event type
+$ss = isset($_REQUEST['ss']) ? $_REQUEST['ss'] : '';    // event search string
+$site = isset($_REQUEST['Site']) ? $_REQUEST['Site'] : '';
+$transportneeded = isset($_REQUEST['TransportNeeded']) ? $_REQUEST['TransportNeeded'] : '';
+$tripstatus = isset($_REQUEST['TripStatus']) ? $_REQUEST['TripStatus'] : '';
+$typeofevent = isset($_REQUEST['TypeOfEvent']) ? $_REQUEST['TypeOfEvent'] : '';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,37 +24,90 @@
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
-
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
+<?php
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
 include 'Incls/mainmenu.inc.php';
+?>
 
-echo ' 
+<script> 
+$(document).ready(function () { 
+  $(function(){
+     $("#btnMORE").click(function() {
+      $("#btnMORE").toggle();
+      $(".HIDE").toggle();
+     });
+     $("#btnLESS").click(function() {
+      $(".HIDE").toggle();
+      $("#btnMORE").toggle();
+     });
+  });
+});
+</script>
+<script type="text/javascript">
+// set up select lists
+$(document).ready(function () { 
+	//alert("start field initialization");
+	$("#S2").val("<?=$et?>");
+	var et = "<?=$et?>";
+	if (et == "%") $("#S2").val("");
+	$("#S1").val("<?=$day?>");
+	$("#TripStatus").val("<?=$tripstatus?>");
+	$("#SS").val("<?=$ss?>");
+	$("#Site").val("<?=$site?>");
+	$("#TypeOfEvent").val("<?=$typeofevent?>");
+	// $("#TransportNeeded").val("'.$transportneeded.'");
+  $(".HIDE").hide();
+  //alert("end field initialization");
+});
+</script>
+<script type="text/javascript">
+// reset all select input fields to null
+function resetflds() { 
+	$(":input").val("");
+	return false;
+}
+</script>
+
 <h3>Event List</h3>
-';
-$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
-$day = isset($_REQUEST['day']) ? $_REQUEST['day'] : ""; // event day of week
-$et = isset($_REQUEST['et']) ? $_REQUEST['et'] : "";    // event type
-$ss = isset($_REQUEST['ss']) ? $_REQUEST['ss'] : '';    // event search string
-$site = isset($_REQUEST['Site']) ? $_REQUEST['Site'] : '';
-$transportneeded = isset($_REQUEST['TransportNeeded']) ? $_REQUEST['TransportNeeded'] : '';
-$tripstatus = isset($_REQUEST['TripStatus']) ? $_REQUEST['TripStatus'] : '';
-$typeofevent = isset($_REQUEST['TypeOfEvent']) ? $_REQUEST['TypeOfEvent'] : '';
+<h4 class="hidden-print">Select from list or enter selection criteria to search: </h4>
+<form class="hidden-print" id="F1" action="evtlister.php" method="post">
+<select id="S1" name=day>';
+<?php echo readlist('Day'); ?>
+</select>&nbsp;
 
+<select id="TripStatus" name="TripStatus">';
+<?php echo readlist('TripStatus'); ?>
+</select>
+
+<input id="SS" type=text value="" name=ss placeholder="Search Filter" title="Enter a single word or short character string to search all program descriptions.">&nbsp;
+<input type=hidden name=action value="list">
+<button class="btn btn-primary" type="submit" form="F1" data-toggle="tooltip" data-placement="left" title="Search for % to list all">SEARCH</button>
+<button class="btn btn-warning" onclick="return resetflds()">Reset</button>
+
+<div class="HIDE">
+
+<select id="Site" name="Site">
+<option value="">Sites</option>';
+<?php echo readvenlist('Site'); ?>
+</select>
+
+<select id="TypeOfEvent" name="TypeOfEvent">
+<?php echo readlist('TypeOfEvent'); ?>
+</select>
+
+<br><button id="btnLESS">LESS</button>
+</form>
+</div>
+<button class="hidden-print" id="btnMORE">MORE</button>
+
+<?php
 // process delete action
 if ($action == 'delete') {
   $rowid = isset($_REQUEST['rowid']) ? $_REQUEST['rowid'] : '';
@@ -63,76 +129,6 @@ $(document).ready(function() {
 		echo "Error on delete of event $rowid<br>";
 	}
 
-echo'
-<script>  
-$(function(){
-   $("#btnMORE").click(function() {
-    $("#btnMORE").toggle();
-    $(".HIDE").toggle();
-   });
-   $("#btnLESS").click(function() {
-    $(".HIDE").toggle();
-    $("#btnMORE").toggle();
-   });
-
-});
-</script>
-<script type="text/javascript">
-// set up select lists
-$(document).ready(function () { 
-	//alert("start field initialization");
-	$("#S2").val("'.$et.'");
-	var et = "'.$et.'";
-	if (et == "%") $("#S2").val("");
-	$("#S1").val("'.$day.'");
-	$("#SS").val("'.$ss.'");
-	$("#Site").val("'.$site.'");
-	$("#TransportNeeded").val("'.$transportneeded.'");
-	$("#TripStatus").val("'.$tripstatus.'");
-	$("#TypeOfEvent").val("'.$typeofevent.'");
-  $(".HIDE").hide();
-  //alert("end field initialization");
-  });
-</script>
-<script type="text/javascript">
-// reset all select input fields to null
-function resetflds() { 
-	$(":input").val("");
-	return false;
-}
-</script>
-
-<h4 class="hidden-print">Select from list or enter selection criteria to search: </h4>
-<form class="hidden-print" id="F1" action="evtlister.php" method="post">
-<select id="S1" name=day>';
-echo readlist('Day');
-echo '</select>&nbsp;
-
-<select id="TripStatus" name="TripStatus">';
-echo readlist('TripStatus');
-echo '</select>
-
-<input id="SS" type=text value="" name=ss placeholder="Search Filter" title="Enter a single word or short character string to search all program descriptions.">&nbsp;
-<input type=hidden name=action value="list">
-<button class="btn btn-primary" type="submit" form="F1" data-toggle="tooltip" data-placement="left" title="Search for % to list all">SEARCH</button>
-<button class="btn btn-warning" onclick="return resetflds()">Reset</button>
-
-<div class="HIDE">
-
-<select id="Site" name="Site">
-<option value="">Sites</option>';
-echo readvenlist('Site');
-echo '</select>
-
-<select id="TypeOfEvent" name="TypeOfEvent">';
-echo readlist('TypeOfEvent');
-echo '</select>
-
-<br><button id="btnLESS">LESS</button>
-</form>
-</div>
-<button class="hidden-print" id="btnMORE">MORE</button>
-';
 // Process listing based on selected criteria
 $sql = '
 SELECT * FROM `events` WHERE ';

@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php session_start(); 
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +27,6 @@
 <script src="js/bootstrap.min.js"></script>
 <div class="container">
 <?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
@@ -44,8 +45,6 @@ $day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : "";
 
 echo '<h3>Resequence Events</h3>';
 
-$dayarray[Friday] = 1;$dayarray[Saturday] = 2; $dayarray[Sunday] = 3; $dayarray[Monday] = 4; 
-
 if ($action == '') {
   echo '
 <script>
@@ -58,9 +57,9 @@ if (d == "") {
 return true;
 }
 </script>
-    <p>This utility will assign a new sequence number to an event based on the day of the event. If the day for the event is Friday the number is a 100 series number, Saturday is a 200 series, Sunday is a 300 series and Monday is a 400 series.</p>
+    <p>This utility will assign a new sequence number to an event based on the day of the event. If the day for the event is the first day of the Festival the number is a 100 series number, the second day events are a 200 series, etc.  Festival days are defined in the &apos;Utilities &gt; List Maintenance -&gt; Day&apos; configuration file.</p>
 
-    <p>First ALL events are selected for the currently requested day regardless of trip number. The results are sorted by start time, end time within start time, and event title within end time within start time. The number is created by assigning a sequential number within the series based on the day.</p>
+    <p>First ALL events with a &apos;RETAIN&apos; status are selected for the requested day. The results are sorted by start time, end time within start time, and event title within end time within start time. The number is created by assigning a sequential number within the series based on the day of the Festival.</p>
 
     <p>If an event is to be assigned a different day or a new or duplicated event is created there is a probabilility that the trip number will be duplicated. The re-sequence utility should be run periodically to eliminate these duplications.</p>
 
@@ -75,6 +74,19 @@ echo '</select>
 ';
 exit;
   }
+
+// setup day sequence number array  
+$dayarray = array();
+$days = readlistarray('Day');
+$daynbr = 1;
+foreach ($days as $v) {
+  preg_match('/^.*>(.*)<.*$/i', $v, $matches);
+  if ($matches[1] == 'Day') continue;
+  // echo '<pre>'; print_r($matches[1]); echo '</pre>';
+  $dayarray[$matches[1]] = $daynbr;
+  $daynbr += 1;
+  }
+// echo '<pre>dayarray 2 '; print_r($dayarray); echo '</pre>';
 
 if ($action == 'reseq') {
 //$sql = 'SELECT * FROM `events` WHERE `Day` = "'.$day.'";';
@@ -106,9 +118,8 @@ $(document).ready(function() {
     $("#IMG").attr("style","visibility-visible");
     });
 });
-</script>';
-echo '<a id="AP" href="utlresequence.php?action=apply&Day='.$day.'" class="btn btn-primary">Apply</a>';
-echo '
+</script>
+<a id="AP" href="utlresequence.php?action=apply&Day='.$day.'" class="btn btn-primary">Apply</a>
 <br><br>
 <img id="IMG" style="visibility: hidden;" src="img/progressbar.gif" width="226" height="26" alt="">
 ';

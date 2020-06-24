@@ -55,8 +55,8 @@ echo '
 
 echo '
 <div id="helptext">
-<p>This report provides the scheduled actvities for the venue seleted.</p>
-<p>Selection of the first selection item (a blank) will select all venues and list all events for each.</p>
+<p>This report provides the scheduled actvities with a status of &apos;<b>RETAIN</b>&apos; for the venue seleted.</p>
+<p>Selection of the first selection item (a blank) will select all venues and list all events with a status of &apos;<b>RETAIN</b>&apos; for each.</p>
 <p>A download CSV file is created and is available with the same results as shown on the page except that the venue name is in column 1 of each row of the result.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
 </div>
@@ -69,7 +69,7 @@ else list($site, $code) = explode(':', $site);
 $sql = '
 SELECT * FROM `events` 
 WHERE `Site` LIKE "'.$site.'%" 
-  AND `TripStatus` NOT LIKE "Delete" 
+  AND `TripStatus` LIKE "%Retain%" 
 ORDER BY `Site` ASC, `Dnbr` ASC, `StartTime` ASC;';
 
 //echo "<br>sql: $sql<br>";

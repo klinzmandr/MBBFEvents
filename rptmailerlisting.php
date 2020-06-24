@@ -50,7 +50,7 @@ print <<<helpPart
 <span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span>
 </h3>
 <div id="helptext">
-<p>This report duplicates the columns and layout contained in the event mailer.</p>
+<p>This report list all the events with a status of &apos;<b>RETAIN</b>&apos; and duplicates the columns and layout contained in the event mailer.</p>
 <p>A download CSV file is created and is available with the same results as shown on the page except that the venue name is in column 1 of each row of the result.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
 </div>  <!-- helptext -->
@@ -68,8 +68,7 @@ echo '
 //$sql = 'SELECT * FROM `events` WHERE 1=1;';
 $sql = '
 SELECT * FROM `events` 
-WHERE 1=1  
-  AND `TripStatus` NOT LIKE "Delete" 
+WHERE `TripStatus` LIKE "%Retain%" 
 ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;
 ';
 
