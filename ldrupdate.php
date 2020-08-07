@@ -197,7 +197,7 @@ if ($r[ImgURL] <> '') $imgurl = $r[ImgURL];
 <font size="+2"><b><?=$r[FirstName]?> <?=$r[LastName]?></b></font>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <button form="F1" class="updb btn btn-success" type="submit">UPDATE LEADER</button></td>
-<td><span id="LIL" title="Leader Info Listing" class="glyphicon glyphicon-blackboard" style="color: blue; font-size: 25px;"></span></td>
+<td><span id="LIL" title="Leader Info 360 View" class="glyphicon glyphicon-blackboard" style="color: blue; font-size: 25px;"></span></td>
 <td align="right"><a onclick="return confirmContinue()" 
 href="ldrlister.php?rowid=<?=$r[RowID]?>&ss=<?=$ss?>&action=delete&Active=<?=$active?>">
 <span title="Delete Leader" class="glyphicon glyphicon-trash" style="color: blue; font-size: 25px;"></span></a>&nbsp;&nbsp;

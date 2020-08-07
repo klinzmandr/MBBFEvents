@@ -22,9 +22,9 @@ include 'Incls/datautils.planner.inc.php';
 //include 'Incls/listutils.inc.php';
 if (isset($_REQUEST['rowid'])) {
   $rowid = $_REQUEST['rowid'];
-  echo "<a class='btn btn-success' href=\"ldrupdate.php?rowid=$rowid\">RETURN</a><br>";
+  // add return button if called for
+  echo "<a class='btn btn-success' href=\"ldrlister.php\">RETURN</a><br>";
   }
-// add return button if called from ldrupdate.php
 
 // Process listing based on selected criteria
 $eaddr = isset($_REQUEST['eaddr']) ? $_REQUEST['eaddr'] : "";

@@ -56,9 +56,9 @@ SELECT `FirstName`,`LastName`, `ImgURL`
 // echo "sql: $sql<br>";
 $res = doSQLsubmitted($sql);
 while ($r = $res->fetch_assoc()) {
-  $fullname = $r[FirstName] . ' ' . $r[LastName];
+  $fullname = $r['FirstName'] . ' ' . $r['LastName'];
   $fullname = rtrim($fullname, ' ');
-  $imgarray[$fullname] = $r[ImgURL];
+  $imgarray[$fullname] = $r['ImgURL'];
   // $imgarray[$fullname][type] = $r[LDREvent];
   }
 // echo '<pre>img '; print_r($imgarray); echo '</pre>';
@@ -76,10 +76,10 @@ echo '
 $ldrarray = array();
 while($r = $res->fetch_assoc()) {
 //  echo "<pre>Full record $r[RowID] "; print_r($r); echo '</pre>';
-  bldldr($r[Leader1]);
-  bldldr($r[Leader2]);  
-  bldldr($r[Leader3]);
-  bldldr($r[Leader4]);
+  bldldr($r['Leader1']);
+  bldldr($r['Leader2']);  
+  bldldr($r['Leader3']);
+  bldldr($r['Leader4']);
   }
 
 function bldldr($name) {

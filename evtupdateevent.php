@@ -220,7 +220,7 @@ $("#TripStatus").change(function() {
         chgFlag = 0;
         $('.updb').prop('disabled', true);    
         $(".updb").css({"background-color": "green", "color":"white"});
-        $("#content").html("<h3>Event Update Successful</h3><p>A listing of all 'deleted/parked' events may be obtained by doing a search with the 'Status' field set to 'Delete'.</p><p>An event may be re-used ('un-parked') by merely changing the 'Trip' number and the 'Trip Status' fields.  Other distinguishing fields such as the event day, start time, end time, event leaders, etc. would also, probably, be modified as well.</p><p>Use the trashcan icon to permanently remove an event from the database.</p>"); 
+        $("#content").html("<h3>Event Update Successful</h3><p>A listing of all 'deleted/parked' events may be obtained by doing a search with the 'Status' field set to 'Delete'.</p><p>An event may be re-used ('un-parked') by merely changing the 'Trip' number and the 'Trip Status' fields.  Other distinguishing fields such as the event day, start time, end time, event leaders, etc. would also, probably, be modified as well.</p><p>Use the trashcan icon to permanently remove an event from the database.</p><br><button type='button' class='btn btn-success' data-dismiss='modal'>CLOSE</button>"); 
         $("#ModalLabel").text("Event Delete/Park"); 
         $('#ldrModal').modal('toggle', { keyboard: true });
       });  // end $.post logic 
@@ -339,6 +339,7 @@ $(".ld").click(function() {
       },
       function(data, status){
         // alert("Data: " + data + "\\nStatus: " + status);
+        data = data + "<br><button type='button' class='btn btn-success' data-dismiss='modal'>CLOSE</button>";
         $("#content").html(data); 
         $("#ModalLabel").text("Leader Information"); 
         $('#ldrModal').modal('toggle', { keyboard: true });
@@ -356,6 +357,7 @@ $(".ld").click(function() {
       },
       function(data, status) {
         // alert("Data: " + data + "\\nStatus: " + status);
+        data = "<br><button type='button' class='btn btn-success' data-dismiss='modal'>CLOSE</button>" + data;
         $("#content").html(data);
         $("#ModalLabel").text("Venue Information"); 
         $('#ldrModal').modal('toggle', { keyboard: true });

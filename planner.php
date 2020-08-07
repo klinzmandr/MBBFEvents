@@ -149,47 +149,47 @@ echo '<h3>Events meeting selected criteria</h3>
 
 $rarray = array(); 
 while ($r = $res->fetch_assoc()) {
-  $rarray[$r[RowID]] = $r;
+  $rarray[$r['RowID']] = $r;
   }
 // echo '<pre> results '; print_r($rarray); echo '</pre>';
 // echo '<pre> leader '; print_r($ldrarray); echo '</pre>';
 
 foreach ($rarray as $k => $r) {
 //  echo '<pre> full record '; print_r($r); echo '</pre>';
-  $ldrstr = !empty($r[Leader1]) ? "<b><span class=mod>$r[Leader1]</span></b>" : '';
-  $ldrstr .= !empty($r[Leader2]) ? ", <b><span class=mod>$r[Leader2]</span></b>" : '';
-  $ldrstr .= !empty($r[Leader3]) ? ", <b><span class=mod>$r[Leader3]</span></b>" : '';
-  $ldrstr .= !empty($r[Leader4]) ? ", <b><span class=mod>$r[Leader4]</span></b>" : '';
+  $ldrstr = !empty($r['Leader1']) ? "<b><span class=mod>$r[Leader1]</span></b>" : '';
+  $ldrstr .= !empty($r['Leader2']) ? ", <b><span class=mod>$r[Leader2]</span></b>" : '';
+  $ldrstr .= !empty($r['Leader3']) ? ", <b><span class=mod>$r[Leader3]</span></b>" : '';
+  $ldrstr .= !empty($r['Leader4']) ? ", <b><span class=mod>$r[Leader4]</span></b>" : '';
 // echo '<pre> leaders '; echo $ldrs; echo '</pre>';
   if ($r[FEE] == '') $r[FEE] = 'No Charge';
   else $r[FEE] = '$'.$r[FEE];  
-  $r[StartTime] = date("g:i A", strtotime($r[StartTime]));
-  $r[EndTime] = date("g:i A", strtotime($r[EndTime]));
+  $r[StartTime] = date("g:i A", strtotime($r['StartTime']));
+  $r[EndTime] = date("g:i A", strtotime($r['EndTime']));
   echo '
 <div class="panel panel-default">
-<div class="panel-heading" role="tab" id="heading'.$r[RowID].'">
+<div class="panel-heading" role="tab" id="heading'.$r['RowID'].'">
 <h4 class="panel-title">
-<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse'.$r[RowID].'" aria-expanded="false" aria-controls="collapse'.$r[RowID].'">
-  Event '.$r[Trip].' '.$r[Event].'
+<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse'.$r['RowID'].'" aria-expanded="false" aria-controls="collapse'.$r['RowID'].'">
+  Event '.$r['Trip'].' '.$r['Event'].'
 </a>
 </h4>
 </div> <!-- panel-eading -->
-<div id="collapse'.$r[RowID].'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'.$r[RowID].'">
+<div id="collapse'.$r[RowID].'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'.$r['RowID'].'">
 <div class="panel-body">
 <table>
 <tr>
-<td>Event Type: '.$r[Type].'</td>
-<td>Event Day: '.$r[Day].'</td>
-<td>Event Hours: '.$r[StartTime].' to '.$r[EndTime].'</td>
+<td>Event Type: '.$r['Type'].'</td>
+<td>Event Day: '.$r['Day'].'</td>
+<td>Event Hours: '.$r['StartTime'].' to '.$r['EndTime'].'</td>
 </tr>
 <tr>
 <td>Guide/Speaker: '.
 $ldrstr
 .'</td>
-<td>FEE: '.$r[FEE].'</td>
-<td>Site: <b><span class=ven>'.$r[Site].'</span></b></td>
+<td>FEE: '.$r['FEE'].'</td>
+<td>Site: <b><span class=ven>'.$r['Site'].'</span></b></td>
 </tr>
-<tr><td colspan=3 border=1>'.$r[Program].'</td></tr>
+<tr><td colspan=3 border=1>'.$r['Program'].'</td></tr>
 </table>
 </div> <!-- panel-body -->
 </div> <!-- panel-collapse collapse -->
