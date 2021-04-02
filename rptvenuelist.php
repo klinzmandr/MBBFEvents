@@ -59,7 +59,7 @@ $res = doSQLsubmitted($sql);
 $eventrc = $res->num_rows;
 $evtvencount = array();
 while ($r = $res->fetch_assoc()) {
-  $evtvencount[$r[SiteCode]] += 1;
+  $evtvencount[$r['SiteCode']] += 1;
   }
 // echo '<pre> evtvencount '; print_r($evtvencount); echo '</pre>';
 
@@ -69,7 +69,7 @@ $res = doSQLsubmitted($sql);
 $venrc = $res->num_rows;
 $sitenames = array();
 while ($r = $res->fetch_assoc()) {
-  $sitenames[$r[VenCode]] = $r;
+  $sitenames[$r['VenCode']] = $r;
   }
 
 // echo '<pre> sitenames '; print_r($sitenames); echo '</pre>';
@@ -78,7 +78,7 @@ echo '<table>
 <tr><th>Venue Name</th><th>Code</th><th>Evt Count</th><th>Map Info?</th></tr>';  
 foreach ($sitenames as $k => $v) {
   $vc = 0; if (array_key_exists($k, $evtvencount)) $vc = $evtvencount[$k];
-  $mi = 'YES'; if ($v[VenGmapURL] == '') $mi = 'NO';
+  $mi = 'YES'; if ($v['VenGmapURL'] == '') $mi = 'NO';
   echo "<tr><td>$v[VenName]</td><td>$k</td><td>$vc</td><td>$mi</td></tr>";
   }
 echo '</table>===== END REPORT =====<br><br><br>';

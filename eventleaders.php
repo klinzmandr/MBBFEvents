@@ -94,12 +94,12 @@ function bldldr($name) {
     $picurl = "<img src='$imgarray[$name]' width='100' height='75'>";
   if ($l == '') {
     $fc = substr($f,0,1);
-    $ldrarray[$fc][$name][name] = $f;   
-    $ldrarray[$fc][$name][pic] = $picurl; }   
+    $ldrarray[$fc][$name]['name'] = $f;   
+    $ldrarray[$fc][$name]['pic'] = $picurl; }   
   else {  
     $fc = substr($l,0,1);  
-    $ldrarray[$fc][$name][name] = $l . ', ' . $f;   
-    $ldrarray[$fc][$name][pic] = $picurl; }   
+    $ldrarray[$fc][$name]['name'] = $l . ', ' . $f;   
+    $ldrarray[$fc][$name]['pic'] = $picurl; }   
   return; 
   }
 

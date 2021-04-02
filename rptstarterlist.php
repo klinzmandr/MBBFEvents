@@ -53,9 +53,9 @@ $rc = $res->num_rows;
 // Trip, Start, End, Type, Event, Site, Leader1, Leader2, Leader3, Travel, Attend
 
 $mask = '
-<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
-$csvmask = '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",%s'."\n";
-$csv = 'Trip, Start, End, Type, Event, Site, SiteRoom, Leader1, Leader2, Leader3, Leader4, Travel, Attend'."\n";
+<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
+$csvmask = '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",%s'."\n";
+$csv = 'Trip, Start, End, Type, Event, VenueSite, VenInst, MeetSite, MeetInst, Leader1, Leader2, Leader3, Leader4, Travel, Attend'."\n";
 
 //echo '<table class="table" border=0>
 //<tr><th>Trip</th><th>Start</th><th>End</th><th>Type</th><th>Event</th><th>Site</th><th>SiteRoom</th><th>Leader1
@@ -65,10 +65,10 @@ $csv = 'Trip, Start, End, Type, Event, Site, SiteRoom, Leader1, Leader2, Leader3
 $sc = readlistreturnarray("TripTypeCodes");
 
 while ($r = $res->fetch_assoc()) {
-  $st = date("g:iA", strtotime($r[StartTime]));
-  $et = date("g:iA", strtotime($r[EndTime]));
+  $st = date("g:iA", strtotime($r['StartTime']));
+  $et = date("g:iA", strtotime($r['EndTime']));
   // printf($mask,$r[Trip],$st,$et,$sc[$r[Type]],$r[Event],$r[SiteCode],$r[Leader1],$r[Leader2],$r[Leader3],$r[Leader4],$r[Transportation],$r[MaxAttendees]);
-  $csv .= sprintf($csvmask,$r[Trip],$st,$et,$sc[$r[Type]],$r[Event],$r[SiteCode],$r[SiteRoom],$r[Leader1],$r[Leader2],$r[Leader3],$r[Leader4],$r[Transportation],$r[MaxAttendees]);
+  $csv .= sprintf($csvmask,$r['Trip'],$st,$et,$sc[$r['Type']],$r['Event'],$r['SiteCode'],$r['SiteRoom'],$r['Site2Code'], $$r['Site2Room'], $r['Leader1'],$r['Leader2'],$r['Leader3'],$r['Leader4'],$r['Transportation'],$r['MaxAttendees']);
   
   //echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   }

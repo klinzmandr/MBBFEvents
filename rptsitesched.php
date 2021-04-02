@@ -11,17 +11,20 @@
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<link href="css/bootstrap-sortable.css" rel="stylesheet">
+
 </head>
 <body>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-sortable.js"></script>
+<script>
+$(function() {
+  $.bootstrapSortable({ sign: 'AZ' })
+});
+</script>
+
 <script>
 $(document).ready(function() {
   $("#helptext").hide();
@@ -50,7 +53,7 @@ $site = isset($_REQUEST['Site']) ? $_REQUEST['Site'] : "";
 
 echo '
 <h3>Venue Schedule of Events
-<span id="help" title="Help" class="hidden-print glyphicon glyphicon-question-sign" style="color: blue; font-size: 20px"></span></h3>
+<span id="help" title="Help" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px"></span></h3>
 ';
 
 echo '
@@ -81,14 +84,26 @@ $rc = $res->num_rows;
 $venuearray = array();
 while ($r = $res->fetch_assoc()) {
 //  echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
-  $venuecount[$r[Site]] += 1;
-  $venuearray[$r[Site]][] = $r;
+  $venuecount[$r['Site']] += 1;
+  $venuearray[$r['Site']][] = $r;
   }
-
 //echo '<pre> venue '; print_r($venuearray); echo '</pre>';
-$mask = '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
-$csvmask = '"%s","%s","%s","%s","%s","%s"'."\n";
-$csv = 'Site,Day,StartTime,Duration,Event,SiteRoom'."\n";
+
+// setup day sequence number array  
+$dayarray = array();
+$days = readlistarray('Day');
+$daynbr = 1;
+foreach ($days as $v) {
+  preg_match('/^.*>(.*)<.*$/i', $v, $matches);
+  if ($matches[1] == 'Day') continue;
+  // echo '<pre>'; print_r($matches[1]); echo '</pre>';
+  $dayarray[$matches[1]] = $daynbr;
+  $daynbr += 1;
+  }
+// echo '<pre>dayarray '; print_r($dayarray); echo '</pre>';
+
+$csvmask = '"%s","%s","%s","%s","%s","%s","%s","%s"'."\n";
+$csv = 'Venue,Day,StartTime,Duration,Event,VenueInst,MeetSite,MeetInst'."\n";
 
 echo '<table><tr><td>
 <form id="FF" action="rptsitesched.php" method="post">
@@ -112,17 +127,20 @@ foreach ($venuearray as $k => $v) {
   //echo "<pre> venue $k "; print_r($v); echo '</pre>';
   $ec = $venuecount[$k];
   echo '<h3>'.$k.' (Event Count: '.$ec.')</h3>
-  <table class="table">
-  <tr><th>Day</th><th>StartTime</th><th>Duration</th><th>Event</th><th>SiteRoom</th>';
+  <table class="table sortable">
+  <thead><tr><th data-defaultsort="asc">Day</th><th>StartTime</th><th>Duration</th><th>Event</th><th>VenueInst</th><th>MeetSite</th><th>MeetInst</th></thead><tbody>';
   foreach ($v as $kk => $vv) {
     //echo "<pre> xxx $kk "; print_r($vv); echo '</pre>';
     //echo "Day: $vv[Day]<br>";
-    $st = date("g:i A", strtotime($vv[StartTime]));
-    $dur = timediff($vv[StartTime], $vv[EndTime]);
-    printf($mask,$vv[Day],$st,$dur,$vv[Event],$vv[SiteRoom]);
-    $csv .= sprintf($csvmask,$k,$vv[Day],$st,$dur,$vv[Event],$vv[SiteRoom]);
+    $st = date("g:i A", strtotime($vv['StartTime']));
+    $stv = strtotime($vv['StartTime']);
+    $dur = timediff($vv['StartTime'], $vv['EndTime']);
+    $durs = dursecs($vv['StartTime'], $vv['EndTime']);
+    $mask = '<tr><td date-value='.$dayarray[$vv['Day']].'>%s</td><td data-value='.$stv.'>%s</td><td data-value='.$durs.'>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>'."\n";
+    printf($mask,$vv['Day'],$st,$dur,$vv['Event'],$vv['SiteRoom'], $vv['Site2'], $vv['Site2Room']);
+    $csv .= sprintf($csvmask,$k,$vv['Day'],$st,$dur,$vv['Event'],$vv['SiteRoom'], $vv['Site2'], $vv['Site2Room']);
     }
-  echo '</table>';
+  echo '</tbody></table>';
   }
 
 //echo '<pre> csv file<br>'; print_r($csv); echo '</pre>';
@@ -139,6 +157,11 @@ function timediff($start, $end) {
   return($fmtdiff);
   }
 
+function dursecs($start, $end) {
+  $tp1val = strtotime($start);
+  $tp2val = strtotime($end);
+  return($tp2val - $tp1val);
+  }
 ?>
 </div> <!-- container -->
 </body>

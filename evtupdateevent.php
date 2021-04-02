@@ -28,9 +28,8 @@ date_default_timezone_set('America/Los_Angeles');
   }
 .mod { 
   color: blue; 
-  font-weight: 
-  bold; text-decoration: 
-  underline; 
+  font-weight: bold; 
+  text-decoration: underline; 
   cursor: pointer;  
   }
 </style>
@@ -39,7 +38,7 @@ date_default_timezone_set('America/Los_Angeles');
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-//include 'Incls/vardump.inc.php';
+// include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
 include 'Incls/mainmenu.inc.php'; 
@@ -49,16 +48,17 @@ $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
 $rowid = isset($_REQUEST['rowid']) ? $_REQUEST['rowid'] : "1";
 
 //echo '<pre> REQUEST '; print_r($_REQUEST); echo '</pre>';
-$navarray = $_SESSION['navarray'];  // array of record numbers from last search
-$nav = $_SESSION['nav'];            // array first, prev, curr, next and last
-$ptr = $_REQUEST['ptr'];            // index of record number array 
+// array of record numbers from last search
+$navarray = $_SESSION['navarray'];  
+$nav = $_SESSION['nav'];  // array first, prev, curr, next and last
+$ptr = $_REQUEST['ptr'];  // index of record number array 
 
 //echo '<pre> navarray '; print_r($navarray); echo '</pre>';
 //echo '<pre> BEFORE '; print_r($nav); echo '</pre>';
 $nav['curr'] = $ptr;
-$nav['prev'] = $nav['curr'] - 1; if ($nav['prev'] < 0) $nav['prev'] = 0;
-$nav['next'] = $nav['curr'] + 1; if ($nav['next'] > $nav['last']) 
-$nav['next'] = $nav['last'];
+$nav['prev'] = $nav['curr'] - 1; 
+if ($nav['prev'] < 0) $nav['prev'] = 0; $nav['next'] = $nav['curr'] + 1; 
+if ($nav['next'] > $nav['last']) $nav['next'] = $nav['last'];
 //echo '<pre> AFTER '; print_r($nav); echo '</pre>';
 
 // PROCESS UPDATE ACTION IF INDICATED
@@ -79,26 +79,33 @@ if ($action == 'update') {
   // now update the event record
   $flds = array();
   $flds = $_REQUEST['flds'];
-  $flds[StartTime] = date("H:i:s", strtotime($flds[StartTime]));
-  $flds[EndTime] = date("H:i:s", strtotime($flds[EndTime]));
+  $flds['StartTime'] = date("H:i:s", strtotime($flds['StartTime']));
+  $flds['EndTime'] = date("H:i:s", strtotime($flds['EndTime']));
   
   // day seq nbr based on day of event
-  $flds[Dnbr] = $dayarray[$flds[Day]]; 
+  $flds['Dnbr'] = $dayarray[$flds['Day']]; 
 
 // handle multiselect Event Codes field
   $lvls = isset($_REQUEST['Codes']) ? $_REQUEST['Codes'] : '';
 //  print_r($lvls);
-  if ($lvls != "") $flds[Level] = implode(",", $lvls);  // string levels for db update
-  else $flds[Level] = "";                               // no levels selected for update
-// echo "<br>flds[Level]: ".$flds[Level]."<br>";
+  if ($lvls != "") $flds['Level'] = implode(",", $lvls);  // string levels for db update
+  else $flds['Level'] = "";                               // no levels selected for update
+// echo "<br>flds['Level']: ".$flds[Level']."<br>";
 
 // handle site:sitecode split - ONLY place site portion into db field
-// the SiteCode field is already initialized
-  if (isset($flds[Site])) {
-    list($s, $sc) = explode(':',$flds[Site]); 
-    $flds[Site] = $s;
+// the SiteCode field is already initialized in the form
+  if (isset($flds['Site'])) {
+    list($s, $sc) = explode(':',$flds['Site']); 
+    $flds['Site'] = $s;
     }
-	$rowid = $flds[RowID]; unset($flds[RowID]);
+// same for second site field
+  if (isset($flds['Site2'])) {
+    list($s, $sc) = explode(':',$flds['Site2']); 
+    $flds['Site2'] = $s;
+    }
+
+	$rowid = $flds['RowID']; unset($flds['RowID']);
+	// echo '<pre>'; print_r($flds); echo '</pre>';
   sqlupdate('events', $flds, '`RowID` = "'.$rowid.'";');
 
   echo '
@@ -121,13 +128,24 @@ $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 
 $r = $res->fetch_assoc();
-//echo '<pre> full record '; print_r($r); echo '</pre>';
 // set up Site field for multiselect initialization
-if ($r[Site] != '') {
-  $r[Site] = $r[Site] . ':' . $r[SiteCode];
-}
+if ($r['Site'] != '') {
+  $r['Site'] = $r['Site'] . ':' . $r['SiteCode']; }
+if ($r['Site2'] != '') {
+  $r['Site2'] = $r['Site2'] . ':' . $r['Site2Code']; }
+// echo '<pre> full record '; print_r($r); echo '</pre>';
 ?>
-
+<script>
+$(function() { 
+  $("#DONE").click (function() {
+    // alert("done clicked");
+    if (chgFlag <= 0) { window.close(); }
+  	var r=confirm("WARNING: All changes made will be LOST.\n\nClick OK to confirm leaving page.\nClick CANCEL to stay on page.");	
+  	if (r == true) { window.close(); }
+  		return false;
+    });
+  });
+</script>
 <table border="0" class="hidden-print table table-condensed">
 <tr>
 <td width="33%" valign="top">
@@ -135,13 +153,15 @@ if ($r[Site] != '') {
 <td align="center"><br>
 <a class="clk" href="evtupdateevent.php?ptr=<?=$nav['start']?>"><span title="START" class="glyphicon glyphicon-fast-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
 <a class="clk" href="evtupdateevent.php?ptr=<?=$nav['prev']?>"><span title="PREV" class="glyphicon glyphicon-step-backward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
-<a href="evtlister.php" class="clk btn btn-primary">SEARCH</a>&nbsp;&nbsp;
+
+<button id="DONE" class="btn btn-primary">DONE</button>&nbsp;&nbsp;
+
 <a class="clk" href="evtupdateevent.php?ptr=<?=$nav['next']?>"><span title="NEXT" class="glyphicon glyphicon-step-forward" style="color: blue; font-size: 20px;"></span></a>&nbsp;&nbsp;
 <a class="clk" href="evtupdateevent.php?ptr=<?=$nav['last']?>"><span title="LAST" class="glyphicon glyphicon-fast-forward" style="color: blue; font-size: 20px;"></span></a><br>
 </td>
 <script>
 function confirmContinue() {
-	var r=confirm("This action cannot be reversed.\\n\\nConfirm this action by clicking OK or CANCEL"); 
+	var r=confirm("This action cannot be reversed.\n\nConfirm this action by clicking OK or CANCEL"); 
 	if (r==true) { return true; }
 	return false;
 	}
@@ -149,8 +169,8 @@ function confirmContinue() {
 
 <td width="33%" align="right" valign="center">
 <br>
-<a class="clk" onclick="return confirmContinue()" href="evtlister.php?rowid=<?=$r[RowID]?>&action=delete"><span title="Remove THIS Event from the database." class="glyphicon glyphicon-trash" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a class="clk" href="evtduplicateevent.php?rowid=<?=$r[RowID]?>"><span title="Duplicate THIS Event" class="glyphicon glyphicon-duplicate" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="clk" onclick="return confirmContinue()" href="evtlister.php?rowid=<?=$r['RowID']?>&action=delete"><span title="Remove THIS Event from the database." class="glyphicon glyphicon-trash" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="clk" href="evtduplicateevent.php?rowid=<?=$r['RowID']?>"><span title="Duplicate THIS Event" class="glyphicon glyphicon-duplicate" style="color: blue; font-size: 30px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;
 <a class="clk" href="evtaddevent.php"><span title="Add NEW Event" class="glyphicon glyphicon-plus" style="color: blue; font-size: 30px"></span></a>
 </td></tr></table>
@@ -185,22 +205,26 @@ function validate() {
 <script>
 // SELECT FIELD ON-LOAD SETUPS
 $(document).ready(function() {
-  $("#Day").val("<?=$r[Day]?>");
-  $("#Type").val("<?=$r[Type]?>");
-  $("#TripStatus").val("<?=$r[TripStatus]?>");
-  $("#Transportation").val("<?=$r[Transportation]?>");
-  $("#TransportNeeded").val("<?=$r[TransportNeeded]?>");
-  $("#FeeRequired").val("<?=$r[FeeRequired]?>");
-  $("#MultiEvent").val("<?=$r[MultiEvent]?>");
-  $("#TypeOfEvent").val("<?=$r[TypeOfEvent]?>");
-  $("#SC").text("<?=$r[SiteCode]?>");
-  $("#Site").val("<?=$r[Site]?>");
-  $("#SiteCode").val("<?=$r[SiteCode]?>");
+  $(".navbar").hide();    // hide the dropdown menu
+  $("#Day").val("<?=$r['Day']?>");
+  $("#Type").val("<?=$r['Type']?>");
+  $("#TripStatus").val("<?=$r['TripStatus']?>");
+  $("#Transportation").val("<?=$r['Transportation']?>");
+  $("#TransportNeeded").val("<?=$r['TransportNeeded']?>");
+  $("#FeeRequired").val("<?=$r['FeeRequired']?>");
+  $("#MultiEvent").val("<?=$r['MultiEvent']?>");
+  $("#TypeOfEvent").val("<?=$r['TypeOfEvent']?>");
+  $("#SC").text("<?=$r['SiteCode']?>");
+  $("#Site").val("<?=$r['Site']?>");
+  $("#SiteCode").val("<?=$r['SiteCode']?>");
+  $("#SC2").text("<?=$r['Site2Code']?>");
+  $("#Site2").val("<?=$r['Site2']?>");
+  $("#Site2Code").val("<?=$r['Site2Code']?>");
 
 // change status field to 'Delete' implies trip number == 999
 // and all leader fields set to empty. 
 $("#TripStatus").change(function() {
-  var loadedts = "<?=$r[TripStatus]?>";
+  var loadedts = "<?=$r['TripStatus']?>";
   var newts = $("#TripStatus").val();
   if (newts == 'Delete') {
     r = confirm("This action will:\n1. set the trip status to Delete,\n2. set the trip number to 999,\n3. clear the day field.\n\n\nClick OK to confirm.\n");
@@ -212,7 +236,7 @@ $("#TripStatus").change(function() {
       // json call to update event record         
       $.post("evtupdateeventjson.php",
         {
-          eventrow: "<?=$r[RowID]?>"
+          eventrow: "<?=$r['RowID']?>"
         },
     function(data, status){
         // alert("Data: " + data + "\nStatus: " + status);
@@ -238,25 +262,25 @@ $ldrlist = setupta();     // set up type ahead for lead name input fields
 //echo "ldrlist: $ldrlist<br>";
 
 // FORM FIELD DEF's
-$t = sprintf("%03s",$r[Trip]);
-$diff = timediff($r[StartTime],$r[EndTime]);
-$stime = ($r[StartTime] != '') ? date("g:i A", strtotime($r[StartTime])) : ''; 
-$etime = ($r[EndTime]   != '') ? date("g:i A", strtotime($r[EndTime])) : '';
+$t = sprintf("%03s",$r['Trip']);
+$diff = timediff($r['StartTime'],$r['EndTime']);
+$stime = ($r['StartTime'] != '') ? date("g:i A", strtotime($r['StartTime'])) : ''; 
+$etime = ($r['EndTime']   != '') ? date("g:i A", strtotime($r['EndTime'])) : '';
 
 // set up multi select init string for Level code field
 // echo '<pre>lvls '; print_r($lvls); echo '</pre>';
-if ($r[Level] != "") {
-  $valarray = explode(',',$r[Level]);
+if ($r['Level'] != "") {
+  $valarray = explode(',',$r['Level']);
   $vals = "['" . implode("','", $valarray) . "']";
   }
 else $vals = "[]";
 // echo "dblevels: $r[Level], vals: $vals<br>";
 ?>
-<button form="F1" id="updb1" class="updb btn btn-success hidden-print" type="submit">APPLY UPDATES TO EVENT: </button>&nbsp;<font size="+2"><?=$r[Event]?></font>
+<button form="F1" id="updb1" class="updb btn btn-success hidden-print" type="submit">APPLY UPDATES TO EVENT: </button>&nbsp;<font size="+2"><?=$r['Event']?></font>
 
 <form id="F1" action="evtupdateevent.php" method="post" onsubmit="return validate()">
 <table border="1">
-<input type="hidden" name="flds[RowID]" value="<?=$r[RowID]?>">
+<input type="hidden" name="flds[RowID]" value="<?=$r['RowID']?>">
 <tr><td>
 Trip Number: 
 <input autofocus type="text" name="flds[Trip]" value="<?=$t?>" size="5" id="Trip">
@@ -282,7 +306,7 @@ Duration: <span id="DUR"><?=$diff?></span>
 </td></tr>
 <tr><td colspan="3">
 Event Name: 
-<input type="text" name="flds[Event]" value="<?=$r[Event]?>" size="60" id="Event">
+<input type="text" name="flds[Event]" value="<?=$r['Event']?>" size="60" id="Event">
 </td>
 </tr>
 <tr>
@@ -325,6 +349,17 @@ $("#Site").change(function() {
     var parts = x.split(":");
     $("#SC").text(parts[1]);
     $("#SiteCode").val(parts[1]);
+    if ($("#SC2").text().length == 0) {
+      $("#SC2").text($("#SC").text());
+      $("#Site2").val($("#Site").val());
+      $("#Site2Code").val($("#SiteCode").val());
+      }
+  });
+$("#Site2").change(function() {
+    var x = $("#Site2").val();
+    var parts = x.split(":");
+    $("#SC2").text(parts[1]);
+    $("#Site2Code").val(parts[1]);
   });
 // get modal for a leader  
 $(".ld").click(function() {
@@ -346,10 +381,28 @@ $(".ld").click(function() {
         });  // end $.post logic 
       });
  
-// get modal for a venue/site  
+// get modal for a event venue  
   $("#VID").click(function() {
     var vencode = $("#SC").html();
-    vencode = vencode.replace(/[,\s]/g, "");
+    vencode = vencode.replace("/[,\s]/g", "");
+    // alert("Modal button clicked: " + vencode);
+    $.post("evtvenuejson.php",
+      {
+        vencode: vencode
+      },
+      function(data, status) {
+        // alert("Data: " + data + "\\nStatus: " + status);
+        data = "<br><button type='button' class='btn btn-success' data-dismiss='modal'>CLOSE</button>" + data;
+        $("#content").html(data);
+        $("#ModalLabel").text("Venue Information"); 
+        $('#ldrModal').modal('toggle', { keyboard: true });
+        });  // end $.post logic 
+    });
+
+// get modal for a meeting venue  
+  $("#VID2").click(function() {
+    var vencode = $("#SC2").html();
+    vencode = vencode.replace("/[,\s]/g", "");
     // alert("Modal button clicked: " + vencode);
     $.post("evtvenuejson.php",
       {
@@ -367,7 +420,9 @@ $(".ld").click(function() {
 </script>
 
 <tr><td>
-Site:
+Event Site:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span align="right" class="mod" id="VID">(Site Code:<span id="SC"></span>)</span>
+<input id="SiteCode" type="hidden" name="flds[SiteCode]" value="">
 <select id="Site" name="flds[Site]">
 <?php 
 $site = readvenlist('Site');
@@ -375,39 +430,59 @@ echo $site;
 echo '</select></td>';
 // echo '<pre>sites '; print_r(htmlentities($site)); echo '</pre>';
 ?>
-<td class="mod" id="VID">
-Site Code: <span id="SC"></span>
-<input id="SiteCode" type="hidden" name="flds[SiteCode]" value="">
-</td>
-<td> 
-Site Room: 
-<input id="SiteRoom" type="text" name="flds[SiteRoom]" value="<?=$r[SiteRoom]?>">
+<td colspan=2> 
+Event Site Inst:<br>
+<textarea id="SiteRoom" name="flds[SiteRoom]" rows="2" cols="40">
+<?=$r['SiteRoom']?></textarea>
+<!-- <input id="SiteRoom" type="text" name="flds[SiteRoom]" value="<?=$r['SiteRoom']?>"> -->
 </td>
 </tr>
 <tr>
-<td valign="top">Site Address or Directions:</td>
-<td id="sa" colspan="2">
-<textarea name="flds[SiteAddr]" cols="50"  colid="SiteAddr"><?=$r[SiteAddr]?></textarea>
+<!-- ===== Setup for meeting site ==== -->
+<td>
+Meeting Site:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span align="right" class="mod" id="VID2">(Site Code:<span id="SC2">VH</span>)</span>
+<input id="Site2Code" type="hidden" name="flds[Site2Code]" value="">
+<select id="Site2" name="flds[Site2]">
+<?php 
+$site2 = readvenlist('Site');
+echo $site2; 
+// echo '<pre>sites '; print_r(htmlentities($site)); echo '</pre>';
+?>
+</select>
 </td>
+<td colspan=2>
+Meeting Site Inst:<br>
+<textarea id="Site2Room" name="flds[Site2Room]" rows="2" cols="40">
+<?=$r['Site2Room']?></textarea>
+<!-- <input id="Site2Room" type="text" name="flds[Site2Room]" value="<?=$r['Site2Room']?>">  -->
+
+
+</td>
+<!-- Retire use of SiteAddr field -->
+<!-- <td valign="top">Site Address or Directions:</td>
+<td id="sa" colspan="2">
+<textarea name="flds[SiteAddr]" cols="50"  colid="SiteAddr"><?=$r['SiteAddr']?></textarea>
+</td> -->
 </tr>
 </table>
 
 <table border="0">
 <tr><td>
 <span class="ld mod">Leader 1:</span> 
-<input  class="LDR" data-provide="typeahead" id="Leader1" type="text" name="flds[Leader1]" value="<?=$r[Leader1]?>">
+<input  class="LDR" data-provide="typeahead" id="Leader1" type="text" name="flds[Leader1]" value="<?=$r['Leader1']?>">
 </td>
 <td colspan="2">
 <span class="ld mod">Leader 2:</span> 
-<input class="LDR" data-provide="typeahead" id="Leader2" type="text" name="flds[Leader2]" value="<?=$r[Leader2]?>">
+<input class="LDR" data-provide="typeahead" id="Leader2" type="text" name="flds[Leader2]" value="<?=$r['Leader2']?>">
 </td></tr><tr>
 <td>
 <span  class="ld mod">Leader 3:</span> 
-<input class="LDR" data-provide="typeahead" id="Leader3" type="text" name="flds[Leader3]" value="<?=$r[Leader3]?>">
+<input class="LDR" data-provide="typeahead" id="Leader3" type="text" name="flds[Leader3]" value="<?=$r['Leader3']?>">
 </td>
 <td>
 <span  class="ld mod">Leader 4:</span> 
-<input class="LDR" data-provide="typeahead" id="Leader4" type="text" name="flds[Leader4]" value="<?=$r[Leader4]?>">
+<input class="LDR" data-provide="typeahead" id="Leader4" type="text" name="flds[Leader4]" value="<?=$r['Leader4']?>">
 </td></tr>
 </table>
 <table border="0">
@@ -418,7 +493,7 @@ Fee Required(Y/N):
 </select>
 </td><td colspan="2">
 FEE: 
-<input id="FEE" type="text" name="flds[FEE]" value="<?=$r[FEE]?>" size="6" ><br>
+<input id="FEE" type="text" name="flds[FEE]" value="<?=$r['FEE']?>" size="6" ><br>
 </td></tr>
 <tr><td>
 Transport Needed(Y/N): 
@@ -433,7 +508,7 @@ Transportation:
 </td></tr>
 <tr><td>
 Maximum Attendees: 
-<input type="text" name="flds[MaxAttendees]" value="<?=$r[MaxAttendees]?>" size="5" id="MaxAttendees">
+<input type="text" name="flds[MaxAttendees]" value="<?=$r['MaxAttendees']?>" size="5" id="MaxAttendees">
 </td><td>
 Multi-Event(Y/N): 
 <select id="MultiEvent" name="flds[MultiEvent]">
@@ -441,18 +516,18 @@ Multi-Event(Y/N):
 </select>
 </td><td>
 Multi Event Code(s): 
-<input id="MultiEventCode" type="text" name="flds[MultiEventCode]" value="<?=$r[MultiEventCode]?>">
+<input id="MultiEventCode" type="text" name="flds[MultiEventCode]" value="<?=$r['MultiEventCode']?>">
 </td></tr>
 <tr><td>
 </table>
 <table>
 <tr><td>
 Program Description: <br>
-<textarea id="Program" name="flds[Program]" rows="5" cols="100"><?=$r[Program]?></textarea>
+<textarea id="Program" name="flds[Program]" rows="5" cols="100"><?=$r['Program']?></textarea>
 </td></tr>
 <tr><td valign="top">
 Production Notes:<br>
-<textarea id="SecondaryStatus" name="flds[SecondaryStatus]" rows="5" cols="100"><?=$r[SecondaryStatus]?></textarea>
+<textarea id="SecondaryStatus" name="flds[SecondaryStatus]" rows="5" cols="100"><?=$r['SecondaryStatus']?></textarea>
 </td></tr>
 <tr>
 <td align="center">
@@ -532,8 +607,8 @@ if ($res->num_rows == 0) {
 // now create the string for the javascript arrays to download
 $ldrs = '[';		// create string for form typeahead
 while ($r = $res->fetch_assoc()) {
-	$ldrfn = preg_replace("/[\(\)\.\ \/\&]/i", "", $r[FirstName]);
-	$ldrln = preg_replace("/[\(\)\.\ \/\'\&]/i", "", $r[LastName]);
+	$ldrfn = preg_replace("/[\(\)\.\ \/\&]/i", "", $r['FirstName']);
+	$ldrln = preg_replace("/[\(\)\.\ \/\'\&]/i", "", $r['LastName']);
 	if ($ldrln == '')
   	$ldrs .= "'$ldrfn',";
   else 	

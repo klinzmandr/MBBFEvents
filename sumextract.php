@@ -51,8 +51,8 @@ Output columns are:<br>
 <li>Trip#  (Trip number - a sequential number for each day.</li>
 <li>Day (Day of week for event)</li>
 <li>TimeSpan (Event date plus start time - Event date plus end time as YYYY-MM-DD HH:MM)</li>
-<li>Site</li>
-<li>Site Address</li>
+<li>Venue</li>
+<li>Venue Address</li>
 <li>Max Attendees</li>
 <li>CODE (Event "Level" field)</li>
 <li>FEE (Event "FEE" field)</li>
@@ -95,7 +95,7 @@ ORDER BY `Dnbr` ASC, `StartTime` ASC, `EndTime` ASC;';
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 
-$csv = "Track|EventType|Trip#|Day|Start|End|TimeSpan|Site|SiteAddr|MaxAtt|CODE|FEE|Event|Leaders|Program\n";
+$csv = "Track|EventType|Trip#|Day|Start|End|TimeSpan|Venue|VenueAddr|MaxAtt|CODE|FEE|Event|Leaders|Program\n";
 $seqno = 1;
 while ($r = $res->fetch_assoc()) {
   list($toe,$whocares) = preg_split('/ /', $r[TypeOfEvent]);

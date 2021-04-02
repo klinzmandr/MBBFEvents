@@ -24,17 +24,24 @@ $typeofevent = isset($_REQUEST['TypeOfEvent']) ? $_REQUEST['TypeOfEvent'] : '';
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
+<link href="css/bootstrap-sortable.css" rel="stylesheet">
 </head>
 <body>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-sortable.js"></script>
 
 <?php
-//include 'Incls/vardump.inc.php';
+// include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
 include 'Incls/mainmenu.inc.php';
 ?>
+<script>
+$(function() {
+  $.bootstrapSortable({ sign: 'AZ' })
+});
+</script>
 
 <script> 
 $(document).ready(function () { 
@@ -54,6 +61,9 @@ $(document).ready(function () {
 // set up select lists
 $(document).ready(function () { 
 	//alert("start field initialization");
+	// initialize table cols on document load  
+  $('td:nth-child(1),th:nth-child(1)').hide();
+  $('td:nth-child(2),th:nth-child(2)').hide();
 	$("#S2").val("<?=$et?>");
 	var et = "<?=$et?>";
 	if (et == "%") $("#S2").val("");
@@ -108,6 +118,19 @@ function resetflds() {
 <button class="hidden-print" id="btnMORE">MORE</button>
 
 <?php
+// setup day sequence number array  
+$dayarray = array();
+$days = readlistarray('Day');
+$daynbr = 1;
+foreach ($days as $v) {
+  preg_match('/^.*>(.*)<.*$/i', $v, $matches);
+  if ($matches[1] == 'Day') continue;
+  // echo '<pre>'; print_r($matches[1]); echo '</pre>';
+  $dayarray[$matches[1]] = $daynbr;
+  $daynbr += 1;
+  }
+// echo '<pre>dayarray '; print_r($dayarray); echo '</pre>';
+
 // process delete action
 if ($action == 'delete') {
   $rowid = isset($_REQUEST['rowid']) ? $_REQUEST['rowid'] : '';
@@ -168,7 +191,49 @@ if (strlen($sql) == $sqllen) {      // no criteria entered
 </html>';
   exit;
   }
+?>
+<script>
+$(function() {
+  $("tr").click(function() {
+    // alert("row click event");
+    var r = $(this);  // row clicked
+    if (r.prop("id") == 'head') return;
+    var rownbr = $(r).closest('tr').find('td:nth-child(1)').text();
+    // console.log("rownbr: "+rownbr);
+    var ptr = 1; var count = 0; var recarr = [];
+    $("tr").each(function() {
+      var p = $(this).find('td:nth-child(1)').text();
+      if ($(this).is(":visible")) {
+        if (p == rownbr) {
+          ptr = count;
+          return false; }
+        count += 1;
+        }
+      });    
+     $("tr").each(function() {  
+        var rp = $(this).find('td:nth-child(2)').text();
+        if (rp != '') recarr.push(rp);
+        });    
+    ptr -= 1;
+    // console.log(recarr);
+    // console.log("ptr: "+ptr);
+    
+    // update session vars with new rec nbr list
+    $.post("evtdayschedJSONsetsess.php",
+      {
+      sessArray: recarr
+      },
+    function(data, status){
+        // alert("Data: " + data + "\nStatus: " + status);
+        });  // end $.post logic 
+    // console.log("Fini");
+    // window.location.assign('evtupdateevent.php?ptr='+ptr);
+    window.open("evtupdateevent.php?ptr="+ptr, "_blank");
+    });
+  });
+</script>
 
+<?php
 if (strlen($tripstatus) == 0) 
   $sql .= '`TripStatus` NOT LIKE "Delete" AND ';
 
@@ -182,39 +247,30 @@ $rc = $res->num_rows;
 
 echo '
 <h4>Events Listed&nbsp;&nbsp;(Listed: '.$rc.')
-
-<table border="1" class="table table-condensed table-hover">
-<tr><th>Day</th><th>TripStatus</th><th>Trip Type</th><th>StartTime</th><th>Event</th><th>Site</th><th>EventTitle</th><th>Leader</th></tr>';
-$navarray = array(); $var = array(); $ptr = 0;
+<table border="1" class="sortable table table-condensed table-hover">
+<thead><tr id="head"><th>Row</th><th>RecNo</th><th data-defaultsort="asc">Day</th><th>TripStatus</th><th>Trip Type</th><th>StartTime</th><th>Event</th><th>Venue</th><th>EventTitle</th><th>Leader</th></tr></thead><tbody>';
+$recptr = 1;
 while ($r = $res->fetch_assoc()) {
-  //if ($r['Type'] == '**New**') continue;
-  $navarray[] = $r[RowID];
-//  echo '<pre> full record '; print_r($r); echo '</pre>';
-//  echo '
-//<tr onclick=window.location="evtupdateevent.php?ptr='.$ptr.'" style="cursor: pointer;">
-echo "<tr onclick=\"window.location='evtupdateevent.php?ptr=$ptr'\" style='cursor: pointer;'>";
-$stime = ($r[StartTime] != '') ? date("g:i A", strtotime($r[StartTime])) : '';
-echo '
-<td>'.$r[Day].'</font></td>
-<td>'.$r[TripStatus].'</font></td>
-<td>'.$r[Type].'</font></td>
-<td>'.$stime.'</font></td>
-<td>'.$r[TypeOfEvent].'</font></td>
-<td>'.$r[Site].'</font></td>
-<td>'.$r[Trip].'&nbsp;'.$r[Event].'</font></td>
-<td>'.$r[Leader1].'</font></td>
+echo "<tr style='cursor: pointer;'>";
+$stime = ($r['StartTime'] != '') ? date("g:i A", strtotime($r['StartTime'])) : '';
+$stv = strtotime($r['StartTime']);
+$d = $dayarray[$r['Day']];
+echo "
+<td>$recptr</td>
+<td>$r[RowID]</td>
+<td data-value='$d'>$r[Day]</td>
+<td>$r[TripStatus]</td>
+<td>$r[Type]</td>
+<td data-value='$stv'>$stime</td>
+<td>$r[TypeOfEvent]</td>
+<td>$r[Site]</td>
+<td>$r[Trip]&nbsp$r[Event]</td>
+<td>$r[Leader1]</td>
 </tr>
-';
-$ptr += 1;
+";
+$recptr += 1;
 }
-echo '</table>';
-
-$nav['start'] = 0; $nav['prev'] = ''; $nav['curr'] = '';
-$nav['next'] = ''; $nav['last'] = count($navarray) - 1;
-
-$_SESSION['navarray'] = $navarray;
-$_SESSION['nav'] = $nav;
-
+echo '</tbody></table>';
 ?>
 </body>
 </html>

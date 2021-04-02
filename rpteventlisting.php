@@ -11,6 +11,7 @@
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css " rel="stylesheet" media="all">
 <link href="css/bs3dropdownsubmenus.css" rel="stylesheet">
+<link href="css/bootstrap-sortable.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -22,6 +23,13 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-sortable.js"></script>
+<script>
+$(function() {
+  $.bootstrapSortable({ sign: 'AZ' })
+});
+</script>
+
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
@@ -97,24 +105,29 @@ $day = 'All Days';
 // echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
-echo '<h3>Listing for: '.$day.'</h3>row count: '.$rc.'<br>';
-$mask = '
-<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
-$csvmask = '"%s","%s","%s","%s",%s,%s,"%s","%s","%s",%s,"%s","%s","%s","%s"'."\n";
-$csv = 'Type,Trip,TypeOfEvent,Day,StartTime,EndTime,Event,Site,SiteRoom,MaxAttendees,Leader1,Leader2,Leader3,	Leader4'."\n";
+echo '<h3>Listing for: '.$day.'</h3>
+row count: '.$rc.'<br>';
 
-echo '<table class="table">
-<tr><th>Type</th><th>Trip</th><th>Type</th><th>Day</th><th>StartTime</th><th>EndTime</th><th>Event</th><th>Site</th><th>SiteRoom</th><th>MaxAttendees</th><th>Leader1</th><th>Leader2</th><th>Leader3</th><th>Leader4</th></tr>';
+$csvmask = '"%s","%s","%s","%s",%s,%s,"%s","%s","%s",%s,"%s","%s","%s","%s"'."\n";
+$csv = 'Type,Trip,TypeOfEvent,Day,StartTime,EndTime,Event,Venue,VenueInst,MaxAttendees,Leader1,Leader2,Leader3,	Leader4'."\n";
+
+echo '<table class="sortable table"><thead>
+<tr><th>Type</th><th>Trip</th><th>Type</th><th>Day</th><th>StartTime</th><th>EndTime</th><th>Event</th><th>Venue</th><th>VenueInst</th><th>MaxAttendees</th><th>Leader1</th><th>Leader2</th><th>Leader3</th><th>Leader4</th></tr></thead><tbody>';
 
 while ($r = $res->fetch_assoc()) {
-  $st = date("g:i A", strtotime($r[StartTime]));
-  $et = date("g:i A", strtotime($r[EndTime]));
+  $st = date("g:i A", strtotime($r['StartTime']));
+  $et = date("g:i A", strtotime($r['EndTime']));
+  $stv = strtotime($r['StartTime']);
+  $etv = strtotime($r['EndTime']);
+  $mask = '
+<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td data-value="'.$stv.'">%s</td><td data-value="'.$etv.'">%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
+  
   printf($mask,$r[Type],$r[Trip],$r[TypeOfEvent],$r[Day],$st,$et,$r[Event],$r[Site],$r[SiteRoom],$r[MaxAttendees],$r[Leader1],$r[Leader2],$r[Leader3],$r[Leader4]);
   $csv .= sprintf($csvmask,$r[Type],$r[Trip],$r[TypeOfEvent],$r[Day],$st,$et,$r[Event],$r[Site],$r[SiteRoom],$r[MaxAttendees],$r[Leader1],$r[Leader2],$r[Leader3],$r[Leader4]);
   
 //  echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   }
-echo '</table>';
+echo '</tbody></table>';
 
 // echo "<pre> csv \n"; print_r($csv); echo '</pre>';
 file_put_contents("downloads/eventlisting.csv", $csv);

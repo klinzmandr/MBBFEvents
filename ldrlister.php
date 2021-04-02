@@ -162,16 +162,16 @@ $lnavarray = array(); $lvar = array(); $lptr = 0;
 while ($r = $res->fetch_assoc()) {
   //if ($r['FirstName'] == '**New**') continue;
   //echo '<pre> full record '; print_r($r); echo '</pre>';
-  $lptr = $r[RowID];
+  $lptr = $r['RowID'];
 
   echo '<tbody><tr>
 <td class="RID">'.$lptr.'</td>
 <td class="LIL"><span title="Leader Info 360 View" class="glyphicon glyphicon-blackboard" style="color: blue; font-size: 20px;"></span></td>
-<td class="ELL">'.$r[Active].'</td>
-<td class="ELL">'.$r[FirstName].'&nbsp;'.$r[LastName].'</td>
-<td class="ELL">'.$r[PrimaryPhone].'</td>
-<td class="ELL">'.$r[SecondaryPhone].'</td>
-<td class="ELL">'.$r[Email].'</td>
+<td class="ELL">'.$r['Active'].'</td>
+<td class="ELL">'.$r['FirstName'].'&nbsp;'.$r['LastName'].'</td>
+<td class="ELL">'.$r['PrimaryPhone'].'</td>
+<td class="ELL">'.$r['SecondaryPhone'].'</td>
+<td class="ELL">'.$r['Email'].'</td>
 </tr></tbody>
 ';
   }

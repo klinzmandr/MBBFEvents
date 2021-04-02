@@ -85,15 +85,15 @@ while ($r = $res->fetch_assoc()) {
   //echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   $codes = array();
   if (stripos($r[Type], 'n/f') > 0) $codes[] = 'P-F';
-  else $codes[] = substr($r[Type],0,1);
-  if (strlen($r[SiteCode]) > 0) $codes[] = $r[SiteCode];
-  if (strlen($r[Level]) > 0) $codes[] = str_replace(",","",$r[Level]); 
-  if (strlen($r[FEE]) > 0)  $codes[] = '$'.$r[FEE];
+  else $codes[] = substr($r['Type'],0,1);
+  if (strlen($r['SiteCode']) > 0) $codes[] = $r['SiteCode'];
+  if (strlen($r['Level']) > 0) $codes[] = str_replace(",","",$r['Level']); 
+  if (strlen($r['FEE']) > 0)  $codes[] = '$'.$r['FEE'];
   $codeout = implode('/',$codes);
-  $st = date('h:ia', strtotime($r[StartTime]));
-  $et = date('h:ia', strtotime($r[EndTime]));
+  $st = date('h:ia', strtotime($r['StartTime']));
+  $et = date('h:ia', strtotime($r['EndTime']));
   $timerange = $st.'-'.$et; 
-  printf($mask, $r[Trip], $r[TypeOfEvent], $r[Day], $timerange, $codeout, $r[Event]);
+  printf($mask, $r['Trip'], $r['TypeOfEvent'], $r['Day'], $timerange, $codeout, $r[Event]);
   $csv[] .= "$r[Trip], $r[TypeOfEvent], $r[Day], $timerange, $codeout, \"$r[Event]\"\n";
   }
 echo '</table>';

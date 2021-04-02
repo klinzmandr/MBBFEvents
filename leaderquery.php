@@ -49,7 +49,7 @@ echo '<img src="http://morrobaybirdfestival.org/wp-content/uploads/2016/08/LOGO3
 // there should be only 1 record returned so process it here
 // but output them all if more than one
 while ($l = $res->fetch_assoc()) {
-$leader = $l[FirstName] . ' ' . $l[LastName];
+$leader = $l['FirstName'] . ' ' . $l['LastName'];
 
 addlogentry("ldrqry for $leader");
 
@@ -78,17 +78,17 @@ else {
   <th>Site</th><th>SiteRm</th>
   <th>Event</th><th>Leader Group</th></tr>';
   while ($r = $rese->fetch_assoc()) {
-    $kk = $r[Dnbr];
+    $kk = $r['Dnbr'];
     if ($kk == 1) $dx='Friday '; if ($kk == 2) $dx='Saturday ';
     if ($kk == 3) $dx='Sunday '; if ($kk == 4) $dx='Monday ';
     if ($kk == '') $dx='NotSet';
-    $st = date("g:iA", strtotime($r[StartTime]));
-    $et = date("g:iA", strtotime($r[EndTime]));
+    $st = date("g:iA", strtotime($r['StartTime']));
+    $et = date("g:iA", strtotime($r['EndTime']));
     // echo '<pre> full record '.$rowid.' '; print_r($r); echo '</pre>';
-    $ldrgrp = $r[Leader1];
-    if (strlen($r[Leader2]) > 0) $ldrgrp .= ', '.$r[Leader2]; 
-    if (strlen($r[Leader3]) > 0) $ldrgrp .= ',<br>'.$r[Leader3]; 
-    if (strlen($r[Leader4]) > 0) $ldrgrp .= ', '.$r[Leader4]; 
+    $ldrgrp = $r['Leader1'];
+    if (strlen($r['Leader2']) > 0) $ldrgrp .= ', '.$r['Leader2']; 
+    if (strlen($r['Leader3']) > 0) $ldrgrp .= ',<br>'.$r['Leader3']; 
+    if (strlen($r['Leader4']) > 0) $ldrgrp .= ', '.$r['Leader4']; 
     echo 
   "<tr><td>$r[Trip]</td><td>$dx</td><td>$st-$et</td>
   <td>$r[Site]</td>
@@ -99,10 +99,10 @@ else {
   }
 
 echo "<h2>Information on file for $leader</h2>";
-$img = $l[ImgURL];
+$img = $l['ImgURL'];
 $bio = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $l[Bio]);
 
-if ($l[ImgURL] == '') $img = "./npa.png";
+if ($l['ImgURL'] == '') $img = "./npa.png";
 //echo '<pre> full leader record'; print_r($l); echo '</pre>';
 print <<<infoPart
 <table class="table" border=0><tr><td>

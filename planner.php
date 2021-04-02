@@ -161,10 +161,10 @@ foreach ($rarray as $k => $r) {
   $ldrstr .= !empty($r['Leader3']) ? ", <b><span class=mod>$r[Leader3]</span></b>" : '';
   $ldrstr .= !empty($r['Leader4']) ? ", <b><span class=mod>$r[Leader4]</span></b>" : '';
 // echo '<pre> leaders '; echo $ldrs; echo '</pre>';
-  if ($r[FEE] == '') $r[FEE] = 'No Charge';
-  else $r[FEE] = '$'.$r[FEE];  
-  $r[StartTime] = date("g:i A", strtotime($r['StartTime']));
-  $r[EndTime] = date("g:i A", strtotime($r['EndTime']));
+  if ($r['FEE'] == '') $r['FEE'] = 'No Charge';
+  else $r['FEE'] = '$'.$r['FEE'];  
+  $r['StartTime'] = date("g:i A", strtotime($r['StartTime']));
+  $r['EndTime'] = date("g:i A", strtotime($r['EndTime']));
   echo '
 <div class="panel panel-default">
 <div class="panel-heading" role="tab" id="heading'.$r['RowID'].'">

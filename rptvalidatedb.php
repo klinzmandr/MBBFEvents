@@ -63,8 +63,8 @@ Server Info: <?=$mysqli->server_info?><br /><br>
 <p>This program will perform various database validations including those listed:</p>
 Examine all event records with status of &apos;<b>Retain</b>&apos; and report:
 <ol>
-	<li>any with missing Site Codes. (venue/site name and code need to be defined).</li>
-	<li>any event with an UNDEFINED site/venue.</li>
+	<li>any with missing Venue Codes. (venue/site name and code need to be defined).</li>
+	<li>any event with an UNDEFINED venue.</li>
 	<li>any that do not have a Leader 1 identified.</li>
 	<li>any with invalid leaders not in the leaders registry.</li>
 	<li>any with missing start and/or end times.</li>
@@ -84,9 +84,9 @@ Examine all &apos;ACTIVE&apos; leader records and report:
 	<li>any leader that is &apos;Active&apos; but not assigned a current event with status of &apos;RETAIN&apos;.</li>
 	<li>any leader that has not been assigned a &apos;Leader Type&apos;.</li>
 </ol>
-Examine all venue/site records and report:
+Examine all venue records and report:
 <ol>
-	<li>any venue that is defined in the site/venue list but has no registered information in the site/venue database.</li>
+	<li>any venue that is defined in the venue list but has no registered information in the venue database.</li>
 	<li>any venue lacking an address</li>
 	<li>any venue lacking city, state or zip informaton.</li>
 	<li>any venue lacking map information</li>
@@ -113,7 +113,7 @@ while ($r = $res->fetch_assoc()) {
   }
 //echo '<pre> leader '; print_r($ldrs); echo '</pre>';
 
-// ============= load up venue/site array
+// ============= load up venue array
 $sql = "SELECT * FROM `venues` WHERE 1 ORDER BY `VenCode` ASC;";
 //echo "<br>sql: $sql<br>";
 $res = doSQLsubmitted($sql);
@@ -153,39 +153,41 @@ $eventrc = $res->num_rows;
 $err = array();
 while ($r = $res->fetch_assoc()) {
   // echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
-  if($r[Trip] == 999) continue;  // ignore those parked
-  if ($r[SiteCode] == '') $err[$r[Trip]][] = "is missing a site code";
-  if (!array_key_exists($r[SiteCode], $venarray)) 
-    $err[$r[Trip]][] = "site code $r[SiteCode] is not defined.";
-  $venused[$r[SiteCode]] += 1;
-  if (!in_array($r[Day], $dayarray)) 
-    $err[$r[Trip]][] = "event day is not in &quot;Day&quot; list.";
-  if ($r[Leader1] == '' ) $err[$r[Trip]][] = "has no Leader 1 defined";
+  if($r['Trip'] == 999) continue;  // ignore those parked
+  if ($r['SiteCode'] == '') $err[$r['Trip']][] = "venue code is missing.";
+  if (!array_key_exists($r['SiteCode'], $venarray)) 
+    $err[$r[Trip]][] = "venue code $r[SiteCode] is not defined as a valid venue.";
+  $venused[$r['SiteCode']] += 1;
+  if (!in_array($r['Day'], $dayarray)) 
+    $err[$r['Trip']][] = "event day is not in &quot;Day&quot; list.";
+  if ($r['Leader1'] == '' ) $err[$r['Trip']][] = "has no Leader 1 defined";
   $ldrassigned[$r[Leader1]] += 1;
-  if (($r[Leader1] != '') AND (!array_key_exists($r[Leader1], $ldrs))) {
-    $err[$r[Trip]][] = sprintf("Leader1 (%s) is not registered.", $r[Leader1]);
+  if (($r['Leader1'] != '') AND (!array_key_exists($r['Leader1'], $ldrs))) {
+    $err[$r['Trip']][] = sprintf("Leader1 (%s) is not registered.", $r['Leader1']);
     }
   $ldrassigned[$r[Leader2]] += 1;
-  if (($r[Leader2] != '') AND (!array_key_exists($r[Leader2], $ldrs))) { 
-    $err[$r[Trip]][] = sprintf("Leader2 (%s) is not registered.", $r[Leader2]); 
+  if (($r['Leader2'] != '') AND (!array_key_exists($r['Leader2'], $ldrs))) { 
+    $err[$r['Trip']][] = sprintf("Leader2 (%s) is not registered.", $r['Leader2']); 
     }
-  $ldrassigned[$r[Leader3]] += 1;
-  if (($r[Leader3] != '') AND (!array_key_exists($r[Leader3], $ldrs))) { 
-    $err[$r[Trip]][] = sprintf("Leader3 (%s) is not registered.", $r[Leader3]);
+  $ldrassigned[$r['Leader3']] += 1;
+  if (($r['Leader3'] != '') AND (!array_key_exists($r['Leader3'], $ldrs))) { 
+    $err[$r['Trip']][] = sprintf("Leader3 (%s) is not registered.", $r['Leader3']);
     }
-  $ldrassigned[$r[Leader4]] += 1;
-  if (($r[Leader4] != '') AND (!array_key_exists($r[Leader4], $ldrs))) {
-    $err[$r[Trip]][] = sprintf("Leader4 (%s) is not registered.", $r[Leader4]);
+  $ldrassigned[$r['Leader4']] += 1;
+  if (($r['Leader4'] != '') AND (!array_key_exists($r['Leader4'], $ldrs))) {
+    $err[$r['Trip']][] = sprintf("Leader4 (%s) is not registered.", $r['Leader4']);
     }
-  if ($r[StartTime] == '') $err[$r[Trip]][] = "Has no start time defined";
-  if ($r[EndTime] == '') $err[$r[Trip]][] = "Has no end time defined";
-  if (($r[FeeRequired] == 'Yes') AND ($r[FEE] == '')) 
-    $err[$r[Trip]][] = "Has a fee requirement and no fee.";
-  if (($r[MultiEvent] == 'Yes') AND ($r[MultiEventCode] == '')) 
-    $err[$r[Trip]][] = "is identified as a multi-event function but has no multi-event code.";
-  if (($r[TransportRequired] == 'Yes') AND ($r[Transportation] == '')) 
-      $err[$r[Trip]][] = "Has a trasport requirement and no transportaton identified.";
-  if ($r[MaxAttendees] == '') $err[$r[Trip]][] = "has no max attendee limit defined.";
+  if ($r['Site'] == '') $err[$r['Trip']][] = "Has no venue defined";
+  if ($r['Site2'] == '') $err[$r['Trip']][] = "Has no meeting site defined";
+  if ($r['StartTime'] == '') $err[$r['Trip']][] = "Has no start time defined";
+  if ($r['EndTime'] == '') $err[$r['Trip']][] = "Has no end time defined";
+  if (($r['FeeRequired'] == 'Yes') AND ($r['FEE'] == '')) 
+    $err[$r['Trip']][] = "Has a fee requirement and no fee.";
+  if (($r['MultiEvent'] == 'Yes') AND ($r['MultiEventCode'] == '')) 
+    $err[$r['Trip']][] = "is identified as a multi-event function but has no multi-event code.";
+  if (($r['TransportRequired'] == 'Yes') AND ($r['Transportation'] == '')) 
+      $err[$r['Trip']][] = "Has a trasport requirement and no transportaton identified.";
+  if ($r['MaxAttendees'] == '') $err[$r['Trip']][] = "has no max attendee limit defined.";
   // if ($r[Level] == '') $err[$r[Trip]][] = "has no experience levels defined.";
   }
 
@@ -195,16 +197,16 @@ while ($r = $res->fetch_assoc()) {
 // check out leader info
 $ema = array();
 foreach ($ldrs as $k => $v) {
-  $ldrfull = $v[FirstName] . " " . $v[LastName];
+  $ldrfull = $v['FirstName'] . " " . $v['LastName'];
   $ldrfull = rtrim($ldrfull, ' ');
-  if ($v[Email] == '') $ldrerr[$k][] = "Leader missing email address.";
-  if (!in_array($v[Email], $ema)) $ema[] = $v[Email];
+  if ($v['Email'] == '') $ldrerr[$k][] = "Leader missing email address.";
+  if (!in_array($v['Email'], $ema)) $ema[] = $v['Email'];
   else $ldrerr[$k][] = "Leader email address is a duplicate.";  
-  if ($v[PrimaryPhone] == '') $ldrerr[$k][] = "Leader missing primary phone number.";
-  if ($v[ImgURL] == '') $ldrerr[$k][] = 'Leader missing photo image.';
+  if ($v['PrimaryPhone'] == '') $ldrerr[$k][] = "Leader missing primary phone number.";
+  if ($v['ImgURL'] == '') $ldrerr[$k][] = 'Leader missing photo image.';
   if (!(array_key_exists($ldrfull, $ldrassigned))) 
     $ldrerr[$k][] = 'Leader active but not asssigned an event.'; 
-  if (($v[LdrEvent] == '') AND ($v[LdrDay] == ''))
+  if (($v['LdrEvent'] == '') AND ($v[LdrDay] == ''))
     $ldrerr[$k][] = 'Leader does not have a valid Leader Type designated.';
   }
 
@@ -219,10 +221,10 @@ foreach ($venused as $k => $v) {
 foreach ($venused as $k => $v) {
   $venueuse[$k] .= "$v"; }
 foreach ($venrow as $k => $v) {
-  if ($v[VenAddr] == '') $venerr[] .= "$k does not have an address defined";
-  if (($v[VenCity] == '') || ($v[VenState] == '') || ($v[VenZip] == ''))
+  if ($v['VenAddr'] == '') $venerr[] .= "$k does not have an address defined";
+  if (($v['VenCity'] == '') || ($v['VenState'] == '') || ($v[VenZip] == ''))
     $venerr[] .= "$k has incomplete city, state or zip code information provided";
-  if ($v[VenGmapURL] == '') $venerr[] .= "$k has no map information provided.";
+  if ($v['VenGmapURL'] == '') $venerr[] .= "$k has no map information provided.";
   }
 
 // echo '<pre> ven errors '; print_r($venerr); echo '</pre>';
@@ -243,7 +245,7 @@ if (count($err) > 0 ) {
     foreach ($v as $l) {
       echo $l . '<br>';
       }
-    echo '<br>';
+    echo '</ul>';
     }
   }
 echo "</div>TOTAL EVENT ERRORS: ".count($err).'<br>';
@@ -270,12 +272,12 @@ else {
   }
 echo '<div class="page-break"></div>
 <h4>Veune Record Validation Report
-<span id="ven" title="View Venue/Site Report" class="hidden-print glyphicon glyphicon-zoom-in" style="color: blue; font-size: 30px"></span>
+<span id="ven" title="View Venue Report" class="hidden-print glyphicon glyphicon-zoom-in" style="color: blue; font-size: 30px"></span>
 </h4>
 
 <div id="venerrpt"><br>
 <b>Total Venues defined:'.$venrc.'</b><br>';
-// report venue/site errors
+// report venue errors
 if (count($venerr) > 0) {
   foreach ($venerr as $err) {
     echo "$err<br>";
@@ -288,7 +290,7 @@ TOTAL VENUE ERRORS: '.count($venerr).'<br>';
 
 echo '<br><b>Total events: '.$eventrc.'<br>
 Total ACTIVE leaders: '.$leaderrc.'<br>
-Total Venue/Sites: '.$venrc.'</b><br><br>';
+Total Venue: '.$venrc.'</b><br><br>';
 echo '=== END REPORT ===<br><br>';
 ?>
 </div> <!-- container -->

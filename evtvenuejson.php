@@ -17,26 +17,26 @@ if ($rc == 0) {
   exit;
   }
 
-$r[VenInsurInfo] = html_entity_decode($r[VenInsurInfo], ENT_QUOTES);
-$r[VenSpecNotes] = html_entity_decode($r[VenSpecNotes], ENT_QUOTES);
+$r['VenInsurInfo'] = html_entity_decode($r['VenInsurInfo'], ENT_QUOTES);
+$r['VenSpecNotes'] = html_entity_decode($r['VenSpecNotes'], ENT_QUOTES);
 
-$mi = 'YES'; if ($r[VenGmapURL] == '') $mi = 'NO';
+$mi = 'YES'; if ($r['VenGmapURL'] == '') $mi = 'NO';
 
 echo '<table class="table" border=1><tr><td>';
 echo 
-'<b>Name: </b>' . $r[VenName] . '<br>' .
-'<b>Phone: </b>' . $r[VenPhone] . '<br>' .
-'<b>Address: </b>' . $r[VenAddr] . '<br>' .
-'<b>Address 2: </b>' . $r[VenAddr2] . '<br>' .
-'<b>City: </b>' . $r[VenCity] . '  ' . 
-'<b>State:</b> ' . $r[VenState] . '  ' .
-'<b>Zip: </b> ' . $r[VenZip] . '<br>' .
-'<b>Contact Name: </b>' . $r[VenContactName] . '<br>' .
-'<b>Contact Phone: </b>' . $r[VenContactPhone] . '<br>' .
-'<b>Conact Email: </b>' . $r[VenContactEmail] . '<br>' .
-'<b>Insurance Info: </b>' . '<br>' . $r[VenInsurInfo] . '<br>' .
-'<b>Special Notes: </b>' . '<br>' . $r[VenSpecNotes] . '<br>' .
-'<b>Map Info Defined: </b>' . $mi . '<br>' . $r[VenGmapURL]
+'<b>Name: </b>' . $r['VenName'] . '<br>' .
+'<b>Phone: </b>' . $r['VenPhone'] . '<br>' .
+'<b>Address: </b>' . $r['VenAddr'] . '<br>' .
+'<b>Address 2: </b>' . $r['VenAddr2'] . '<br>' .
+'<b>City: </b>' . $r['VenCity'] . '  ' . 
+'<b>State:</b> ' . $r['VenState'] . '  ' .
+'<b>Zip: </b> ' . $r['VenZip'] . '<br>' .
+'<b>Contact Name: </b>' . $r['VenContactName'] . '<br>' .
+'<b>Contact Phone: </b>' . $r['VenContactPhone'] . '<br>' .
+'<b>Conact Email: </b>' . $r['VenContactEmail'] . '<br>' .
+'<b>Insurance Info: </b>' . '<br>' . $r['VenInsurInfo'] . '<br>' .
+'<b>Special Notes: </b>' . '<br>' . $r['VenSpecNotes'] . '<br>' .
+'<b>Map Info Defined: </b>' . $mi . '<br>' . $r['VenGmapURL']
 ;
 
 // echo '<pre>'; print_r($r); echo '</pre>';

@@ -116,6 +116,7 @@ body { padding-top: 50px; }
       <li><a href="evtlister.php">Search/List</a></li>
       <li><a href="evtprintlist.php">Print Last List</a></li>
       <li><a href="evtaddevent.php">Add New Event</a></li>
+      <li><a href="evtdaysched.php">Event Day Schedule Listing </a></li>
       <li class="divider"></li>      
       <li class="dropdown-submenu">
         <a href="#">Event Reports</a>

@@ -32,7 +32,7 @@ echo '<div class="container"><h1>Event Listing</h1>';
 
 
 echo '
-  <p>This report produces a complete list of ALL events regardless of the their status and all fields for each in a CSV format file to download and open with a spreadsheet program.</p>
+  <p>This report produces a complete list of ALL events not marked &apos;DELETE&apos; and all fields for each in a CSV format file to download and open with a spreadsheet program.</p>
 ';
 
 // create report
@@ -50,16 +50,17 @@ $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 echo '<br>row count: '.$rc.'<br>';
 // Fields
-// Day	Trip	TripStatus	StartTime	EndTime	Type	Event	TypeOfEvent	Level	Site	SiteRoom	Leader1	Leader2	Leader3	Leader4	FeeRequired	FEE	TransportNeeded	Transportation	MaxAttendees	SecondaryStatus	MultiEvent	MultiEventCode	Program
+// Day	Trip	TripStatus	StartTime	EndTime	Type	Event	TypeOfEvent	Level	Venue	VenueInst	Leader1	Leader2	Leader3	Leader4	FeeRequired	FEE	TransportNeeded	Transportation	MaxAttendees	SecondaryStatus	MultiEvent	MultiEventCode	Program
 
-$csvmask = '"%s","%s","%s",%s,%s,"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",%s,"%s","%s",%s,"%s","%s","%s","%s"'."\n";
+$csvmask = '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'."\n";
 
-$csv = 'Day,Trip,TripStatus,StartTime,EndTime,Type,Event,TypeOfEvent,Level,Site,SiteRoom,Leader1,Leader2,Leader3,Leader4, FeeRequired,FEE,TransportNeeded,Transportation,MaxAttendees,SecondaryStatus,MultiEvent,MultiEventCode,Program'."\n";
+$csv = 'Day,Trip,TripStatus,StartTime,EndTime,Type,Event,TypeOfEvent,Level,Venue,VenInst,Meeting,MtngInst,Leader1,Leader2,Leader3,Leader4,FeeRequired,FEE,TransportNeeded,Transportation,MaxAttendees,ProductionNotes,MultiEvent,MultiEventCode,Program'."\n";
 
 while ($r = $res->fetch_assoc()) {
-  $st = date("g:i A", strtotime($r[StartTime]));
-  $et = date("g:i A", strtotime($r[EndTime]));
-  $csv .= sprintf($csvmask,$r[Day],$r[Trip],$r[TripStatus],$r[StartTime],$r[EndTime],$r[Type],$r[Event],$r[TypeOfEvent],$r[Level],$r[Site],$r[SiteRoom],$r[Leader1],$r[Leader2],$r[Leader3],$r[Leader4],$r[FeeRequired],$r[FEE],$r[TransportNeeded],$r[Transportation],$r[MaxAttendees],$r[SecondaryStatus],$r[MultiEvent],$r[MultiEventCode],$r[Program]);
+  $st = date("g:i A", strtotime($r['StartTime']));
+  $et = date("g:i A", strtotime($r['EndTime']));
+  $csv .= sprintf($csvmask,$r['Day'],$r['Trip'],$r['TripStatus'],$r['StartTime'],$r['EndTime'],$r['Type'],$r['Event'],$r['TypeOfEvent'],$r['Level'],$r['Site'],$r['SiteRoom'], 
+$r['Site2'], $r['Site2Room'], $r['Leader1'],$r['Leader2'],$r['Leader3'],$r['Leader4'],$r['FeeRequired'],$r['FEE'],$r['TransportNeeded'],$r['Transportation'],$r['MaxAttendees'],$r['SecondaryStatus'],$r['MultiEvent'],$r['MultiEventCode'],$r['Program']);
   
 //  echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   }

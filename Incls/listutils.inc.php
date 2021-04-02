@@ -11,7 +11,7 @@ function readlist($listname) {
 	$r = $res->fetch_assoc();
 	$rc = $res->num_rows;
 	// echo "rc: $rc<br>"; exit;
-  $buffer = explode("\n", $r[cfgtext]);
+  $buffer = explode("\n", $r['cfgtext']);
   foreach ($buffer as $l) {
     $l = rtrim($l, "\r\n");
     if (substr($l,0,2) == '//') continue;
@@ -36,8 +36,8 @@ function readvenlist($listname) {
 	$str = '';
   while ($r = $res -> fetch_assoc()) {
   	// echo '<pre>'; print_r($r); echo '</pre>';
-    $l = '<option value="' . $r[VenName] . ':' . $r[VenCode] . '">';
-    $l .= $r[VenName] . '</option>';
+    $l = '<option value="' . $r['VenName'] . ':' . $r['VenCode'] . '">';
+    $l .= $r['VenName'] . '</option>';
     $str .= $l;
     }
 	// echo "<pre> cfg: "; print_r($str); echo '</pre>'; exit;
@@ -53,7 +53,7 @@ function readlistarray($listname) {
 	$res = doSQLsubmitted($sqldb);
 	$r = $res->fetch_assoc();
 	$rc = $res->num_rows;
-  $buffer = explode("\n", $r[cfgtext]);
+  $buffer = explode("\n", $r['cfgtext']);
   foreach ($buffer as $l) {
     $l = rtrim($l, "\n");
     $l = rtrim($l, "\r");
@@ -76,8 +76,8 @@ function readvenlistarray($listname) {
 	$rc = $res->num_rows;
 	$str = array();
 	while ($r = $res->fetch_assoc()) {
-    $l = '<option value="' . $r[VenName] . ':' . $r[VenCode] . '">';
-    $l .= $r[VenName] . '</option>';
+    $l = '<option value="' . $r['VenName'] . ':' . $r['VenCode'] . '">';
+    $l .= $r['VenName'] . '</option>';
     $str[] = $l;
     }
 	//echo "<pre> cfg "; print_r($str); echo '</pre>';
@@ -94,7 +94,7 @@ function readvenlistarray($listname) {
 	$res = doSQLsubmitted($sqldb);
 	$r = $res->fetch_assoc();
 	$rc = $res->num_rows;
-  $buffer = explode("\n", $r[cfgtext]);
+  $buffer = explode("\n", $r['cfgtext']);
 //  echo '<pre>'; print_r($buffer); echo '</pre>';
   foreach ($buffer as $l) {
     $l = rtrim($l, "\r\n");
@@ -116,7 +116,7 @@ function readvenlistarray($listname) {
 	$res = doSQLsubmitted($sqldb);
 	$r = $res->fetch_assoc();
 	$rc = $res->num_rows;
-  $buffer = explode("\n", $r[cfgtext]);
+  $buffer = explode("\n", $r['cfgtext']);
   foreach ($buffer as $l) {
     $str .= $l;
     }
@@ -127,7 +127,7 @@ function readvenlistarray($listname) {
 // update named table file with text provided
 function updatelist($listname,$text) {
  	$flds = array();
-	$flds[CfgText] = $text;
+	$flds['CfgText'] = $text;
 	// echo '<pre> upd '; print_r($flds); echo '</pre>';
 	$rows = sqlupdate('config', $flds, "`cfgName` = '$listname'");
 	return($rows);
