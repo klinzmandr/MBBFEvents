@@ -67,7 +67,7 @@ $rc = $res->num_rows;
 
 $r = $res->fetch_assoc();
 // echo '<pre> full record '; print_r($r); echo '</pre>';
-if ($r[FirstName] == '**New**') $r[FirstName] = '';
+if ($r['FirstName'] == '**New**') $r['FirstName'] = '';
 
 ?>
 
@@ -135,8 +135,8 @@ function validate() {
 
 <script>
 $(document).ready(function() {
-  $("#ACTIVE").val("<?=$r[Active]?>");
-  $("#ShirtSize").val("<?=$r[ShirtSize]?>");
+  $("#ACTIVE").val("<?=$r['Active']?>");
+  $("#ShirtSize").val("<?=$r['ShirtSize']?>");
   
   var e = $("#LDREv").val();
   if (e == 'TRUE') $("#LDRE").attr("checked", true);
@@ -189,17 +189,17 @@ $("#LIL").click(function() {
 <?php
 // FORM FIELD DEF's
 $imgurl = 'npa.png';
-if ($r[ImgURL] <> '') $imgurl = $r[ImgURL];
+if ($r['ImgURL'] <> '') $imgurl = $r['ImgURL'];
 ?>
 
 <table border="0" width="100%" class="hidden-print">
 <tr valign="middle"><td>
-<font size="+2"><b><?=$r[FirstName]?> <?=$r[LastName]?></b></font>
+<font size="+2"><b><?=$r['FirstName']?> <?=$r['LastName']?></b></font>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <button form="F1" class="updb btn btn-success" type="submit">UPDATE LEADER</button></td>
 <td><span id="LIL" title="Leader Info 360 View" class="glyphicon glyphicon-blackboard" style="color: blue; font-size: 25px;"></span></td>
 <td align="right"><a onclick="return confirmContinue()" 
-href="ldrlister.php?rowid=<?=$r[RowID]?>&ss=<?=$ss?>&action=delete&Active=<?=$active?>">
+href="ldrlister.php?rowid=<?=$r['RowID']?>&ss=<?=$ss?>&action=delete&Active=<?=$active?>">
 <span title="Delete Leader" class="glyphicon glyphicon-trash" style="color: blue; font-size: 25px;"></span></a>&nbsp;&nbsp;
 </td></tr>
 </table>
@@ -240,7 +240,7 @@ Secondary Phone:
 <table  border="0">
 <tr><td>
 Email Address: 
-<input type="text" name="flds[Email]" value="<?=$r[Email]?>" size="40" id="Event">
+<input type="text" name="flds[Email]" value="<?=$r['Email']?>" size="40" id="Event">
 </td>
 <td>Shirt Size:
 <select id=ShirtSize name="flds[ShirtSize]">

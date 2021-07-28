@@ -120,7 +120,7 @@ if (!$rowcount) {
 $idx = 1;
 while ($x = $res->fetch_assoc()) {
 	//echo '<pre> Log record'; print_r($r); echo '</pre>';
-	$resultrows[$x[LogID]] = $x; 
+	$resultrows[$x['LogID']] = $x; 
 	$idx++;
 	}
 ksort($resultrows);

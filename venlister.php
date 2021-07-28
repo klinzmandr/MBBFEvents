@@ -66,7 +66,7 @@ $(function(){
     $("#head").show();
     chgFlag = 0;
     Cookies.set("venfilter", v);
-    });
+    });8
 
     $('#btnALL').click(function() {
       $('tr').show();
@@ -99,8 +99,8 @@ $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 
 while ($r = $res->fetch_assoc()) {
-  if ($r[VenCode] == '--New--') continue;
-  $mi = 'YES'; if ($r['VenGmapUR'L] == '') $mi = 'NO';
+  if ($r['VenCode'] == '--New--') continue;
+  $mi = 'YES'; if ($r['VenGmapURL'] == '') $mi = 'NO';
   //  echo '<pre> full record '; print_r($r); echo '</pre>';
   echo "<tr onclick=\"window.location='venupdate.php?vencode=$r[VenCode]'\" style='cursor: pointer;'>";
   echo '

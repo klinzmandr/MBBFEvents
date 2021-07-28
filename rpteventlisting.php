@@ -47,7 +47,7 @@ if ($day == '') {
   echo '
   <div class=container>
   <p>A listing of specific events marked with the status of &apos;<b>RETAIN</b>&apos; for the selected day.</p>
-  <p>All scheduled events for all days will be listed if the choice of &apos;Day&apos; is selected.</p>
+  <p>All scheduled events for all days will be listed if the choice of &apos;All Days&apos; is selected.</p>
   <p>A download CSV file is created and is available with the same results as shown on the page except that the venue name is in column 1 of each row of the result.</p>
 <p>Printing of the report is possible but should be done after doing a print preview and adjusting the print settings appropriately.</p>
 
@@ -109,10 +109,10 @@ echo '<h3>Listing for: '.$day.'</h3>
 row count: '.$rc.'<br>';
 
 $csvmask = '"%s","%s","%s","%s",%s,%s,"%s","%s","%s",%s,"%s","%s","%s","%s"'."\n";
-$csv = 'Type,Trip,TypeOfEvent,Day,StartTime,EndTime,Event,Venue,VenueInst,MaxAttendees,Leader1,Leader2,Leader3,	Leader4'."\n";
+$csv = 'Type,Trip,TypeOfEvent,Day,StartTime,EndTime,Event,EventVenue,EvtVenueInst,MaxAttendees,Leader1,Leader2,Leader3,	Leader4'."\n";
 
 echo '<table class="sortable table"><thead>
-<tr><th>Type</th><th>Trip</th><th>Type</th><th>Day</th><th>StartTime</th><th>EndTime</th><th>Event</th><th>Venue</th><th>VenueInst</th><th>MaxAttendees</th><th>Leader1</th><th>Leader2</th><th>Leader3</th><th>Leader4</th></tr></thead><tbody>';
+<tr><th>Type</th><th>Trip</th><th>Type</th><th>Day</th><th>StartTime</th><th>EndTime</th><th>Event</th><th>EventVenue</th><th>EvtVenueInst</th><th>MaxAttendees</th><th>Leader1</th><th>Leader2</th><th>Leader3</th><th>Leader4</th></tr></thead><tbody>';
 
 while ($r = $res->fetch_assoc()) {
   $st = date("g:i A", strtotime($r['StartTime']));
@@ -122,8 +122,8 @@ while ($r = $res->fetch_assoc()) {
   $mask = '
 <tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td data-value="'.$stv.'">%s</td><td data-value="'.$etv.'">%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
   
-  printf($mask,$r[Type],$r[Trip],$r[TypeOfEvent],$r[Day],$st,$et,$r[Event],$r[Site],$r[SiteRoom],$r[MaxAttendees],$r[Leader1],$r[Leader2],$r[Leader3],$r[Leader4]);
-  $csv .= sprintf($csvmask,$r[Type],$r[Trip],$r[TypeOfEvent],$r[Day],$st,$et,$r[Event],$r[Site],$r[SiteRoom],$r[MaxAttendees],$r[Leader1],$r[Leader2],$r[Leader3],$r[Leader4]);
+  printf($mask,$r['Type'],$r['Trip'],$r['TypeOfEvent'],$r['Day'],$st,$et,$r['Event'],$r['Site'],$r['SiteRoom'],$r['MaxAttendees'],$r['Leader1'],$r['Leader2'],$r['Leader3'],$r['Leader4']);
+  $csv .= sprintf($csvmask,$r['Type'],$r['Trip'],$r['TypeOfEvent'],$r['Day'],$st,$et,$r['Event'],$r['Site'],$r['SiteRoom'],$r['MaxAttendees'],$r['Leader1'],$r['Leader2'],$r['Leader3'],$r['Leader4']);
   
 //  echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   }

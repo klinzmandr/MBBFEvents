@@ -14,7 +14,7 @@ $rc = $res->num_rows;
 $r = $res->fetch_assoc();
 
 $url = '@(http|ftp)?(s)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-$bio = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $r[Bio]);
+$bio = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $r['Bio']);
 
 if ($rc == 0) {
   echo '<table class="table" border=1><tr><td>';
@@ -22,7 +22,7 @@ if ($rc == 0) {
   echo '</td></tr></table>';
   }
 else {
-  $img = $r[ImgURL];
+  $img = $r['ImgURL'];
   if ($img == '') $img = "./npa.png";
   if (strlen($bio) == 0) $bio = "NO BIO INFO AVAILABLE";
   echo '<table class="table" border=1>';

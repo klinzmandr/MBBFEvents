@@ -10,11 +10,11 @@ unset($_SESSION['CTS_SessionUser']);
 unset($_SESSION['CTS_SecLevel']);
 
 // logout or timeout reset requested
-if ($lotype == 'lo') { 
-  $title = "Session Logged Out";  
+if ($lotype == 'nli') {
+  addlogentry("user not logged in"); }
+elseif ($lotype == 'lo') { 
   addlogentry("$user Logged out");	}
 else { 
-  $title = "Session Timed Out";
   addlogentry("$user Timed out"); }
 
 session_unset();
@@ -40,7 +40,6 @@ $(document).ready(function() {
 </script>
 
 <div class="container">
-  <h1><?=$title?></h1>
   <p>Your session has been terminated.</p>
   <p>Click the following button to log into the application.</p>
   <a class="btn btn-success" href="index.php">Restart application</a>

@@ -71,19 +71,19 @@ $rc = $res->num_rows;
 while ($r = $res->fetch_assoc()) {
 // echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
 // FORM FIELD DEF's
-$t = sprintf("%03s",$r[Trip]);
-$diff = timediff($r[StartTime],$r[EndTime]);
-$stime = date("g:i A", strtotime($r[StartTime]));
-$etime = date("g:i A", strtotime($r[EndTime]));
+$t = sprintf("%03s",$r['Trip']);
+$diff = timediff($r['StartTime'],$r['EndTime']);
+$stime = date("g:i A", strtotime($r['StartTime']));
+$etime = date("g:i A", strtotime($r['EndTime']));
 echo '
-<h3>Event: '.$r[Event].'</h3>
+<h3>Event: '.$r['Event'].'</h3>
 <table class="table" border="0">
 <tr><td>
 Trip Number: '.$t.'
 </td><td>
-Day: '.$r[Day].' 
+Day: '.$r['Day'].' 
 </td><td>
-Trip Status: '.$r[TripStatus].'
+Trip Status: '.$r['TripStatus'].'
 </td></tr>
 <tr><td>
 Start Time: '.$stime.'
@@ -94,66 +94,66 @@ Duration: '.$diff.'
 </td></tr>
 
 <tr><td colspan="2">
-Event Name: '.$r[Event].'
+Event Name: '.$r['Event'].'
 </td><td>
-Type:  '.$r[Type].'
+Type:  '.$r['Type'].'
 </td></tr>
 <tr><td>
-Type of Event:  '.$r[TypeOfEvent].'
+Type of Event:  '.$r['TypeOfEvent'].'
 </td><td colspan="2">
-Level: '.$r[Level].'
+Level: '.$r['Level'].'
 </td></tr>
 <tr><td>
-Site:  '.$r[Site].'
+Site:  '.$r['Site'].'
 </td>
 <td>
-Site Code: '.$r[SiteCode].'
+Site Code: '.$r['SiteCode'].'
 </td>
 <td> 
-Site Room: '.$r[SiteRoom].'
+Site Room: '.$r['SiteRoom'].'
 </td>
 </tr>
 </table>
 
 <table class="table" border="0">
 <tr><td>
-Leader 1: '.$r[Leader1].'
+Leader 1: '.$r['Leader1'].'
 </td><td>
-Leader 2: '.$r[Leader2].'
+Leader 2: '.$r['Leader2'].'
 </td></tr>
 <tr><td>
-Leader 3: '.$r[Leader3].'
+Leader 3: '.$r['Leader3'].'
 </td><td>
-Leader 4: '.$r[Leader4].'
+Leader 4: '.$r['Leader4'].'
 </td></tr>
 </table>
 
 <table class="table" border="0">
 <tr><td>
-Fee Required(Y/N): '.$r[FeeRequired].'
+Fee Required(Y/N): '.$r['FeeRequire'].'
 </td><td colspan="2">
-FEE: '.$r[FEE].'
+FEE: '.$r['FEE'].'
 </td></tr>
 <tr><td>
-Transport Needed(Y/N): '. $r[TransportNeeded].'
+Transport Needed(Y/N): '. $r['TransportNeeded'].'
 </td><td colspan="2">
-Transportation: '.$r[Transportation].'
+Transportation: '.$r['Transportation'].'
 </td></tr>
 <tr><td>
-Maximum Attendees: '.$r[MaxAttendees].'
+Maximum Attendees: '.$r['MaxAttendees'].'
 </td><td>
-Multi-Event(Y/N): '.$r[MultiEvent].'
+Multi-Event(Y/N): '.$r['MultiEvent'].'
 </td><td>
-Multi Event Code(s): '.$r[MultiEventCode].'
+Multi Event Code(s): '.$r['MultiEventCod'].'
 </td></tr>
 <tr><td>
 </table>
 <table class="table" border="0">
 <tr><td>
-Program Description: <br>'.$r[Program].'
+Program Description: <br>'.$r['Program'].'
 </td></tr>
 <tr><td valign="top">
-Secondary Status (Production Notes):<br>'.$r[SecondaryStatus].'
+Secondary Status (Production Notes):<br>'.$r['SecondaryStatus'].'
 </td></tr>
 </table>
 <div class="page-break"></div>

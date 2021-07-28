@@ -66,7 +66,7 @@ $ldrres = doSQLsubmitted($ldrsql);
 $ldrrc = $ldrres->num_rows;
 // echo "ldrrc: $ldrrc<br>";
 while ($l = $ldrres->fetch_assoc()) {
-  $fullname = $l[FirstName] . ' ' . $l[LastName];
+  $fullname = $l['FirstName'] . ' ' . $l['LastName'];
   $fullname = rtrim($fullname, ' ');
   $leaders[] = $fullname;
   }
@@ -99,24 +99,25 @@ $rc = $res->num_rows;
 //report cols: Leader	Day	StartTime	Duration	TripStatus Site Event
 $ldrarray = array();
 while ($r = $res->fetch_assoc()) {
-  $d = $dayarray[$r[Day]];
+  $d = $dayarray[$r['Day']];
   // echo "d: $d<br>";  
-  if ($r[Leader1] != '') 
-  $ldrarray[$r[Leader1]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";
-  if ($r[Leader2] != '')
-  $ldrarray[$r[Leader2]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";
-  if ($r[Leader3] != '')
-  $ldrarray[$r[Leader3]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";
-  if ($r[Leader4] != '')
-  $ldrarray[$r[Leader4]] [$d] [$r[StartTime]] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Event]";  
+  if ($r['Leader1'] != '') 
+  $ldrarray[$r['Leader1']] [$d] [$r['StartTime']] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Trip] $r[Event]";
+  if ($r['Leader2'] != '')
+  $ldrarray[$r['Leader2']] [$d] [$r['StartTime']] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Trip] $r[Event]";
+  if ($r['Leader3'] != '')
+  $ldrarray[$r['Leader3']] [$d] [$r['StartTime']] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Trip] $r[Event]";
+  if ($r['Leader4'] != '')
+  $ldrarray[$r['Leader4']] [$d] [$r['StartTime']] = "$r[EndTime]/$r[Day]/$r[TripStatus]/$r[Site]/$r[Trip] $r[Event]";  
   }
-ksort($ldrarray);
+ksort($ldrarray); // sort by leader name
 // echo '<pre> ldrarray '; print_r($ldrarray); echo '</pre>';
 
 foreach ($ldrarray as $k => $v) {
   if (!in_array($k, $leaders)) continue;
   echo "<h4>$k</h4>";
   // echo "<pre> leader $k "; print_r($v); echo '</pre>';
+  ksort($v);  // sort day within leader 
   foreach ($v as $kk => $vv) {
     // echo "Day $kk<br>";
     echo '<ul>';
@@ -126,15 +127,16 @@ foreach ($ldrarray as $k => $v) {
     if (strlen($dx) == 0) $dx = "**INVALID EVENT DAY**<br>";
     // echo "dx: -$dx-<br>";
     // echo "<pre> day: $kk, dx: $dx "; print_r($vv); echo '</pre>';
+    ksort($vv); // sort start time within day within leader
     foreach ($vv as $kkk => $vvv) {
       //echo "$kkk ";
       //echo "<pre> hour $kkk "; print_r($vvv); echo '</pre>';
       list($endtime, $day, $tripstatus, $site, $event) = explode('/',$vvv);
       $dur = timediff($kkk, $endtime);
       $st = date("g:i A", strtotime($kkk));
-      $et = date("g:i A", strtotime($r[EndTime]));
+      $et = date("g:i A", strtotime($r['EndTime']));
       
-      echo "<b>$dx</b> $st (Duration: $dur) <b>site:</b> $site <b>event:</b> $event<br>";
+      echo "<b>$dx</b> $st (Duration: $dur) <b>Venue:</b> $site <b>Event:</b> $event<br>";
       }
     echo '</ul>';
     }

@@ -52,9 +52,9 @@ echo '<br>row count: '.$rc.'<br>';
 // Fields
 // Day	Trip	TripStatus	StartTime	EndTime	Type	Event	TypeOfEvent	Level	Venue	VenueInst	Leader1	Leader2	Leader3	Leader4	FeeRequired	FEE	TransportNeeded	Transportation	MaxAttendees	SecondaryStatus	MultiEvent	MultiEventCode	Program
 
-$csvmask = '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'."\n";
+$csvmask = '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'."\n";
 
-$csv = 'Day,Trip,TripStatus,StartTime,EndTime,Type,Event,TypeOfEvent,Level,Venue,VenInst,Meeting,MtngInst,Leader1,Leader2,Leader3,Leader4,FeeRequired,FEE,TransportNeeded,Transportation,MaxAttendees,ProductionNotes,MultiEvent,MultiEventCode,Program'."\n";
+$csv = 'Day,Trip,TripStatus,StartTime,EndTime,Type,Event,TypeOfEvent,Level,EventVenue,EvtVenInst,MeetingVenue,MtngVenInst,Leader1,Leader2,Leader3,Leader4,FeeRequired,FEE,TransportNeeded,Transportation,MaxAttendees,ProductionNotes,MultiEvent,MultiEventCode,Program'."\n";
 
 while ($r = $res->fetch_assoc()) {
   $st = date("g:i A", strtotime($r['StartTime']));

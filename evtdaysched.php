@@ -223,7 +223,7 @@ Events listed: <span id="ecnt"></span>
 
 <table class="sortable table table-hover">
 <thead>
-<tr id="head"><th>Ptr</th><th>RecNo<th>Day</th><th>StartTime</th><th>EndTime</th><th>Duration</th><th>Trip</th><th>Event</th><th>Venue</th><th>MeetingSite</th></tr>
+<tr id="head"><th>Ptr</th><th>RecNo<th>Day</th><th>StartTime</th><th>EndTime</th><th>Duration</th><th>Trip</th><th>Event</th><th>EventVenue</th><th>MeetingSite</th></tr>
 </thead>
 <tbody>
 <?=$rows?>

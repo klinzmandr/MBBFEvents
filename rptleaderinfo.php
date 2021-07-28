@@ -112,23 +112,23 @@ $emstr = ''; $noemstr = '';
 $csv = '"First Name","Last Name","Pri Phone","Sec Phone","Email Address","ShirtSize","Address 1","Address 2","City","State","Zip","Active"'."\n";
 while ($r = $res->fetch_assoc()) {
   //echo '<pre> full record for '.$r[RowID].' '; print_r($r); echo '</pre>';
-if ($r[Bio] == "") $r[Bio] = "None provided";
-$r[Bio] = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $r[Bio]);
+if ($r['Bio'] == "") $r['Bio'] = "None provided";
+$r['Bio'] = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $r['Bio']);
 
-$csv .= '"'.$r[FirstName].'","'.$r[LastName].'","'.$r[PrimaryPhone].'","'.$r[SecondaryPhone].'","'.$r[Email].'","'.$r[ShirtSize].'","'.$r[Address1].'","'.$r[Address2].'","'.$r[City].'","'.$r[State].'","'.$r[Zip].'","'.$r[Active].'"'."\n";
+$csv .= '"'.$r['FirstName'].'","'.$r['LastName'].'","'.$r['PrimaryPhone'].'","'.$r['SecondaryPhone'].'","'.$r['Email'].'","'.$r['ShirtSize'].'","'.$r['Address1'].'","'.$r['Address2'].'","'.$r['City'].'","'.$r['State'].'","'.$r['Zip'].'","'.$r['Active'].'"'."\n";
 echo '
 <tr>
-<td>'.$r[FirstName].'&nbsp;'.$r[LastName].'</td><td>'.$r[PrimaryPhone].'</td><td>'.$r[SecondaryPhone].'</td><td>'.$r[Email].'</td><td>'.$r[ShirtSize].'</td><td>'.$r[Address1].'</td><td>'.$r[Address2].'</td><td>'.$r[City].'</td><td>'.$r[State].'</td><td>'.$r[Zip].'</td><td align="center">'.$r[Active].'</td>   
+<td>'.$r['FirstName'].'&nbsp;'.$r['LastName'].'</td><td>'.$r['PrimaryPhone'].'</td><td>'.$r['SecondaryPhone'].'</td><td>'.$r['Email'].'</td><td>'.$r['ShirtSize'].'</td><td>'.$r['Address1'].'</td><td>'.$r['Address2'].'</td><td>'.$r['City'].'</td><td>'.$r['State'].'</td><td>'.$r['Zip'].'</td><td align="center">'.$r['Active'].'</td>   
 </tr>
 <tr class="RH">
-<td>&nbsp;</td><td colspan="9"><b>BIO: </b>'.$r[Bio].'</td>
+<td>&nbsp;</td><td colspan="9"><b>BIO: </b>'.$r['Bio'].'</td>
 </tr>
 <tr><td colspan="10">&nbsp;</td></tr>
 ';
-if (strlen($r[Email]) > 0) {
-  $emstr .= $r[FirstName].' '.$r[LastName]." &lt;".$r[Email] . "&gt;\n";   }
+if (strlen($r['Email']) > 0) {
+  $emstr .= $r['FirstName'].' '.$r['LastName']." &lt;".$r['Email'] . "&gt;\n";   }
 else {
-  $noemstr .= $r[FirstName].' '.$r[LastName]."\n";   }
+  $noemstr .= $r['FirstName'].' '.$r['LastName']."\n";   }
 }
 echo '</table>';
 

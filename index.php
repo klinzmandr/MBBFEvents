@@ -20,7 +20,7 @@
 // session_start();
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-//include 'Incls/vardump.inc.php';
+// include 'Incls/vardump.inc.php';
 include 'Incls/datautils.inc.php';
 include 'Incls/listutils.inc.php';
 include 'Incls/checkcred.inc.php';

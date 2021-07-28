@@ -141,7 +141,7 @@ $(function() {
     // alert("done clicked");
     if (chgFlag <= 0) { window.close(); }
   	var r=confirm("WARNING: All changes made will be LOST.\n\nClick OK to confirm leaving page.\nClick CANCEL to stay on page.");	
-  	if (r == true) { window.close(); }
+  	if (r == true) { chgFlag == 0; window.close(); }
   		return false;
     });
   });

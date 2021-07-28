@@ -47,23 +47,23 @@ echo '
 
 while ($r = $res->fetch_assoc()) {
   // echo '<pre> full record '; print_r($r); echo '</pre>';
-  echo '<h3>' . $r[VenName] .' (' . $r[VenCode] . ')</h3>';
-  $r[VenInsurInfo] = html_entity_decode($r[VenInsurInfo]);
-  $r[VenSpecNotes] = html_entity_decode($r[VenSpecNotes]);
+  echo '<h3>' . $r['VenName'] .' (' . $r['VenCode'] . ')</h3>';
+  $r['VenInsurInfo'] = html_entity_decode($r['VenInsurInfo']);
+  $r['VenSpecNotes'] = html_entity_decode($r['VenSpecNotes']);
   echo '<table class="table" border=1><tr><td>';
   echo 
-  '<b>Phone: </b>' . $r[VenPhone] . '<br>' .
-  '<b>Address: </b>' . $r[VenAddr] . '<br>' .
-  '<b>Address 2: </b>' . $r[VenAddr2] . '<br>' .
-  '<b>City: </b>' . $r[VenCity] . '  ' . 
-  '<b>State:</b> ' . $r[VenState] . '  ' .
-  '<b>Zip: </b> ' . $r[VenZip] . '<br>' .
-  '<b>Contact Name: </b>' . $r[VenContactName] . '<br>' .
-  '<b>Contact Phone: </b>' . $r[VenContactPhone] . '<br>' .
-  '<b>Conact Email: </b>' . $r[VenContactEmail] . '<br>' .
-  '<b>Insurance Info: </b><br>' . $r[VenInsurInfo] . '<br>' .
-  '<b>Special Notes: </b><br>' . $r[VenSpecNotes] . '<br>' .
-  '<b>Google Map Info: </b><br>' . $r[VenGmapURL]
+  '<b>Phone: </b>' . $r['VenPhone'] . '<br>' .
+  '<b>Address: </b>' . $r['VenAddr'] . '<br>' .
+  '<b>Address 2: </b>' . $r['VenAddr2'] . '<br>' .
+  '<b>City: </b>' . $r['VenCity'] . '  ' . 
+  '<b>State:</b> ' . $r['VenState'] . '  ' .
+  '<b>Zip: </b> ' . $r['VenZip'] . '<br>' .
+  '<b>Contact Name: </b>' . $r['VenContactName'] . '<br>' .
+  '<b>Contact Phone: </b>' . $r['VenContactPhone'] . '<br>' .
+  '<b>Conact Email: </b>' . $r['VenContactEmail'] . '<br>' .
+  '<b>Insurance Info: </b><br>' . $r['VenInsurInfo'] . '<br>' .
+  '<b>Special Notes: </b><br>' . $r['VenSpecNotes'] . '<br>' .
+  '<b>Google Map Info: </b><br>' . $r['VenGmapURL']
   ;
   echo '</td></tr></table><div class="page-break"></div>';
   }

@@ -55,8 +55,8 @@ $sql = "SELECT `FirstName`,`LastName`, `ImgURL` FROM `leaders` WHERE `Active` = 
 $res = doSQLsubmitted($sql);
 
 while ($r = $res->fetch_assoc()) {
-  $fullname = $r[FirstName] . ' ' . $r[LastName];
-  $imgurl = $r[ImgURL];
+  $fullname = $r['FirstName'] . ' ' . $r['LastName'];
+  $imgurl = $r['ImgURL'];
   bldldr($fullname, $imgurl);
   }
 
@@ -71,12 +71,12 @@ function bldldr($name, $imgurl) {
     $picurl = "<img src='$imgurl' width='100' height='75'>";
   if ($l == '') {
     $fc = substr($f,0,1);
-    $ldrarray[$fc][$name][name] = $f;   
-    $ldrarray[$fc][$name][pic] = $picurl; }   
+    $ldrarray[$fc][$name]['name'] = $f;   
+    $ldrarray[$fc][$name]['pic'] = $picurl; }   
   else {  
     $fc = substr($l,0,1);  
-    $ldrarray[$fc][$name][name] = $l . ', ' . $f;   
-    $ldrarray[$fc][$name][pic] = $picurl; }   
+    $ldrarray[$fc][$name]['name'] = $l . ', ' . $f;   
+    $ldrarray[$fc][$name]['pic'] = $picurl; }   
   return; 
   }
 

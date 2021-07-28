@@ -50,10 +50,10 @@ $rc = $res->num_rows;
 if ($rc == 1) {
 //  echo 'new one exists<br>';
 //  echo '<pre> NEW '; print_r($r); echo '</pre>';
-  $rowid = $r[RowID];
+  $rowid = $r['RowID'];
 //  echo '<h3>Search for the character string &quot;**New&quot; to display the new record for updates.</h3>
 //  <a href="evtlister.php?ss=**New" class="btn btn-success">CONTINUE TO UPDATE NEW EVENT</a>';
-echo '<a href="evtupdateevent.php?ptr=0" class="btn btn-success">CONTINUE TO UPDATE NEW EVENT</a>';
+echo '<a href="evtupdateevent.php?ptr=0" target="_blank" class="btn btn-success">CONTINUE TO UPDATE NEW EVENT</a>';
 
 $navarray[] = $rowid;
 $nav['start'] = 0; $nav['prev'] = ''; $nav['curr'] = '';
@@ -75,7 +75,7 @@ $res = doSQLsubmitted($sql);
 $r = $res->fetch_assoc();
 $rc = $res->num_rows;
 //  echo '<pre> NEW '; print_r($r); echo '</pre>';
-$rowid = $r[RowID];
+$rowid = $r['RowID'];
 //echo '<h3>Search for the character string &quot;**New&quot; to display the new record for updates.</h3>
 //<a href="evtlister.php?ss=**New" class="btn btn-success">CONTINUE TO UPDATE NEW EVENT</a>';
 echo '<a href="evtupdateevent.php?ptr=0" class="btn btn-success">CONTINUE TO ADD A NEW EVENT</a>';

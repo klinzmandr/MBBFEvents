@@ -1,5 +1,16 @@
 <?php
-
+// check if there is an active session
+if (!isset($_SESSION['EPSSessionActive'])) {
+  echo '
+<script>
+$(document).ready(function() {
+  // alert("No Active Session - Please login");
+  window.location.assign("indexsto.php?lo=nli");
+});
+</script>
+';
+  return;
+  }
 ?>
 
 <script src="js/bootstrap-session-timeout.js"></script> 
@@ -205,7 +216,9 @@ body { padding-top: 50px; }
       <li><a href="utlresetstatus.php">Reset All Event Status</a></li>
       <li><a href="sumextract.php" target="_blank" >SignUp Masters Extract</a></li>
       <li class=divider></li>
+      <li><a href="leaderquery.php" target="_blank" class="btn btn-success">Leader 360 Query</a></li>
       <li><a href="planner.php" target="_blank" class="btn btn-success">Planner Preview</a></li>
+      <li><a href="plannerforday.php" target="_blank" class="btn btn-success">Day Event Planner Preview</a></li>
       <li><a href="eventleaders.php" target="_blank" class="btn btn-success">Event Leader Preview</a></li>
       <li><a href="familydayleaders.php" target="_blank" class="btn btn-success">Family Day Leader Preview</a></li>
       <!-- <li><a href="#">Item</a></li> -->

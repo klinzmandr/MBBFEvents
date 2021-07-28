@@ -47,7 +47,7 @@ $rc = $res->num_rows;
 if ($rc == 1) {
 //  echo 'new one exists<br>';
 //  echo '<pre> Just created '; print_r($r); echo '</pre>';
-  $rowid = $r[RowID];
+  $rowid = $r['RowID'];
 //  echo '<a href=ldrupdate.php?rowid='.$rowid.' class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
   echo '<a href="ldrupdate.php?rowid='.$rowid.'" class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
   $navarray[] = $rowid;
@@ -68,7 +68,7 @@ $res = doSQLsubmitted($sql);
 $r = $res->fetch_assoc();
 $rc = $res->num_rows;
 // echo '<pre> Exiting New '; print_r($r); echo '</pre>';
-$rowid = $r[RowID];
+$rowid = $r['RowID'];
 //echo '<a href=ldrupdate.php?rowid='.$rowid.' class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
 echo '<a href="ldrupdate.php?rowid='.$rowid.'" class="btn btn-success">CONTINUE TO UPDATE NEW LEADER</a>';
 $navarray[] = $rowid;

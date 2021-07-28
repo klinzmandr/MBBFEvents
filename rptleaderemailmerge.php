@@ -67,9 +67,9 @@ if ($lt == 'dl')
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 while ($r = $res->fetch_assoc()) {
-  $key = $r[FirstName] . ' ' . $r[LastName];
+  $key = $r['FirstName'] . ' ' . $r['LastName'];
   $key = rtrim($key, ' ');
-  $leaderemail[$key] = $r[Email];
+  $leaderemail[$key] = $r['Email'];
   $leadername[$key] = $key;
   }
 // echo '<pre> email array '; print_r($leaderemail); echo '</pre>';
@@ -86,10 +86,10 @@ $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 // building this array will eliminate any dup email addresses.
 while ($r = $res->fetch_assoc()) {
-  $emarray[$leaderemail[$r[Leader1]]] = $leadername[$r[Leader1]]; 
-  $emarray[$leaderemail[$r[Leader2]]] = $leadername[$r[Leader2]];
-  $emarray[$leaderemail[$r[Leader3]]] = $leadername[$r[Leader3]]; 
-  $emarray[$leaderemail[$r[Leader4]]] = $leadername[$r[Leader4]]; 
+  $emarray[$leaderemail[$r['Leader1']]] = $leadername[$r['Leader1']]; 
+  $emarray[$leaderemail[$r['Leader2']]] = $leadername[$r['Leader2']];
+  $emarray[$leaderemail[$r['Leader3']]] = $leadername[$r['Leader3']]; 
+  $emarray[$leaderemail[$r['Leader4']]] = $leadername[$r['Leader4']]; 
   }
 echo '<br>Active event count: '.$rc.'<br>';
 echo 'Leader email count: '.count($emarray).'<br>';

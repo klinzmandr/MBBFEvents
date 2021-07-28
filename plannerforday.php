@@ -12,7 +12,6 @@
 <body>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<h2>Plan Your Trip: Search Event Listings</h2>
 <?php
 // error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
@@ -77,19 +76,13 @@ function resetflds() {
 }
 </script>
 
-<h3>Select one or more selection criteria and continue:</h3> 
 <form id="f1" action="<?=$caller?>" method="post">
-<select id="Day" name="Day">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<select id="Day" name="Day" onchange="this.form.submit()">
 <?php echo readlist('Day'); ?>
 </select>&nbsp;
-<select id="Type" name="Type">
-<?php echo readlist('TripType'); ?>
-</select>
-<input id="SS" type=text value="<?=$ss?>" name="ss" placeholder="Search" title="Enter a single word or short character string to search all program descriptions.">&nbsp;
 <input type=hidden name=action value="list">
-
-<button class="btn btn-primary" type="submit" form="f1">SEARCH EVENTS</button>
-<button class="btn btn-warning" onclick="return resetflds()">Clear Form</button>
+<!-- <button class="btn btn-primary" type="submit" form="f1">SEARCH EVENTS</button> -->
 </form>
 
 <?php
@@ -115,7 +108,7 @@ if (strlen($ss) > 0) {
 
 if (strlen($sql) == $sqllen) {      // no criteria entered
   echo '
-<h4 style="color: red; ">Please provide criteria for search.</h4>
+<h4 style="color: red; ">Please select Festival Day from list.</h4>
 </div> <!-- contianer -->
 </body>
 </html>';

@@ -19,13 +19,18 @@ if ($rc == 0) {
   echo '</td></tr></table>';
   }
 else {
-  if ($r[VenGmapURL] == '') {
+  if ($r['VenGmapURL'] == '') {
     echo "<table class='table' border=1>
           <tr><td colspan=2><h4>$r[VenName]</h4></td></tr>
           <tr><td>$r[VenAddr]<br>
-          $r[VenCity], $r[VenState]. $r[VenZip]</td></tr>
-          </table>"; }
+          $r[VenCity], $r[VenState]  $r[VenZip]</td></tr>
+          <tr><td>$f[VenSpecNotes]</td></tr>
+          </table>"; 
+          }
   else {
-    echo "$r[VenGmapURL]"; }
+    echo "<table class='table' border=1>";
+    if (strlen($r['VenSpecNotes'])) 
+      echo "<tr><td>Notes: $r[VenSpecNotes]</td><tr>";
+    echo "<tr><td>$r[VenGmapURL]</td></tr></table>"; }
   }
 ?>

@@ -71,7 +71,7 @@ function chktrip() {
   }
 </script>
 <h3>Duplication of Event</h3>
-<p>Duplication of an existing Trip numbered "'.$r[Trip].'" with the description of "'.$r[Event].'" has been requested.</p>
+<p>Duplication of an existing Trip numbered "'.$r['Trip'].'" with the description of "'.$r['Event'].'" has been requested.</p>
 <h4>Please enter the new trip number to use for the duplicate record.</h4>
 <p>Please note that the trip number must be 3 digits long. Numbering scheme is for 100 series numbers are used for day 1 events, 200 series numbers for day 2 and so on.  Renumbering of events may be necessary if numbers are duplicated.</p>
 <p><b>It is recommended that the &quot;Multi-event Code&quot; field be defined before cloning to allow for a search of a group of similar events to be done.</b></p>
@@ -90,8 +90,8 @@ $updarray = array();
 $updarray = $r;  
 //echo '<pre> updarray before '; print_r($updarray); echo '</pre>';
 
-unset($updarray[RowID]);          // dump old row number and
-$updarray[Trip] = $newtrip;       // insert the new trip number into update array
+unset($updarray['RowID']);          // dump old row number and
+$updarray['Trip'] = $newtrip;       // insert the new trip number into update array
 //echo '<pre> Duplicate '; print_r($updarray); echo '</pre>';
 
 // create dup now
@@ -114,7 +114,7 @@ $rc = $res->num_rows;
 //echo "row count after insert: $rc<br>";
 //echo '<pre> DUPLICATE '; print_r($r); echo '</pre>';
 
-$rowid = $r[RowID];
+$rowid = $r['RowID'];
 echo "rowid: $rowid<br>";
 $navarray[] = $rowid;
 $nav['start'] = 0; $nav['prev'] = ''; $nav['curr'] = '';
@@ -124,7 +124,7 @@ $_SESSION['navarray'] = $navarray;
 $_SESSION['nav'] = $nav;
 
 echo '
-<h3>A duplicate record of event "'.$r[Trip].'" with the description of "'.$r[Event].'" has been completed.</h3>
+<h3>A duplicate record of event "'.$r['Trip'].'" with the description of "'.$r['Event'].'" has been completed.</h3>
 <a href="evtupdateevent.php?ptr=0" class="btn btn-success">CONTINUE TO UPDATE THE DUPLICATE EVENT</a>';
 
 ?>

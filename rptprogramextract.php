@@ -82,18 +82,18 @@ $mask = '<tr><td>%s</td><td>%s</td><td>%s-%s</td><td>%s</td><td>%s</td><td>%s</t
 $csv = "Day,Trip,StartTime,EndTime,Codes,TypeOfEvent,Event\n";
 $csvmask .= '"%s","%s","%s","%s","%s","%s","%s"' ."\n";
 
-echo '<a class="hidden-print" href="downloads/leaderinfo.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
+echo '<a class="hidden-print" href="downloads/programextract.csv">DOWN LOAD RESULTS</a><span title="Download file with quoted values and comma separated fields" class="hidden-print glyphicon glyphicon-info-sign" style="color: blue; font-size: 20px;"></span>';
 echo '<table border="1" class="table">';
 echo '<tr><th>Day</th><th>Trip</th><th>Time Span</th><th>Code(s)</th><th>TypeOfEvent</th><th>Event</th></tr>';
 
 while ($r = $res->fetch_assoc()) {
   //echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
-  $st = date("g:i A", strtotime($r[StartTime]));
-  $et = date("g:i A", strtotime($r[EndTime]));
+  $st = date("g:i A", strtotime($r['StartTime']));
+  $et = date("g:i A", strtotime($r['EndTime']));
       
-  printf($mask,$r[Day],$r[Trip],$st,$et,$r[Level],$r[TypeOfEvent],$r[Event]);
+  printf($mask,$r['Day'],$r['Trip'],$st,$et,$r['Level'],$r['TypeOfEvent'],$r['Event']);
   
-  $csv .= sprintf($csvmask,$r[Day],$r[Trip],$st,$et,$r[Level],$r[TypeOfEvent],$r[Event]);
+  $csv .= sprintf($csvmask,$r['Day'],$r['Trip'],$st,$et,$r['Level'],$r['TypeOfEvent'],$r['Event']);
   }
 echo '</table>';
 file_put_contents("downloads/programextract.csv", $csv);

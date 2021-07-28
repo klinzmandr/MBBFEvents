@@ -19,16 +19,37 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 //include 'Incls/vardump.inc.php';
 include 'Incls/datautils.planner.inc.php';
-//include 'Incls/listutils.inc.php';
+include 'Incls/listutils.inc.php';
+
+$eaddr = isset($_REQUEST['eaddr']) ? $_REQUEST['eaddr'] : "";
 if (isset($_REQUEST['rowid'])) {
   $rowid = $_REQUEST['rowid'];
   // add return button if called for
   echo "<a class='btn btn-success' href=\"ldrlister.php\">RETURN</a><br>";
   }
+else {
+  // Process listing based on selected criteria
+  if ($eaddr == '') {
+    echo "<form action='leaderquery.php'>
+    <input autofocus no_autocomplete type='text' name='eaddr' placeholder='Leader Email Address'>
+    </form>";
+    exit;
+    }
+  }
 
-// Process listing based on selected criteria
-$eaddr = isset($_REQUEST['eaddr']) ? $_REQUEST['eaddr'] : "";
-
+// setup day sequence number array  
+$dayarray = array();
+$days = readlistarray('Day');
+$daynbr = 1;
+foreach ($days as $v) {
+  preg_match('/^.*>(.*)<.*$/i', $v, $matches);
+  if ($matches[1] == 'Day') continue;
+  // echo '<pre>'; print_r($matches[1]); echo '</pre>';
+  $dayarray[$daynbr] = $matches[1];
+  $daynbr += 1;
+  }
+// echo '<pre>dayarray '; print_r($dayarray); echo '</pre>';
+ 
 $sql = "SELECT * FROM `leaders` WHERE `Email`='$eaddr';";
 
 //echo "<br>sql: $sql<br>";
@@ -37,6 +58,7 @@ $rc = $res->num_rows;
 
 if ($rc == 0) {
   echo '<h2>ERROR: email address not associated with any registered leader.</h2>';
+   echo "<a class='btn btn-success' href='leaderquery.php'>Try Again?</a><br>";
   exit;
   }  
 
@@ -78,10 +100,9 @@ else {
   <th>Site</th><th>SiteRm</th>
   <th>Event</th><th>Leader Group</th></tr>';
   while ($r = $rese->fetch_assoc()) {
-    $kk = $r['Dnbr'];
-    if ($kk == 1) $dx='Friday '; if ($kk == 2) $dx='Saturday ';
-    if ($kk == 3) $dx='Sunday '; if ($kk == 4) $dx='Monday ';
-    if ($kk == '') $dx='NotSet';
+    if ($r['Dnbr'] == '') $dx = 'NotSet';    
+    else $dx = $dayarray[$r['Dnbr']];  
+    // echo "day: $dx<br>"; 
     $st = date("g:iA", strtotime($r['StartTime']));
     $et = date("g:iA", strtotime($r['EndTime']));
     // echo '<pre> full record '.$rowid.' '; print_r($r); echo '</pre>';
@@ -100,7 +121,7 @@ else {
 
 echo "<h2>Information on file for $leader</h2>";
 $img = $l['ImgURL'];
-$bio = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $l[Bio]);
+$bio = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $l['Bio']);
 
 if ($l['ImgURL'] == '') $img = "./npa.png";
 //echo '<pre> full leader record'; print_r($l); echo '</pre>';

@@ -105,10 +105,10 @@ $leaderrc = $res->num_rows;
 $ldrs = array();
 while ($r = $res->fetch_assoc()) {
 //  echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
-  $key = $r[FirstName] . ' ' . $r[LastName];
+  $key = $r['FirstName'] . ' ' . $r['LastName'];
   $key = rtrim($key, ' ');
-  if ($r[LastName] == '') $key = $r[FirstName];
-  if ($r[FirstName] == '') $key = $r[LastName];
+  if ($r['LastName'] == '') $key = $r['FirstName'];
+  if ($r['FirstName'] == '') $key = $r['LastName'];
   $ldrs[$key] = $r;
   }
 //echo '<pre> leader '; print_r($ldrs); echo '</pre>';
@@ -120,9 +120,9 @@ $res = doSQLsubmitted($sql);
 $venrc = $res->num_rows;
 $venarray = array(); $venrow = array();
 while ($r = $res->fetch_assoc()) {
-  if ($r[VenCode] == '--New--') continue;
-  $venarray[$r[VenCode]] = $r[VenName];
-  $venrow[$r[VenCode]] = $r;
+  if ($r['VenCode'] == '--New--') continue;
+  $venarray[$r['VenCode']] = $r['VenName'];
+  $venrow[$r['VenCode']] = $r;
   }
 // echo '<pre> venarray '; print_r($venarray); echo '</pre>';
 // echo '<pre> vendrow '; print_r($venrow); echo '</pre>';
@@ -161,11 +161,11 @@ while ($r = $res->fetch_assoc()) {
   if (!in_array($r['Day'], $dayarray)) 
     $err[$r['Trip']][] = "event day is not in &quot;Day&quot; list.";
   if ($r['Leader1'] == '' ) $err[$r['Trip']][] = "has no Leader 1 defined";
-  $ldrassigned[$r[Leader1]] += 1;
+  $ldrassigned[$r['Leader1']] += 1;
   if (($r['Leader1'] != '') AND (!array_key_exists($r['Leader1'], $ldrs))) {
     $err[$r['Trip']][] = sprintf("Leader1 (%s) is not registered.", $r['Leader1']);
     }
-  $ldrassigned[$r[Leader2]] += 1;
+  $ldrassigned[$r['Leader2']] += 1;
   if (($r['Leader2'] != '') AND (!array_key_exists($r['Leader2'], $ldrs))) { 
     $err[$r['Trip']][] = sprintf("Leader2 (%s) is not registered.", $r['Leader2']); 
     }
@@ -206,7 +206,7 @@ foreach ($ldrs as $k => $v) {
   if ($v['ImgURL'] == '') $ldrerr[$k][] = 'Leader missing photo image.';
   if (!(array_key_exists($ldrfull, $ldrassigned))) 
     $ldrerr[$k][] = 'Leader active but not asssigned an event.'; 
-  if (($v['LdrEvent'] == '') AND ($v[LdrDay] == ''))
+  if (($v['LdrEvent'] == '') AND ($v['LdrDay'] == ''))
     $ldrerr[$k][] = 'Leader does not have a valid Leader Type designated.';
   }
 
@@ -222,7 +222,7 @@ foreach ($venused as $k => $v) {
   $venueuse[$k] .= "$v"; }
 foreach ($venrow as $k => $v) {
   if ($v['VenAddr'] == '') $venerr[] .= "$k does not have an address defined";
-  if (($v['VenCity'] == '') || ($v['VenState'] == '') || ($v[VenZip] == ''))
+  if (($v['VenCity'] == '') || ($v['VenState'] == '') || ($v['VenZip'] == ''))
     $venerr[] .= "$k has incomplete city, state or zip code information provided";
   if ($v['VenGmapURL'] == '') $venerr[] .= "$k has no map information provided.";
   }

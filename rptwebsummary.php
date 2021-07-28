@@ -69,16 +69,16 @@ echo '<table border="0">';
 while ($r = $res->fetch_assoc()) {
   //echo '<pre> full record for '.$rowid.' '; print_r($r); echo '</pre>';
   $codes = array();
-  if (strlen($r[Level]) > 0) $codes[] = str_replace(",","",$r[Level]); 
-  if (strlen($r[FEE]) > 0)  $codes[] = '$'.$r[FEE];
+  if (strlen($r['Level']) > 0) $codes[] = str_replace(",","",$r['Level']); 
+  if (strlen($r['FEE']) > 0)  $codes[] = '$'.$r['FEE'];
   $codeout = implode('&nbsp;&nbsp;&nbsp;&nbsp;',$codes);
-  $st = date('h:i a', strtotime($r[StartTime]));
-  $et = date('h:i a', strtotime($r[EndTime]));
-  $timerange = $r[Day] . ', ' . $st.' - '.$et;
+  $st = date('h:i a', strtotime($r['StartTime']));
+  $et = date('h:i a', strtotime($r['EndTime']));
+  $timerange = $r['Day'] . ', ' . $st.' - '.$et;
   printf("<tr><td><b>%s</b></td><td>%s</td><td colspan=3>%s&nbsp;%s</td></tr>", 
-    $r[Trip], $r[Event], $r[TypeOfEvent], $r[Type]);
-  printf("<tr><td colspan=2>%s</td><td>%s</td><td colspan=2>%s</td></tr>",$timerange,$r[Site],$codeout);
-  printf("<tr><td colspan=5>%s</td></tr>", $r[Program]);
+    $r['Trip'], $r['Event'], $r['TypeOfEvent'], $r['Type']);
+  printf("<tr><td colspan=2>%s</td><td>%s</td><td colspan=2>%s</td></tr>",$timerange,$r['Site'],$codeout);
+  printf("<tr><td colspan=5>%s</td></tr>", $r['Program']);
   printf("<tr><td colspan=5>&nbsp;</td></tr>");
   }
 echo '</table>';

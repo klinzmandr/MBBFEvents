@@ -22,8 +22,8 @@ include 'Incls/mainmenu.inc.php';
 
 $dbinuse = "DB in use: mbbf_mbbfdb<br>";
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
-$sd = isset($_REQUEST['sd']) ? $_REQUEST['sd'] : date('Y-m-d 00:00:00', strtotime(now));
-$ed = isset($_REQUEST['ed']) ? $_REQUEST['ed'] : date('Y-m-d 23:59:00', strtotime(now));
+$sd = isset($_REQUEST['sd']) ? $_REQUEST['sd'] : date('Y-m-d 00:00:00', strtotime('now'));
+$ed = isset($_REQUEST['ed']) ? $_REQUEST['ed'] : date('Y-m-d 23:59:00', strtotime('now'));
 $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : '%mbbf/%';
 $testdb = isset($_REQUEST['testdb']) ? $_REQUEST['testdb'] : '';
 
@@ -114,25 +114,25 @@ $rc = 0;
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 // echo "Total Pages Used: $rc<br />";
-$whatarray = array(); $whoarray = array(); $whotimemin = array(); $whotimemax = array();
+$whatarray = array(); $whoarray = array(); $whotimemin = array(); $whotimemax = array(); $comboarray = array(); $userarray = array();
 while ($r = $res->fetch_assoc()) {
 //	echo '<pre> rows '; print_r($r); echo '</pre>';
-	$exprpt = explode('/', $r[Page]);
-	$exprpt[0] = $r[User];			// debug
+	$exprpt = explode('/', $r['Page']);
+	$exprpt[0] = $r['User'];			// debug
 //	echo '<pre> exprpt '; print_r($exprpt); echo '</pre>';
-	if ($r[User] == '') continue;
+	if ($r['User'] == '') continue;
 	$rpt = end($exprpt);
 	$rpt = strtolower($rpt);
 //	echo "rpt: $rpt<br>";
 	$whatarray[$rpt] += 1;
-	$whoarray[$r[User]] += 1;
-	if (($r[DateTime] < $whotimemin[$r[User]]) OR (!isset($whotimemin[$r[User]]))) 
-		$whotimemin[$r[User]] = $r[DateTime]; 
-	if ($r[DateTime] > $whotimemax[$r[User]]) $whotimemax[$r[User]] = $r[DateTime];
-	$comboarray[$rpt] [$r[User]] += 1;
-	$combotimearray[$rpt][$r[User]] = $r[DateTime];
-	$usercountarray[$r[User]] += 1;
-	$userarray[$r[User]] [$rpt] += 1;
+	$whoarray[$r['User']] += 1;
+	if (($r['DateTime'] < $whotimemin[$r['User']]) OR (!isset($whotimemin[$r['User']]))) 
+		$whotimemin[$r['User']] = $r['DateTime']; 
+	if ($r['DateTime'] > $whotimemax[$r['User']]) $whotimemax[$r['User']] = $r['DateTime'];
+	$comboarray[$rpt] [$r['User']] += 1;
+	$combotimearray[$rpt][$r['User']] = $r['DateTime'];
+	$usercountarray[$r['User']] += 1;
+	$userarray[$r['User']] [$rpt] += 1;
 //	echo '<pre> reports '; print_r($whoarray); echo '</pre>';
 	}
 // echo "Total Pages: " . count($whoarray) . "$rc<br />";
@@ -186,24 +186,24 @@ $rc = 0;
 $res = doSQLsubmitted($sql);
 $rc = $res->num_rows;
 // echo "Total Pages Used: $rc<br />";
-
+$user = array();
 while ($r = $res->fetch_assoc()) {
 //	echo '<pre> logged in '; print_r($r); echo '</pre>';
-	if ($r[User] == '') continue;	
-	$usr = $r[User];
+	if ($r['User'] == '') continue;	
+	$usr = $r['User'];
 //	echo '<pre> whotimemax '; print_r($whotimemax); echo '</pre>';
 	$lasttimedate = $whotimemax[$usr];
 	$lasttime = strtotime($whotimemax[$usr]) + 30*60;
-	$now = strtotime(now);
+	$now = strtotime('now');
 //	echo "lasttimedate: $lasttimedate, lasttime: $lasttime, NOW: $now<br>";
 //	echo "lasttime: $lasttime, lastdate: $whotimemax[$r[User]]<br>";
 //	echo "now: $now, last: $lasttime<br>";
 	if ($now > $lasttime) continue;
 	
-	if ($r[Text] == "Logged In") {
-		$user[$r[User]] = $r;
+	if ($r['Text'] == "Logged In") {
+		$user[$r['User']] = $r;
 		}
-	if ($r[Text] == "Logged Out") {
+	if ($r['Text'] == "Logged Out") {
 		unset($user[$r[User]]);		
 		}
 	}
@@ -214,7 +214,7 @@ if (count($user) > 0) {
 //	echo '<pre> addr '; print_r($addr); echo '</pre>';
 	echo '<h4>Current Active Users:</h4>';
 	foreach ($user as $k => $v) {
-		$u = $v[User]; $s = $v[SecLevel]; $d = $v[DateTime];
+		$u = $v['User']; $s = $v['SecLevel']; $d = $v['DateTime'];
 		echo "
 		$u at $d on $a<br>
 		";

@@ -144,11 +144,11 @@ $seqstart = ($dayarray[$day]*100) + 1 ;
 $results = ''; $updarray = array();
 while ($r = $res->fetch_assoc()) {
   // echo '<pre> full record for '.$rowid.' '; print_r($r[Trip]); echo '</pre>';
-  $rowid = $r[RowID];
+  $rowid = $r['RowID'];
   $results .= "$r[Trip] => $seqstart, ";
-  $updarray[Trip] = $seqstart;
-  $updarray[Day]  = $day;
-  $updarray[Dnbr] = $dayindex;
+  $updarray['Trip'] = $seqstart;
+  $updarray['Day']  = $day;
+  $updarray['Dnbr'] = $dayindex;
   sqlupdate('events', $updarray, '`RowID` = "'.$rowid.'";');
   $seqstart += 1;
   }

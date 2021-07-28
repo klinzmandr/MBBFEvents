@@ -248,7 +248,7 @@ $rc = $res->num_rows;
 echo '
 <h4>Events Listed&nbsp;&nbsp;(Listed: '.$rc.')
 <table border="1" class="sortable table table-condensed table-hover">
-<thead><tr id="head"><th>Row</th><th>RecNo</th><th data-defaultsort="asc">Day</th><th>TripStatus</th><th>Trip Type</th><th>StartTime</th><th>Event</th><th>Venue</th><th>EventTitle</th><th>Leader</th></tr></thead><tbody>';
+<thead><tr id="head"><th>Row</th><th>RecNo</th><th data-defaultsort="asc">Day</th><th>TripStatus</th><th>Trip Type</th><th>StartTime</th><th>Event</th><th>EventVenue</th><th>MtngVenue</th><th>EventTitle</th><th>Leader</th></tr></thead><tbody>';
 $recptr = 1;
 while ($r = $res->fetch_assoc()) {
 echo "<tr style='cursor: pointer;'>";
@@ -264,6 +264,7 @@ echo "
 <td data-value='$stv'>$stime</td>
 <td>$r[TypeOfEvent]</td>
 <td>$r[Site]</td>
+<td>$r[Site2]</td>
 <td>$r[Trip]&nbsp$r[Event]</td>
 <td>$r[Leader1]</td>
 </tr>

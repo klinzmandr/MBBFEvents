@@ -37,12 +37,12 @@ if ($action == 'update') {
   $flds = array();
   $flds = $_REQUEST['flds'];
   // $flds[VenGmapURL] = htmlentities($flds[VenGmapURL], ENT_QUOTES);
-  $flds[VenInsurInfo] = htmlentities($flds[VenInsurInfo], ENT_QUOTES);
-  $flds[VenSpecNotes] = htmlentities($flds[VenSpecNotes], ENT_QUOTES);
-  $venid = $flds[VenID];
+  $flds['VenInsurInfo'] = htmlentities($flds['VenInsurInfo'], ENT_QUOTES);
+  $flds['VenSpecNotes'] = htmlentities($flds['VenSpecNotes'], ENT_QUOTES);
+  $venid = $flds['VenID'];
 	// echo '<pre> full update '; print_r($flds); echo '</pre>';
   $stat  = sqlupdate('venues', $flds, '`VenID` = "'.$venid.'";');
-  $vencode = $flds[VenCode];
+  $vencode = $flds['VenCode'];
 
   echo '
 <script>
@@ -82,7 +82,7 @@ if ($rc > 1) {
 
 $r = $res->fetch_assoc();
 //echo '<pre> full record '; print_r($r); echo '</pre>';
-if ($r[VenCode] == '--New--') $r[VenCode] = '';
+if ($r['VenCode'] == '--New--') $r['VenCode'] = '';
 
 ?>
 <script>
@@ -141,94 +141,94 @@ $("#helpclk").click(function() {
 </script>
 
 <form id="F1" action="venupdate.php" method="post" onsubmit="return validate()">
-<input id="VenID" type="hidden" name="flds[VenID]" value="<?=$r[VenID]?>">
+<input id="VenID" type="hidden" name="flds[VenID]" value="<?=$r['VenID']?>">
 <table border="0">
 <tr id="help"><td>
 Lorem ipsum dolor sit amet, consecteteur adipiscing elit pretium sollicitudin elementum magna nunc. A urna risus vitae amet. Fames lacus dolor, a, taciti penatibus parturient nam justo semper. Vestibulum quis porta ac consequat a, habitasse etiam. Proin eleifend eu, nisi diam dolor amet montes venenatis donec felis nunc suspendisse pretium. Mattis sapien, dolor, netus. Quis dolor bibendum, ac. Fermentum bibendum ve etiam ligula tortor consequat. Dictum. Risus, pede bibendum curae nullam, donec odio leo hac dis sem leo. Risus, leo adipiscing parturient et eros orci quis quam. Lacinia in primis lorem ac ac netus cum eget. Fringilla primis. Ac ligula eu, mattis justo parturient molestie quam malesuada tellus, nunc cras. Aptent tincidunt et. A. Amet feugiat class nisl condimentum dui ut justo in molestie. Eni nulla cum curae penatibus facilisi erat ve. Porta conubia, posuere auctor duis pellentesque lobortis vitae. Conubia venenatis. Tempus taciti. Amet.
 
 </td</tr>
 <tr><td>
-<h3><b>Venue Name:</b> <span id="SiteName"><?=$r[VenName]?></span></h3>
-<input id="SiteNameIn" type="hidden" name="flds[VenName]" value="<?=$r[VenName]?>">
+<h3><b>Venue Name:</b> <span id="SiteName"><?=$r['VenName']?></span></h3>
+<input id="SiteNameIn" type="hidden" name="flds[VenName]" value="<?=$r['VenName']?>">
 </td>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 <td>
-<h3><b>Venue Code:</b> <span id="SiteCode"><?=$r[VenCode]?></span></h3>
-<input id="SiteCodeIn" type="hidden" name="flds[VenCode]" value="<?=$r[VenCode]?>">
+<h3><b>Venue Code:</b> <span id="SiteCode"><?=$r['VenCode']?></span></h3>
+<input id="SiteCodeIn" type="hidden" name="flds[VenCode]" value="<?=$r['VenCode']?>">
 </td>
 </tr>
 </table>
 <table>
 <tr><td colspan="3">
 <b>Venue Address:</b> 
-<input type="text" name="flds[VenAddr]" value="<?=$r[VenAddr]?>" size="40" id="Event">
+<input type="text" name="flds[VenAddr]" value="<?=$r['VenAddr']?>" size="40" id="Event">
 </td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue Address 2:</b> 
-<input size="40" type="text" name="flds[VenAddr2]" value="<?=$r[VenAddr2]?>">&nbsp;
+<input size="40" type="text" name="flds[VenAddr2]" value="<?=$r['VenAddr2']?>">&nbsp;
 </td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue City:</b> 
-<input size="40" type="text" name="flds[VenCity]" value="<?=$r[VenCity]?>">
+<input size="40" type="text" name="flds[VenCity]" value="<?=$r['VenCity']?>">
 </td><td>
 <b>Venue State: </b>
-<input size="4" type="text" name="flds[VenState]" value="<?=$r[VenState]?>" maxlength="2">
+<input size="4" type="text" name="flds[VenState]" value="<?=$r['VenState']?>" maxlength="2">
 </td><td>
 <b>Venue Zip: </b>
-<input size="10" maxlength="10" type="text" name="flds[VenZip]" value="<?=$r[VenZip]?>">
+<input size="10" maxlength="10" type="text" name="flds[VenZip]" value="<?=$r['VenZip']?>">
 </td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue Phone:</b> 
-<input size="40" type="text" name="flds[VenPhone]" value="<?=$r[VenPhone]?>">&nbsp;
+<input size="40" type="text" name="flds[VenPhone]" value="<?=$r['VenPhone']?>">&nbsp;
 </td><td></td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue Web URL:</b> 
-<input size="40" type="text" name="flds[VenWebURL]" value="<?=$r[VenWebURL]?>">&nbsp;
+<input size="40" type="text" name="flds[VenWebURL]" value="<?=$r['VenWebURL']?>">&nbsp;
 </td><td></td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue Contact Name:</b> 
-<input size="40" type="text" name="flds[VenContactName]" value="<?=$r[VenContactName]?>">&nbsp;
+<input size="40" type="text" name="flds[VenContactName]" value="<?=$r['VenContactName']?>">&nbsp;
 </td><td></td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue Contact Phone:</b> 
-<input size="40" type="text" name="flds[VenContactPhone]" value="<?=$r[VenContactPhone]?>">&nbsp;
+<input size="40" type="text" name="flds[VenContactPhone]" value="<?=$r['VenContactPhone']?>">&nbsp;
 </td><td></td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue Contact Email:</b> 
-<input size="40" type="text" name="flds[VenContactEmail]" value="<?=$r[VenContactEmail]?>">&nbsp;
+<input size="40" type="text" name="flds[VenContactEmail]" value="<?=$r['VenContactEmail']?>">&nbsp;
 </td><td></td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue Google Maps URL Information:</b><br>
 NOTE: this must be obtained from the Google Maps web site.<br> 
-<textarea name="flds[VenGmapURL]" rows="5" cols="100"><?=$r[VenGmapURL]?></textarea>
+<textarea name="flds[VenGmapURL]" rows="5" cols="100"><?=$r['VenGmapURL']?></textarea>
 </td><td></td></tr>
 </table>
 <table>
 <tr><td>
 <b>Venue Insurance Information:</b><br> 
-<textarea name="flds[VenInsurInfo]" rows="5" cols="100"><?=$r[VenInsurInfo]?></textarea>
+<textarea name="flds[VenInsurInfo]" rows="5" cols="100"><?=$r['VenInsurInfo']?></textarea>
 </td><td></td></tr>
 </table>
 <table border=0>
 <tr><td>
 <b>Special Notes:</b><br>
-<textarea name="flds[VenSpecNotes]" rows="5" cols="100"><?=$r[VenSpecNotes]?></textarea>
+<textarea name="flds[VenSpecNotes]" rows="5" cols="100"><?=$r['VenSpecNotes']?></textarea>
 </td</tr>
 </table>
 

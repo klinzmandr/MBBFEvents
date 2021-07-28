@@ -21,13 +21,13 @@ if ($rc == 0) {
   echo '</td></tr></table>';
   }
 else {
-  $img = $r[ImgURL];
-  $bio = $r[Bio];
+  $img = $r['ImgURL'];
+  $bio = $r['Bio'];
   if ($img == '') $img = "./npa.png";
   if ($bio == '') $bio = "No biography information available";
 
   $url = '@(http|ftp)?(s)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-  $bio = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $r[Bio]);
+  $bio = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $r['Bio']);
 
   echo '<table class="table" border=1>';
   echo "<tr><td colspan=2><h4>$r[FirstName] $r[LastName]</h4></td></tr>

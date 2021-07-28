@@ -45,8 +45,6 @@ $day = isset($_REQUEST['Day']) ? $_REQUEST['Day'] : "";
 
 echo '<h3>Reset of Event Status</h3>';
 
-$dayarray[Friday] = 1;$dayarray[Saturday] = 2; $dayarray[Sunday] = 3; $dayarray[Monday] = 4; 
-
 if ($action == '') {
   echo '
   <p>This utility will set the &quot;Trip Status&quot; field on all events to a value of &quot;Under Consideration&quot;.  In addition, the &quot;Secondary Status&quot; field used for production notes is also cleared.</p>
